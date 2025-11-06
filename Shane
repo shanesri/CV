@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rattapon Sriphathoorat - CV</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Inter font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Load Lucide icons -->
+    <script src="https://unpkg.com/lucide-react@latest/dist/umd/lucide-react.js"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6; /* light gray background */
+        }
+        /* Simple icon component styling */
+        .icon {
+            width: 1.125rem; /* 18px */
+            height: 1.125rem; /* 18px */
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 0.5rem; /* 8px */
+            stroke-width: 2px;
+        }
+    </style>
+</head>
+<body class="text-gray-800 antialiased">
+
+    <!-- Main container -->
+    <div class="container mx-auto max-w-4xl p-4 sm:p-8">
+        
+        <!-- Header Section -->
+        <header class="bg-white shadow-md rounded-xl p-6 sm:p-8 mb-8">
+            <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between">
+                <div>
+                    <h1 class="text-3xl sm:text-4xl font-bold text-gray-900">Rattapon Sriphathoorat</h1>
+                    <h2 class="text-xl sm:text-2xl font-semibold text-blue-700 mt-1">CFA EXAM LEVEL III PASSER</h2>
+                </div>
+                <!-- Profile picture placeholder -->
+                <div class="mt-4 sm:mt-0 sm:ml-6 flex-shrink-0">
+                    <img src="https://placehold.co/120x120/e0e7ff/3730a3?text=RS" alt="Rattapon Sriphathoorat" class="rounded-full w-24 h-24 sm:w-32 sm:h-32 border-4 border-gray-100 shadow-sm">
+                </div>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="border-t border-gray-200 mt-6 pt-6">
+                <h3 class="text-xs font-semibold uppercase text-gray-500 mb-3">Contact Information</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                    <a href="mailto:R.Sriphathoorat@gmail.com" class="flex items-center text-gray-700 hover:text-blue-700 transition-colors">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                        R.Sriphathoorat@gmail.com
+                    </a>
+                    <a href="https://linkedin.com/in/shanesri" target="_blank" rel="noopener noreferrer" class="flex items-center text-gray-700 hover:text-blue-700 transition-colors">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                        linkedin.com/in/shanesri
+                    </a>
+                    <div class="flex items-center text-gray-700">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                        (+66) 89 490 9896
+                    </div>
+                    <div class="flex items-center text-gray-700">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                        Bangkok, Thailand
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Professional Summary -->
+        <section class="bg-white shadow-md rounded-xl p-6 sm:p-8 mb-8">
+            <h2 class="text-xl font-bold text-gray-900 border-b-2 border-blue-600 pb-2 mb-4">Professional Summary</h2>
+            <p class="text-gray-700 leading-relaxed">
+                Analytically driven CFA Level III passer transitioning from an engineering and entrepreneurial background to a career in investment management. Seeking a foundational role in Equity Research, Investment Analysis, or Portfolio Management to leverage a combination of skills:
+            </p>
+            <ul class="list-disc list-outside pl-5 mt-4 space-y-2 text-gray-700">
+                <li>
+                    <strong>Quantitative:</strong> Rigorous analytical and problem-solving skills from a B.Eng. in Aerospace Engineering.
+                </li>
+                <li>
+                    <strong>Practical Financials:</strong> Hands-on experience in P&L management, budgeting, product costing, and ROI analysis from founding and operating two businesses.
+                </li>
+                <li>
+                    <strong>Investment Expertise:</strong> Demonstrated mastery of advanced investment concepts, financial modeling, and portfolio construction via the CFA program.
+                </li>
+            </ul>
+        </section>
+
+        <!-- Key Skills -->
+        <section class="bg-white shadow-md rounded-xl p-6 sm:p-8 mb-8">
+            <h2 class="text-xl font-bold text-gray-900 border-b-2 border-blue-600 pb-2 mb-4">Key Skills</h2>
+            <div class_="">
+                <h3 class="text-lg font-semibold text-gray-800 mb-2">Financial & Investment Analysis</h3>
+                <div class="flex flex-wrap gap-2">
+                    <span class="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">Financial Modeling</span>
+                    <span class="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">Portfolio Development & Management</span>
+                    <span class="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">Investment Analysis</span>
+                    <span class="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">Financial Analysis</span>
+                    <span class="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">Equity Valuation</span>
+                    <span class="bg-blue-100 text-blue-800 text-sm font-medium px-3 py-1 rounded-full">Risk Management</span>
+                </div>
+
+                <h3 class="text-lg font-semibold text-gray-800 mt-6 mb-2">Languages</h3>
+                <div class="flex flex-wrap gap-2">
+                    <span class="bg-gray-100 text-gray-800 text-sm font-medium px-3 py-1 rounded-full">Thai (Native)</span>
+                    <span class="bg-gray-100 text-gray-800 text-sm font-medium px-3 py-1 rounded-full">English (Fluent)</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Professional Experience -->
+        <section class="mb-8">
+            <h2 class="text-xl font-bold text-gray-900 mb-4 ml-2 sm:ml-0">Professional Experience</h2>
+            <div class="space-y-6">
+                <!-- Job 1 -->
+                <div class="bg-white shadow-md rounded-xl p-6 sm:p-8 border-l-4 border-blue-600">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-900">Co-Owner | Head of Media Buying & Operations</h3>
+                            <p class="text-gray-700 font-medium">Brand Buddy Co., Ltd.</p>
+                        </div>
+                        <span class="text-sm text-gray-500 font-medium flex-shrink-0 ml-4">Jan 2019 - Nov 2023</span>
+                    </div>
+                    <ul class="list-disc list-outside pl-5 mt-4 space-y-2 text-gray-700">
+                        <li>
+                            <strong>Financial Planning:</strong> Co-developed financial plans and budgets for client marketing strategies, managing media spends and operational costs.
+                        </li>
+                        <li>
+                            <strong>Performance Analysis:</strong> Led all campaign data analysis, focusing on ROI optimization and cost-efficiency metrics to inform capital allocation decisions and maximize client profitability.
+                        </li>
+                        <li>
+                            <strong>Process Improvement:</strong> Designed and implemented new data workflows that improved project efficiency and the accuracy of performance reports.
+                        </li>
+                    </ul>
+                </div>
+                <!-- Job 2 -->
+                <div class="bg-white shadow-md rounded-xl p-6 sm:p-8 border-l-4 border-blue-600">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-900">Community & Strategic Marketing Lead</h3>
+                            <p class="text-gray-700 font-medium">PFP NFT Blockchain Project</p>
+                        </div>
+                        <span class="text-sm text-gray-500 font-medium flex-shrink-0 ml-4">Jun 2021 - Aug 2022</span>
+                    </div>
+                    <ul class="list-disc list-outside pl-5 mt-4 space-y-2 text-gray-700">
+                        <li>
+                            <strong>Market & Growth Strategy:</strong> Developed the complete go-to-market strategy, using market analytics to build a community from 0 to 10,000+ members.
+                        </li>
+                        <li>
+                            <strong>Project Execution:</strong> Executed high-impact strategic campaigns that resulted in a complete project sell-out within 4 minutes of public launch.
+                        </li>
+                    </ul>
+                </div>
+                <!-- Job 3 -->
+                <div class="bg-white shadow-md rounded-xl p-6 sm:p-8 border-l-4 border-blue-600">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-900">Owner & Operator</h3>
+                            <p class="text-gray-700 font-medium">Personal Craft Co., Ltd.</p>
+                        </div>
+                        <span class="text-sm text-gray-500 font-medium flex-shrink-0 ml-4">Feb 2015 - Apr 2020</span>
+                    </div>
+                    <ul class="list-disc list-outside pl-5 mt-4 space-y-2 text-gray-700">
+                        <li>
+                            <strong>Financial Management:</strong> Directed all company financial operations as founder, holding full P&L responsibility and managing daily cash flow.
+                        </li>
+                        <li>
+                            <strong>Corporate Finance:</strong> Developed budgets, created product costing methodologies, and built pricing models to optimize gross and net profitability.
+                        </li>
+                        <li>
+                            <strong>Operations:</strong> Managed the entire D2C business, from CAD-based product design to online commerce and operations.
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education & Certifications -->
+        <section class="mb-8">
+            <h2 class="text-xl font-bold text-gray-900 mb-4 ml-2 sm:ml-0">Education & Certifications</h2>
+            <div class="space-y-6">
+                <!-- Cert -->
+                <div class="bg-white shadow-md rounded-xl p-6 sm:p-8">
+                    <h3 class="text-lg font-semibold text-gray-900">CFA Program - Level III Passer</h3>
+                    <p class="text-gray-700 font-medium">CFA Institute</p>
+                    <p class="text-sm text-gray-600 mt-3">Completed Practical Skills Modules including:</p>
+                    <ul class="list-disc list-outside pl-5 mt-2 space-y-1 text-sm text-gray-600">
+                        <li>Financial Modeling</li>
+                        <li>Portfolio Development and Construction</li>
+                        <li>Python, Data Science & AI</li>
+                        <li>Python Programming Fundamentals</li>
+                    </ul>
+                </div>
+                <!-- Edu -->
+                <div class="bg-white shadow-md rounded-xl p-6 sm:p-8">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-900">B.Eng. Aerospace Engineering</h3>
+                            <p class="text-gray-700 font-medium">Kasetsart University</a</p>
+                        </div>
+                        <span class="text-sm text-gray-500 font-medium flex-shrink-0 ml-4">2008 - 2012</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center mt-12 mb-4">
+            <p class="text-sm text-gray-500">&copy; 2025 Rattapon Sriphathoorat</p>
+        </footer>
+
+    </div>
+
+</body>
+</html>
