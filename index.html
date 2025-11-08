@@ -64,7 +64,7 @@
             /* Rotate to Chevron Down when open */
             transform: rotate(90deg);
         }
-        /* Optional: Hide scrollbar for a cleaner look on Interest section (might not work in all environments, but keeps the flow) */
+        /* Optional: Hide scrollbar for a cleaner look */
         .hide-scrollbar::-webkit-scrollbar {
             display: none;
         }
@@ -101,7 +101,7 @@
             position: relative; /* For the close button */
             padding: 1.5rem; /* 24px */
         }
-        /* The close button */
+        /* The close button (Updated Design) */
         .modal-close-btn {
             position: absolute;
             top: 0.75rem; /* 12px */
@@ -112,7 +112,12 @@
             cursor: pointer;
             padding: 0.5rem; /* 8px */
             line-height: 1;
-            border-radius: 9999px; /* Make it a circle */
+            border-radius: 9999px; /* rounded-full */
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .modal-close-btn:hover {
             color: #111827; /* text-gray-900 */
@@ -208,16 +213,16 @@
 <div class="grid grid-cols-1 md:grid-cols-5 gap-12 items-center">
 <div class="md:col-span-2">
 <img 
-                src="https://github.com/shanesri/CV/blob/613792b8e94e52f5377c8b3e1f3bffedd1bebfb0/profile_about.jpg?raw=true" 
-                alt="A professional headshot of Shane"
-                class="rounded-lg shadow-xl w-full h-auto object-cover aspect-square"
-                onerror="this.src='https://placehold.co/500x500/cccccc/444444?text=Image+Load+Error'"
-            >
+                    src="https://github.com/shanesri/CV/blob/613792b8e94e52f5377c8b3e1f3bffedd1bebfb0/profile_about.jpg?raw=true" 
+                    alt="A professional headshot of Shane"
+                    class="rounded-lg shadow-xl w-full h-auto object-cover aspect-square"
+                    onerror="this.src='https://placehold.co/500x500/cccccc/444444?text=Image+Load+Error'"
+                >
 </div>
 <div class="md:col-span-3">
 <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">About Me</h2>
 <p class="text-lg text-gray-700 mb-6">
-                I'm a recent CFA Level III passer with a unique background combining a quantitative Aerospace Engineering degree with hands-on entrepreneurial experience, where I managed full P&L and financial operations. I am now making a focused career transition and am actively pursuing analyst roles within the investment management industry.
+                    I'm a recent CFA Level III passer with a unique background combining a quantitative Aerospace Engineering degree with hands-on entrepreneurial experience, where I managed full P&L and financial operations. I am now making a focused career transition and am actively pursuing analyst roles within the investment management industry.
 </p>
 
 <!-- Start of Updated Skills Section -->
@@ -290,10 +295,9 @@
 <details>
 <summary class="text-gray-700 font-semibold hover:text-gray-900">Job Description</summary>
 <p class="mt-2 text-gray-700">
-                        As Co-Owner, my core responsibilities covered two main areas: leading the digital marketing department and managing the company's internal operations. My marketing duties involved developing client media strategies, managing the end-to-end media buying process on platforms like Google and Facebook, and analyzing campaign data for performance reports. On the operations side, I was responsible for designing all internal project workflows and coordinating between the creative, marketing, and client service teams to ensure projects were delivered smoothly and efficiently.
+                                As Co-Owner, my core responsibilities covered two main areas: leading the digital marketing department and managing the company's internal operations. My marketing duties involved developing client media strategies, managing the end-to-end media buying process on platforms like Google and Facebook, and analyzing campaign data for performance reports. On the operations side, I was responsible for designing all internal project workflows and coordinating between the creative, marketing, and client service teams to ensure projects were delivered smoothly and efficiently.
 </p>
-
-<!-- NEW: Image Scroller -->
+<!-- Image Scroller for Brand Buddy -->
 <div class="relative mt-6">
     <!-- Scroll Buttons (Smaller) -->
     <button id="brandbuddy-scroll-left" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white p-1 rounded-full shadow-md opacity-80 hover:opacity-100 transition-opacity duration-300 z-10 hidden md:flex items-center justify-center border border-gray-200 w-8 h-8">
@@ -304,14 +308,14 @@
     <div id="brandbuddy-scroll-container" class="flex space-x-4 overflow-x-auto pb-2 hide-scrollbar md:px-10">
         <!-- Image 1 -->
         <img src="https://github.com/shanesri/CV/blob/9a23099bc6a3b32be13c48cfd87c874ec6529490/BB1.jpg?raw=true" alt="Brand Buddy Image 1" class="w-64 aspect-square object-cover rounded-lg flex-shrink-0 shadow-sm">
-        <!-- Image 2 (Updated URL) -->
+        <!-- Image 2 (FIXED) -->
         <img src="https://github.com/shanesri/CV/blob/23906b3999a2c509947409e5707da3939582e955/BB2.png?raw=true" alt="Brand Buddy Image 2" class="w-64 aspect-square object-cover rounded-lg flex-shrink-0 shadow-sm">
         <!-- Image 3 -->
         <img src="https://github.com/shanesri/CV/blob/9a23099bc6a3b32be13c48cfd87c874ec6529490/BB3.jpg?raw=true" alt="Brand Buddy Image 3" class="w-64 aspect-square object-cover rounded-lg flex-shrink-0 shadow-sm">
-        <!-- Image 4 (NEW) -->
-        <img src="https://github.com/shanesri/CV/blob/23906b3999a2c509947409e5707da3939582e955/BB5.png?raw=true" alt="Brand Buddy Image 4" class="w-64 aspect-square object-cover rounded-lg flex-shrink-0 shadow-sm">
-        <!-- Image 5 (Original 4, URL fixed) -->
-        <img src="https://github.com/shanesri/CV/blob/9a23099bc6a3b32be13c48cfd87c874ec6529490/BB4.jpg?raw=true" alt="Brand Buddy Image 5" class="w-64 aspect-square object-cover rounded-lg flex-shrink-0 shadow-sm">
+        <!-- Image 4 (NEW BB5) -->
+        <img src="https://github.com/shanesri/CV/blob/23906b3999a2c509947409e5707da3939582e955/BB5.png?raw=true" alt="Brand Buddy Image 5" class="w-64 aspect-square object-cover rounded-lg flex-shrink-0 shadow-sm">
+        <!-- Image 5 (FIXED) -->
+        <img src="https://github.com/shanesri/CV/blob/9a23099bc6a3b32be13c48cfd87c874ec6529490/BB4.jpg?raw=true" alt="Brand Buddy Image 4" class="w-64 aspect-square object-cover rounded-lg flex-shrink-0 shadow-sm">
     </div>
     
     <!-- Scroll Buttons (Smaller) -->
@@ -320,7 +324,6 @@
     </button>
 </div>
 <!-- END: Image Scroller -->
-
 </details>
 </div>
 
@@ -334,21 +337,17 @@
 <details>
 <summary class="text-gray-700 font-semibold hover:text-gray-900">Job Description</summary>
 <p class="mt-2 text-gray-700">
-                        Community-led marketing strategy for an NFT project of ~3000 unique characters. I was responsible for establishing and scaling the project's core community on Discord and Twitter, creating the content roadmap, and executing engagement campaigns to build presale hype. By fostering a loyal and active community from the ground up, I built the foundational momentum that resulted in a complete project sell-out within 4 minutes of the public launch.
+                                Community-led marketing strategy for an NFT project of ~3000 unique characters. I was responsible for establishing and scaling the project's core community on Discord and Twitter, creating the content roadmap, and executing engagement campaigns to build presale hype. By fostering a loyal and active community from the ground up, I built the foundational momentum that resulted in a complete project sell-out within 4 minutes of the public launch.
 </p>
-
-<!-- NEW: Single Image Added -->
+<!-- Single Image Added -->
 <img 
     src="https://github.com/shanesri/CV/blob/58c97be0ffe6b2d478ab169b680eac75d889d423/P4-1.jpg?raw=true" 
-    alt="PFP NFT Project Image" 
+    alt="NFT Project Image" 
     class="mt-6 w-64 aspect-square object-cover rounded-lg shadow-sm"
     onerror="this.src='https::/placehold.co/600x600/e2e8f0/333333?text=Image+Error'"
 >
-<!-- END: Single Image -->
-
 </details>
 </div>
-
 
 <!-- Job 3 -->
 <div class="relative pl-8">
@@ -360,10 +359,9 @@
 <details>
 <summary class="text-gray-700 font-semibold hover:text-gray-900">Job Description</summary>
 <p class="mt-2 text-gray-700">
-                        A direct-to-consumer (D2C) brand I founded to create and sell personalized, custom-made jewelry online. As the owner and operator, I was responsible for all functions of the business. My role included the end-to-end product lifecycle, from initial jewelry design using CAD to final production. I also managed the brand's entire online presence, which involved running our social commerce channels, handling all digital marketing, and overseeing the company's finances and daily operations.
+                                A direct-to-consumer (D2C) brand I founded to create and sell personalized, custom-made jewelry online. As the owner and operator, I was responsible for all functions of the business. My role included the end-to-end product lifecycle, from initial jewelry design using CAD to final production. I also managed the brand's entire online presence, which involved running our social commerce channels, handling all digital marketing, and overseeing the company's finances and daily operations.
 </p>
-
-<!-- NEW: Image Scroller for Personal Craft -->
+<!-- Image Scroller for Personal Craft -->
 <div class="relative mt-6">
     <!-- Scroll Buttons (Smaller) -->
     <button id="personalcraft-scroll-left" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white p-1 rounded-full shadow-md opacity-80 hover:opacity-100 transition-opacity duration-300 z-10 hidden md:flex items-center justify-center border border-gray-200 w-8 h-8">
@@ -380,7 +378,7 @@
         <img src="https://github.com/shanesri/CV/blob/58c97be0ffe6b2d478ab169b680eac75d889d423/PS3.png?raw=true" alt="Personal Craft Image 3" class="w-64 aspect-square object-cover rounded-lg flex-shrink-0 shadow-sm">
         <!-- Image 4 -->
         <img src="https://github.com/shanesri/CV/blob/58c97be0ffe6b2d478ab169b680eac75d889d423/PS4.png?raw=true" alt="Personal Craft Image 4" class="w-64 aspect-square object-cover rounded-lg flex-shrink-0 shadow-sm">
-        <!-- Image 5 -->
+        <!-- Image 5 (FIXED) -->
         <img src="https://github.com/shanesri/CV/blob/58c97be0ffe6b2d478ab169b680eac75d889d423/PS5.png?raw=true" alt="Personal Craft Image 5" class="w-64 aspect-square object-cover rounded-lg flex-shrink-0 shadow-sm">
     </div>
     
@@ -390,7 +388,6 @@
     </button>
 </div>
 <!-- END: Image Scroller -->
-
 </details>
 </div>
 
@@ -404,7 +401,7 @@
 <details>
 <summary class="text-gray-700 font-semibold hover:text-gray-900">Job Description</summary>
 <p class="mt-2 text-gray-700">
-                        In this role, I served as a key engineer for a strategic partnership between E&T Corporation and HONDA R&D ASIA PACIFIC (HRAP). My responsibilities included providing technical sales and consultation for advanced CAE software and CAD outsourcing services. I also managed aspects of our collaborative projects, including the application of a cutting-edge fluid dynamics simulation technique known as the particle method.
+                                In this role, I served as a key engineer for a strategic partnership between E&T Corporation and HONDA R&D ASIA PACIFIC (HRAP). My responsibilities included providing technical sales and consultation for advanced CAE software and CAD outsourcing services. I also managed aspects of our collaborative projects, including the application of a cutting-edge fluid dynamics simulation technique known as the particle method.
 </p>
 </details>
 </div>
@@ -458,10 +455,10 @@
         <img src="https://github.com/shanesri/CV/blob/899b1c3b2dc7ac33c299ebfb8caa393166826f4c/CFA1.jpg?raw=true" alt="CFA Image 1" class="w-64 aspect-square object-cover rounded-lg flex-shrink-0 shadow-sm">
         <!-- Image 2 -->
         <img src="https://github.com/shanesri/CV/blob/899b1c3b2dc7ac33c299ebfb8caa393166826f4c/CFA2.jpg?raw=true" alt="CFA Image 2" class="w-64 aspect-square object-cover rounded-lg flex-shrink-0 shadow-sm">
-        <!-- Image 3 -->
-        <img src="https://github.com/shanesri/CV/blob/899b1c3b2dc7ac33c299ebfb8caa393166826f4c/P3.jpg?raw=true" alt="CFA Image 3" class="w-64 aspect-square object-cover rounded-lg flex-shrink-0 shadow-sm">
-        <!-- Image 4 -->
+        <!-- Image 3 (SWAPPED) -->
         <img src="https://github.com/shanesri/CV/blob/899b1c3b2dc7ac33c299ebfb8caa393166826f4c/P15.jpg?raw=true" alt="CFA Image 4" class="w-64 aspect-square object-cover rounded-lg flex-shrink-0 shadow-sm">
+        <!-- Image 4 (SWAPPED) -->
+        <img src="https://github.com/shanesri/CV/blob/899b1c3b2dc7ac33c299ebfb8caa393166826f4c/P3.jpg?raw=true" alt="CFA Image 3" class="w-64 aspect-square object-cover rounded-lg flex-shrink-0 shadow-sm">
     </div>
     
     <!-- Scroll Buttons (Smaller) -->
@@ -525,7 +522,7 @@
 <h4 class="text-xl font-semibold text-gray-900">High School, Science - Math</h4>
 <p class="text-md text-gray-600 mb-1">Assumption College, Thailand</p>
 <p class="text-sm text-gray-500 mb-3">2005 - 2008</p>
-<!-- <p class="text-sm text-gray-600 mb-3">Grade: Second Horner</p> 	REMOVED -->
+<!-- <p class="text-sm text-gray-600 mb-3">Grade: Second Horner</p>  REMOVED -->
 <details>
 <summary class="text-gray-700 font-semibold hover:text-gray-900">Description</summary>
 <p class="mt-2 text-gray-700">
@@ -549,11 +546,11 @@
 </div>
 </section>
 
-<!-- Section 4: Portfolio (Converted to Horizontal Scroll) -->
+<!-- Section 4: Portfolio -->
 <section id="portfolio" class="py-20 md:py-24">
 <div class="container mx-auto px-4 md:px-8">
 <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-8 text-center">Portfolio</h2>
-<p class="text-center text-gray-600 mb-12 max-w-3xl mx-auto">
+<p class="text-lg text-gray-700 mb-12 text-center max-w-3xl mx-auto">
     Here's a collection of my projects, awards, and training. Scroll horizontally or use the arrows to see more.
 </p>
 
@@ -561,127 +558,125 @@
 <div class="relative">
 <!-- Scroll Buttons (Arrows) -->
 <button id="portfolio-scroll-left" class="absolute left-0 md:left-2 lg:left-4 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-lg opacity-80 hover:opacity-100 transition-opacity duration-300 z-10 hidden md:flex items-center justify-center border border-gray-200 w-10 h-10">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7" /></svg>
+<!-- SVG for Chevron Left -->
+<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7" /></svg>
 </button>
 
-<!-- 
-    Horizontal Scroll Container 
-    NEW CARDS ADDED AND ALL 15 CARDS RE-SORTED
--->
+<!-- Horizontal Scroll Container -->
 <div id="portfolio-scroll-container" class="flex space-x-6 overflow-x-auto pb-4 hide-scrollbar md:px-12">
-
-<!-- Portfolio Item 1 (CFA LV2) - JAN 2025 -->
-<div 
-    class="bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl cursor-pointer w-80 flex-shrink-0"
+    
+    <!-- Portfolio Card 1: CFA L2 (Newest) -->
+    <div 
+    class="w-80 flex-shrink-0 bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl cursor-pointer"
     data-modal-trigger="portfolio-modal"
     data-image="https://github.com/shanesri/CV/blob/922619fd46a0ec0e249937f95b7a7bd9be37a97f/P15.jpg?raw=true"
-    data-title="CFA Program LV2"
-    data-tags='["CFA Program", "Asset Valuation", "Portfolio Management"]'
-    data-description='This certification represents passing Level II of the CFA Program, which heavily emphasizes asset valuation. It demonstrates in-depth skills in applying investment tools and concepts to value equities, fixed income, derivatives, and alternative investments.'
->
-    <img 
-        src="https://github.com/shanesri/CV/blob/922619fd46a0ec0e249937f95b7a7bd9be37a97f/P15.jpg?raw=true" 
-        alt="CFA Program LV2" 
-        class="w-full aspect-square object-cover"
-        onerror="this.src='https://placehold.co/600x400/e2e8f0/333333?text=Image+Error'"
+    data-title="CFA Program Level II Passed"
+    data-tags='["Asset Valuation", "Portfolio Management", "Financial Analysis"]'
+    data-description='Passing Level II demonstrates a mastery of complex asset valuation methods, including in-depth analysis of equities, fixed income, derivatives, and alternative investments. This stage heavily emphasizes the practical application of investment tools and concepts in real-world valuation scenarios.'
     >
-    <div class="p-6">
-        <h3 class="text-xl font-semibold text-gray-900 mb-2">CFA Program LV2</h3>
-        <p class="text-gray-700 mb-1 line-clamp-2">Professional Certification</p>
-        <p class="text-sm text-gray-500 mb-4">JAN 2025</p>
-        <div class="flex flex-wrap gap-2">
-            <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">CFA Program</span>
-            <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Asset Valuation</span>
-            <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Portfolio Management</span>
+        <img 
+            src="https://github.com/shanesri/CV/blob/922619fd46a0ec0e249937f95b7a7bd9be37a97f/P15.jpg?raw=true" 
+            alt="CFA Program Level II Passed" 
+            class="w-full aspect-square object-cover"
+            onerror="this.src='https://placehold.co/600x400/e2e8f0/333333?text=Image+Error'"
+        >
+        <div class="p-6">
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">CFA Program Level II Passed</h3>
+            <p class="text-gray-700 mb-1 line-clamp-2">Professional Certification</p>
+            <p class="text-sm text-gray-500 mb-4">JAN 2025</p>
+            <div class="flex flex-wrap gap-2">
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Asset Valuation</span>
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Portfolio Management</span>
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Financial Analysis</span>
+            </div>
         </div>
     </div>
-</div>
-
-<!-- Portfolio Item 2 (CFA LV1) - Jul 2024 -->
-<div 
-    class="bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl cursor-pointer w-80 flex-shrink-0"
+    
+    <!-- Portfolio Card 2: CFA L1 -->
+    <div 
+    class="w-80 flex-shrink-0 bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl cursor-pointer"
     data-modal-trigger="portfolio-modal"
     data-image="https://github.com/shanesri/CV/blob/922619fd46a0ec0e249937f95b7a7bd9be37a97f/P3.jpg?raw=true"
-    data-title="CFA Program LV1"
-    data-tags='["CFA Program", "Investment Tools", "Ethics"]'
-    data-description='This certification represents passing Level I of the CFA Program, which focuses on investment tools and concepts. It validates a strong understanding of ethical and professional standards, quantitative methods, economics, financial statement analysis, and corporate finance.'
->
-    <img 
-        src="https://github.com/shanesri/CV/blob/922619fd46a0ec0e249937f95b7a7bd9be37a97f/P3.jpg?raw=true" 
-        alt="CFA Program LV1" 
-        class="w-full aspect-square object-cover"
-        onerror="this.src='https://placehold.co/600x400/e2e8f0/333333?text=Image+Error'"
+    data-title="CFA Program Level I Passed"
+    data-tags='["Investment Tools", "Ethical Standards", "Quantitative Methods"]'
+    data-description='Passing Level I confirms a strong understanding of the foundational knowledge for investment management. This includes mastery of investment tools, quantitative methods, economics, financial statement analysis, and corporate finance, all bound by the CFA Institutes strict ethical standards.'
     >
-    <div class="p-6">
-        <h3 class="text-xl font-semibold text-gray-900 mb-2">CFA Program LV1</h3>
-        <p class="text-gray-700 mb-1 line-clamp-2">Professional Certification</p>
-        <p class="text-sm text-gray-500 mb-4">Jul 2024</p>
-        <div class="flex flex-wrap gap-2">
-            <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">CFA Program</span>
-            <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Investment Tools</span>
-            <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Ethics</span>
+        <img 
+            src="https://github.com/shanesri/CV/blob/922619fd46a0ec0e249937f95b7a7bd9be37a97f/P3.jpg?raw=true" 
+            alt="CFA Program Level I Passed" 
+            class="w-full aspect-square object-cover"
+            onerror="this.src='https://placehold.co/600x400/e2e8f0/333333?text=Image+Error'"
+        >
+        <div class="p-6">
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">CFA Program Level I Passed</h3>
+            <p class="text-gray-700 mb-1 line-clamp-2">Professional Certification</p>
+            <p class="text-sm text-gray-500 mb-4">Jul 2024</p>
+            <div class="flex flex-wrap gap-2">
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Investment Tools</span>
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Ethical Standards</span>
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Quantitative Methods</span>
+            </div>
         </div>
     </div>
-</div>
 
-<!-- Portfolio Item 3 (Google Data Analytics) - Jan 2024 -->
-<div 
-    class="bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl cursor-pointer w-80 flex-shrink-0"
+    <!-- Portfolio Card 3: Google Data Analytics -->
+    <div 
+    class="w-80 flex-shrink-0 bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl cursor-pointer"
     data-modal-trigger="portfolio-modal"
     data-image="https://github.com/shanesri/CV/blob/b05424e9f9520aaf96f0db315971f527fbe6b961/P2-1.jpg?raw=true"
     data-title="Google Data Analytics Professional Certificate"
     data-tags='["Data Analyst", "SQL", "Tableau", "R"]'
-    data-description='This comprehensive professional certificate from Google covers the entire data analysis lifecycle. It includes collecting and cleaning data, analyzing it to find insights, and visualizing findings using tools like SQL, R, and Tableau. The program focuses on practical skills for processing data, performing analysis, and using dashboards to support data-driven decision-making.'
->
-    <img 
-        src="https://github.com/shanesri/CV/blob/b05424e9f9520aaf96f0db315971f527fbe6b961/P2-1.jpg?raw=true" 
-        alt="Google Data Analytics Professional Certificate" 
-        class="w-full aspect-square object-cover"
-        onerror="this.src='https://placehold.co/600x400/e2e8f0/333333?text=Image+Error'"
+    data-description='A comprehensive certification focused on the entire data analysis lifecycle. This program provided hands-on experience with in-demand tools and skills, including data collection (SQL), data transformation (Spreadsheets, R), data visualization (Tableau), and analysis (R). The course culminated in a capstone project demonstrating the ability to ask the right questions and solve business problems using data.'
     >
-    <div class="p-6">
-        <h3 class="text-xl font-semibold text-gray-900 mb-2">Google Data Analytics Professional Certificate</h3>
-        <p class="text-gray-700 mb-1 line-clamp-2">Professional Certification</p>
-        <p class="text-sm text-gray-500 mb-4">Jan 2024</p>
-        <div class="flex flex-wrap gap-2">
-            <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Data Analyst</span>
-            <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">SQL</span>
-            <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Tableau</span>
-            <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">R</span>
+        <img 
+            src="https://github.com/shanesri/CV/blob/b05424e9f9520aaf96f0db315971f527fbe6b961/P2-1.jpg?raw=true" 
+            alt="Google Data Analytics Professional Certificate" 
+            class="w-full aspect-square object-cover"
+            onerror="this.src='https://placehold.co/600x400/e2e8f0/333333?text=Image+Error'"
+        >
+        <div class="p-6">
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Google Data Analytics Professional Certificate</h3>
+            <p class="text-gray-700 mb-1 line-clamp-2">Professional Certificate</p>
+            <p class="text-sm text-gray-500 mb-4">Jan 2024</p>
+            <div class="flex flex-wrap gap-2">
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Data Analyst</span>
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">SQL</span>
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Tableau</span>
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">R</span>
+            </div>
         </div>
     </div>
-</div>
 
-<!-- Portfolio Item 4 (Ad World 2022) - May 2022 -->
-<div 
-    class="bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl cursor-pointer w-80 flex-shrink-0"
+    <!-- Portfolio Card 4: Ad World 2022 -->
+    <div 
+    class="w-80 flex-shrink-0 bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl cursor-pointer"
     data-modal-trigger="portfolio-modal"
     data-image="https://github.com/shanesri/CV/blob/8dd9d4c7a12e4a9ff43f7aa3ef7e39ddcffc2471/P9-1.jpg?raw=true"
     data-title="Ad World Conference 2022"
-    data-tags='["Ad World", "Marketing Conference", "Agency Strategy"]'
-    data-description='Attended Ad World 2022, a major digital marketing conference. This event is a hub for top-tier speakers and industry leaders, providing advanced insights into the latest marketing trends, strategies, and technologies. Attending this ensures our agency (Brand Buddy) stays ahead of the curve and applies the most modern knowledge for client success.'
->
-    <img 
-        src="https://github.com/shanesri/CV/blob/8dd9d4c7a12e4a9ff43f7aa3ef7e39ddcffc2471/P9-1.jpg?raw=true" 
-        alt="Ad World 2022 Badge" 
-        class="w-full aspect-square object-cover"
-        onerror="this.src='https://placehold.co/600x400/e2e8f0/333333?text=Image+Error'"
+    data-tags='["Marketing Strategy", "Digital Trends", "Agency Growth"]'
+    data-description='Attended the 2022 Ad World Conference, a premier global event for the marketing industry. This multi-day conference featured insights from top-tier brand leaders and marketing pioneers on the latest trends in media buying, content marketing, and agency operations. My attendance was focused on absorbing cutting-edge strategies to ensure our agency (Brand Buddy) remained competitive and provided clients with the most modern marketing solutions.'
     >
-    <div class="p-6">
-        <h3 class="text-xl font-semibold text-gray-900 mb-2">Ad World Conference 2022</h3>
-        <p class="text-gray-700 mb-1 line-clamp-2">Industry Conference</p>
-        <p class="text-sm text-gray-500 mb-4">May 2022</p>
-        <div class="flex flex-wrap gap-2">
-            <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Ad World</span>
-            <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Marketing Conference</span>
-            <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Agency Strategy</span>
+        <img 
+            src="https://github.com/shanesri/CV/blob/8dd9d4c7a12e4a9ff43f7aa3ef7e39ddcffc2471/P9-1.jpg?raw=true" 
+            alt="Ad World Conference 2022" 
+            class="w-full aspect-square object-cover"
+            onerror="this.src='https::/placehold.co/600x400/e2e8f0/333333?text=Image+Error'"
+        >
+        <div class="p-6">
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Ad World Conference 2022</h3>
+            <p class="text-gray-700 mb-1 line-clamp-2">Industry Event & Training</p>
+            <p class="text-sm text-gray-500 mb-4">May 2022</p>
+            <div class="flex flex-wrap gap-2">
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Marketing Strategy</span>
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Digital Trends</span>
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Agency Growth</span>
+            </div>
         </div>
     </div>
-</div>
 
-<!-- Portfolio Item 5 (NFT Project) - Aug 2022 -->
-<div 
-    class="bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl cursor-pointer w-80 flex-shrink-0"
+    <!-- Portfolio Card 5: NFT Project -->
+    <div 
+    class="w-80 flex-shrink-0 bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl cursor-pointer"
     data-modal-trigger="portfolio-modal"
     data-image="https://github.com/shanesri/CV/blob/58c97be0ffe6b2d478ab169b680eac75d889d423/P4-1.jpg?raw=true"
     data-title="NFT (PFPs) Project"
@@ -700,7 +695,7 @@ This became a real-time test of crisis management. We had to stay flexible and a
 The Result: Executing Under Pressure
 "Despite launching into a full-blown bear market—the hardest possible time to launch—our new, adapted strategy worked. We successfully launched the collection of ~3,000 PFPs on Ethereum, and it completely sold out in 4 minutes.
 "This project was a high-speed lesson in market dynamics, risk management, and the importance of adaptability. It proved we could execute a high-stakes strategy, even when the entire market was moving against us."'
->
+    >
     <img 
         src="https://github.com/shanesri/CV/blob/58c97be0ffe6b2d478ab169b680eac75d889d423/P4-1.jpg?raw=true" 
         alt="NFT (PFPs) Project" 
@@ -709,6 +704,7 @@ The Result: Executing Under Pressure
     >
     <div class="p-6">
         <h3 class="text-xl font-semibold text-gray-900 mb-2">NFT (PFPs) Project</h3>
+        <!-- Updated to separate Role and Date -->
         <p class="text-gray-700 mb-1 line-clamp-2">Community & Strategic Marketing Lead</p>
         <p class="text-sm text-gray-500 mb-4">Jun 2021 - Aug 2022</p>
         <div class="flex flex-wrap gap-2">
@@ -716,293 +712,294 @@ The Result: Executing Under Pressure
             <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Community Marketing</span>
         </div>
     </div>
-</div>
+    </div>
 
-<!-- Portfolio Item 6 (Ad World 2021) - Nov 2021 -->
-<div 
-    class="bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl cursor-pointer w-80 flex-shrink-0"
+    <!-- Portfolio Card 6: Ad World 2021 -->
+    <div 
+    class="w-80 flex-shrink-0 bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl cursor-pointer"
     data-modal-trigger="portfolio-modal"
     data-image="https://github.com/shanesri/CV/blob/8dd9d4c7a12e4a9ff43f7aa3ef7e39ddcffc2471/P10-1.jpg?raw=true"
     data-title="Ad World Conference 2021"
-    data-tags='["Ad World", "Digital Marketing", "Professional Development"]'
-    data-description='Attended the 2021 Ad World conference to absorb insights from global marketing experts. This event focuses on actionable strategies for paid advertising, content marketing, and e-commerce. My commitment to attending demonstrates a proactive approach to professional development and a dedication to leveraging up-to-date trends for operational and client success.'
->
-    <img 
-        src="https://github.com/shanesri/CV/blob/8dd9d4c7a12e4a9ff43f7aa3ef7e39ddcffc2471/P10-1.jpg?raw=true" 
-        alt="Ad World 2021 Badge" 
-        class="w-full aspect-square object-cover"
-        onerror="this.src='https://placehold.co/600x400/e2e8f0/333333?text=Image+Error'"
+    data-tags='["Post-Pandemic Marketing", "E-commerce Trends", "Content Strategy"]'
+    data-description='Attended the 2021 Ad World Conference to capture the rapid shifts in digital marketing following the pandemic. Key topics included the explosion of e-commerce, the rise of the creator economy, and new content strategies for engaging a remote audience. This event provided critical, timely insights that helped my team pivot our client strategies to align with the "new normal" of consumer behavior.'
     >
-    <div class="p-6">
-        <h3 class="text-xl font-semibold text-gray-900 mb-2">Ad World Conference 2021</h3>
-        <p class="text-gray-700 mb-1 line-clamp-2">Industry Conference</p>
-        <p class="text-sm text-gray-500 mb-4">Nov 2021</p>
-        <div class="flex flex-wrap gap-2">
-            <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Ad World</span>
-            <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Digital Marketing</span>
-            <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Professional Development</span>
+        <img 
+            src="https://github.com/shanesri/CV/blob/8dd9d4c7a12e4a9ff43f7aa3ef7e39ddcffc2471/P10-1.jpg?raw=true" 
+            alt="Ad World Conference 2021" 
+            class="w-full aspect-square object-cover"
+            onerror="this.src='https::/placehold.co/600x400/e2e8f0/333333?text=Image+Error'"
+        >
+        <div class="p-6">
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Ad World Conference 2021</h3>
+            <p class="text-gray-700 mb-1 line-clamp-2">Industry Event & Training</p>
+            <p class="text-sm text-gray-500 mb-4">Nov 2021</p>
+            <div class="flex flex-wrap gap-2">
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Post-Pandemic Marketing</span>
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">E-commerce Trends</span>
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Content Strategy</span>
+            </div>
         </div>
     </div>
-</div>
 
-<!-- Portfolio Item 7 (Google Ads Video) - May 2021 -->
-<div 
-    class="bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl cursor-pointer w-80 flex-shrink-0"
+    <!-- Portfolio Card 7: Google Ads Video (FIXED POPUP) -->
+    <div 
+    class="w-80 flex-shrink-0 bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl cursor-pointer"
     data-modal-trigger="portfolio-modal"
     data-image="https://github.com/shanesri/CV/blob/1d043da0e19fa7cc8c16b5278ec267d161c2ee20/P8-1.jpg?raw=true"
     data-title="Google Ads Video Certificate"
-    data-tags='["Google Ads", "Video Ads", "YouTube Ads"]'
-    data-description='This Google Ads certification validates expertise in using Google Video ads, primarily on YouTube. It demonstrates the ability to create and manage video campaigns that build brand awareness, consideration, and drive action. This includes knowledge of different video ad formats, audience targeting, and measuring the impact of video campaigns.'
->
-    <img 
-        src="https://github.com/shanesri/CV/blob/1d043da0e19fa7cc8c16b5278ec267d161c2ee20/P8-1.jpg?raw=true" 
-        alt="Google Ads Video Certificate" 
-        class="w-full aspect-square object-cover"
-        onerror="this.src='https://placehold.co/600x400/e2e8f0/333333?text=Image+Error'"
+    data-tags='["YouTube Ads", "Video Marketing", "Brand Awareness"]'
+    data-description='This certification validates expertise in creating and optimizing Google Video ad campaigns, primarily on YouTube. It covers strategies for reaching audiences with different video ad formats (e.g., skippable in-stream, bumper ads), driving brand awareness, and measuring campaign effectiveness to maximize client ROI on video spend.'
     >
-    <div class="p-6">
-        <h3 class="text-xl font-semibold text-gray-900 mb-2">Google Ads Video Certificate</h3>
-        <p class="text-gray-700 mb-1 line-clamp-2">Professional Certification</p>
-        <p class="text-sm text-gray-500 mb-4">May 2021</p>
-        <div class="flex flex-wrap gap-2">
-            <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Google Ads</span>
-            <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Video Ads</span>
-            <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">YouTube Ads</span>
+        <img 
+            src="https://github.com/shanesri/CV/blob/1d043da0e19fa7cc8c16b5278ec267d161c2ee20/P8-1.jpg?raw=true" 
+            alt="Google Ads Video Certificate" 
+            class="w-full aspect-square object-cover"
+            onerror="this.src='https::/placehold.co/600x400/e2e8f0/333333?text=Image+Error'"
+        >
+        <div class="p-6">
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Google Ads Video Certificate</h3>
+            <p class="text-gray-700 mb-1 line-clamp-2">Professional Certificate</p>
+            <p class="text-sm text-gray-500 mb-4">May 2021</p>
+            <div class="flex flex-wrap gap-2">
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">YouTube Ads</span>
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Video Marketing</span>
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Brand Awareness</span>
+            </div>
         </div>
     </div>
-</div>
 
-<!-- Portfolio Item 8 (Google Ads Display) - Jan 2021 -->
-<div 
-    class="bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl cursor-pointer w-80 flex-shrink-0"
+    <!-- Portfolio Card 10: Meta Certified (FIXED CARD IMAGE) -->
+    <div 
+    class="w-80 flex-shrink-0 bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl cursor-pointer"
     data-modal-trigger="portfolio-modal"
-    data-image="https"
+    data-image="https://github.com/shanesri/CV/blob/1d043da0e19fa7cc8c16b5278ec267d161c2ee20/P6-1.jpg?raw=true"
     data-title="Google Ads Display Certificate"
-    data-tags='["Google Ads", "Display Ads", "PPC"]'
-    data-description='This Google Ads certification validates expertise in using Google Display ads. It demonstrates the ability to develop effective Display strategies and campaigns that achieve specific marketing goals, covering topics like reaching audiences with compelling visual ads, managing remarketing lists, and optimizing campaigns for performance across the Google Display Network.'
->
-    <img 
-        src="https://github.com/shanesri/CV/blob/1d043da0e19fa7cc8c16b5278ec267d161c2ee20/P6-1.jpg?raw=true" 
-        alt="Google Ads Display Certificate" 
-        class="w-full aspect-square object-cover"
-        onerror="this.src='https://placehold.co/600x400/e2e8f0/333333?text=Image+Error'"
+    data-tags='["Display Ads", "Remarketing", "Audience Targeting"]'
+    data-description='This certification demonstrates proficiency in using the Google Display Network to deliver results. It covers developing effective display advertising strategies, including audience targeting (e.g., remarketing, in-market audiences), creative best practices, and bidding strategies to achieve brand awareness and conversion goals.'
     >
-    <div class="p-6">
-        <h3 class="text-xl font-semibold text-gray-900 mb-2">Google Ads Display Certificate</h3>
-        <p class="text-gray-700 mb-1 line-clamp-2">Professional Certification</p>
-        <p class="text-sm text-gray-500 mb-4">Jan 2021</p>
-        <div class="flex flex-wrap gap-2">
-            <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Google Ads</span>
-            <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Display Ads</span>
-            <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">PPC</span>
+        <img 
+            src="https://github.com/shanesri/CV/blob/1d043da0e19fa7cc8c16b5278ec267d161c2ee20/P6-1.jpg?raw=true" 
+            alt="Google Ads Display Certificate" 
+            class="w-full aspect-square object-cover"
+            onerror="this.src='https::/placehold.co/600x400/e2e8f0/333333?text=Image+Error'"
+        >
+        <div class="p-6">
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Google Ads Display Certificate</h3>
+            <p class="text-gray-700 mb-1 line-clamp-2">Professional Certificate</p>
+            <p class="text-sm text-gray-500 mb-4">Jan 2021</p>
+            <div class="flex flex-wrap gap-2">
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Display Ads</span>
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Remarketing</span>
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Audience Targeting</span>
+            </div>
         </div>
     </div>
-</div>
 
-<!-- Portfolio Item 9 (Google Ads Search) - Jan 2021 -->
-<div 
-    class="bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl cursor-pointer w-80 flex-shrink-0"
+    <!-- Portfolio Card 9: Google Ads Search -->
+    <div 
+    class="w-80 flex-shrink-0 bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl cursor-pointer"
     data-modal-trigger="portfolio-modal"
-    data-image="https://github.com/shanesri/CV/blob/1d043da0e19fa7cc8c16b5278ec267d161c2ee20/P7-1.jpg?raw=true" 
+    data-image="https://github.com/shanesri/CV/blob/1d043da0e19fa7cc8c16b5278ec267d161c2ee20/P7-1.jpg?raw=true"
     data-title="Google Ads Search Certificate"
-    data-tags='["Google Ads", "Search Ads", "SEM"]'
-    data-description='This Google Ads certification demonstrates mastery of Google Search campaigns. It validates the ability to build, manage, and optimize Search ad campaigns, including keyword strategy, bid management, ad copy creation, and performance measurement. Achieving this cert shows proficiency in capturing user intent and driving conversions from Google Search.'
->
-    <img 
-        src="https://github.com/shanesri/CV/blob/1d043da0e19fa7cc8c16b5278ec267d161c2ee20/P7-1.jpg?raw=true" 
-        alt="Google Ads Search Certificate" 
-        class="w-full aspect-square object-cover"
-        onerror="this.src='https://placehold.co/600x400/e2e8f0/333333?text=Image+Error'"
+    data-tags='["Search (SEM)", "PPC", "Keyword Strategy"]'
+    data-description='This certification shows a mastery of building and optimizing Google Search campaigns. It covers the full scope of SEM (Search Engine Marketing), from keyword research and strategy to ad copy creation, bid management, and performance optimization (e.g., Quality Score, conversion tracking). This was a core skill for managing client budgets at Brand Buddy.'
     >
-    <div class="p-6">
-        <h3 class="text-xl font-semibold text-gray-900 mb-2">Google Ads Search Certificate</h3>
-        <p class="text-gray-700 mb-1 line-clamp-2">Professional Certification</p>
-        <p class="text-sm text-gray-500 mb-4">Jan 2021</p>
-        <div class="flex flex-wrap gap-2">
-            <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Google Ads</span>
-            <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Search Ads</span>
-            <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">SEM</span>
+        <img 
+            src="https://github.com/shanesri/CV/blob/1d043da0e19fa7cc8c16b5278ec267d161c2ee20/P7-1.jpg?raw=true" 
+            alt="Google Ads Search Certificate" 
+            class="w-full aspect-square object-cover"
+            onerror="this.src='https::/placehold.co/600x400/e2e8f0/333333?text=Image+Error'"
+        >
+        <div class="p-6">
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Google Ads Search Certificate</h3>
+            <p class="text-gray-700 mb-1 line-clamp-2">Professional Certificate</p>
+            <p class="text-sm text-gray-500 mb-4">Jan 2021</p>
+            <div class="flex flex-wrap gap-2">
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Search (SEM)</span>
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">PPC</span>
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Keyword Strategy</span>
+            </div>
         </div>
     </div>
-</div>
 
-<!-- Portfolio Item 10 (Meta) - Aug 2019 -->
-<div 
-    class="bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl cursor-pointer w-80 flex-shrink-0"
+    <!-- Portfolio Card 10: Meta Certified -->
+    <div 
+    class="w-80 flex-shrink-0 bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl cursor-pointer"
     data-modal-trigger="portfolio-modal"
     data-image="https://github.com/shanesri/CV/blob/a41ba3d6ffcc8aa246d05af34f7ee6c59ed83c2f/P1-1.jpg?raw=true"
     data-title="Meta Certified Media Buying Professional"
-    data-tags='["Digital Marketing", "Media Buying", "Meta Ads"]'
-    data-description='This professional certification from Meta (formerly Facebook) validates expertise in the end-to-end process of media buying on Meta platforms. It covers creating ad campaigns, managing budgets and bids, selecting target audiences, and measuring and optimizing campaign performance. Achieving this certification demonstrates a high level of proficiency in using Meta&apos;s tools to achieve specific marketing goals.'
->
-    <img 
-        src="https://github.com/shanesri/CV/blob/a41ba3d6ffcc8aa246d05af34f7ee6c59ed83c2f/P1-1.jpg?raw=true" 
-        alt="Meta Certified Media Buying Professional" 
-        class="w-full aspect-square object-cover"
-        onerror="this.src='https://placehold.co/600x400/e2e8f0/333333?text=Image+Error'"
+    data-tags='["Digital marketing", "Media Buying", "Facebook Ads"]'
+    data-description='This professional certification from Meta validates the advanced skills required to manage media buying campaigns on the Facebook and Instagram platforms. The exam covers all aspects of the campaign lifecycle, from planning and setup (e.g., audience targeting, budget strategy, ad placements) to optimization (e.g., A/B testing, scaling) and reporting. It demonstrates a high-level competency in using Meta&apos;s tools to achieve specific business goals.'
     >
-    <div class="p-6">
-        <h3 class="text-xl font-semibold text-gray-900 mb-2">Meta Certified Media Buying Professional</h3>
-        <p class="text-gray-700 mb-1 line-clamp-2">Professional Certification</p>
-        <p class="text-sm text-gray-500 mb-4">August 2019</p>
-        <div class="flex flex-wrap gap-2">
-            <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Digital Marketing</span>
-            <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Media Buying</span>
-            <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Meta Ads</span>
+        <img 
+            src="https://github.com/shanesri/CV/blob/a41ba3d6ffcc8aa246d05af34f7ee6c59ed83c2f/P1-1.jpg?raw=true" 
+            alt="Meta Certified Media Buying Professional" 
+            class="w-full aspect-square object-cover"
+            onerror="this.src='https://placehold.co/600x400/e2e8f0/333333?text=Image+Error'"
+        >
+        <div class="p-6">
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Meta Certified Media Buying Professional</h3>
+            <p class="text-gray-700 mb-1 line-clamp-2">Professional Certificate</p>
+            <p class="text-sm text-gray-500 mb-4">August 2019</p>
+            <div class="flex flex-wrap gap-2">
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Digital marketing</span>
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Media Buying</span>
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Facebook Ads</span>
+            </div>
         </div>
     </div>
-</div>
 
-<!-- Portfolio Item 11 (BaanBaiCha) - 2015 -->
-<div 
-    class="bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl cursor-pointer w-80 flex-shrink-0"
+    <!-- Portfolio Card 11: BaanBaiCha (FIXED) -->
+    <div 
+    class="w-80 flex-shrink-0 bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl cursor-pointer"
     data-modal-trigger="portfolio-modal"
-    data-image="httpsK://github.com/shanesri/CV/blob/9e2eadcc5c3547b97c1526afa4310920ecf6e527/P12.JPG?raw=true"
+    data-image="https://github.com/shanesri/CV/blob/9e2eadcc5c3547b97c1526afa4310920ecf6e527/P12.JPG?raw=true"
     data-title="BaanBaiCha (Thai Tea formula)"
-    data-tags='["Entrepreneurship", "F&B"]'
-    data-description='My first experience as a small business owner. Three friends and I got together to invent a unique recipe for Thai Tea, which combines red tea and milk as its main ingredients.
+    data-tags='["Entrepreneurship", "Product Development"]'
+    data-description='This was my first experience as a small business owner. Three friends and I co-founded BaanBaiCha to create a unique, premium Thai Tea formula from scratch.
 
-We spent time developing a unique, strong flavor. Our selling point was a blend of 5 types of tea (sourced from Malaysia, Thailand, and Sri Lanka/Ceylon) in the right proportion, creating a unique taste. We used a partner&apos;s home in Southern Thailand for sourcing and production.
+Our key differentiator was our blend: we spent months developing a proprietary recipe combining 5 different types of tea (sourced from Thailand, Malaysia, and Sri Lanka) to create a uniquely rich and strong flavor. We managed all sourcing and production from a partner&apos;s home in Southern Thailand.
 
-We ran a pivot tea stall near an office building, and it was a success, hitting a peak of around 350 glasses sold per day. Later on, I sold my ownership to an investor, who rebranded and brought the business into modern trade in Thailand.'
->
-    <img 
-        src="https://github.com/shanesri/CV/blob/9e2eadcc5c3547b97c1526afa4310920ecf6e527/P12.JPG?raw=true" 
-        alt="BaanBaiCha Thai Tea" 
-        class="w-full aspect-square object-cover"
-        onerror="this.src='https://placehold.co/600x400/e2e8f0/333333?text=Image+Error'"
+We launched as a pivot tea stall near a major office building, and it was an immediate local hit, selling ~350 glasses per day at its peak. I later sold my stake in the company to an investor, who went on to rebrand the business and expand it into modern trade in Thailand.'
     >
-    <div class="p-6">
-        <h3 class="text-xl font-semibold text-gray-900 mb-2">BaanBaiCha (Thai Tea formula)</h3>
-        <p class="text-gray-700 mb-1 line-clamp-2">Business Venture</p>
-        <p class="text-sm text-gray-500 mb-4">2014 - 2015</p>
-        <div class="flex flex-wrap gap-2">
-            <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Entrepreneurship</span>
-            <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">F&B</span>
+        <img 
+            src="https://github.com/shanesri/CV/blob/9e2eadcc5c3547b97c1526afa4310920ecf6e527/P12.JPG?raw=true" 
+            alt="BaanBaiCha (Thai Tea formula)" 
+            class="w-full aspect-square object-cover"
+            onerror="this.src='https::/placehold.co/600x400/e2e8f0/333333?text=Image+Error'"
+        >
+        <div class="p-6">
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">BaanBaiCha (Thai Tea formula)</h3>
+            <p class="text-gray-700 mb-1 line-clamp-2">Business Co-founder</p>
+            <p class="text-sm text-gray-500 mb-4">2014 - 2015</p>
+            <div class="flex flex-wrap gap-2">
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Entrepreneurship</span>
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Product Development</span>
+            </div>
         </div>
     </div>
-</div>
 
-<!-- Portfolio Item 12 (AIGS) - 2014 -->
-<div 
-    class="bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl cursor-pointer w-80 flex-shrink-0"
+    <!-- Portfolio Card 12: AIGS (FIXED POPUP) -->
+    <div 
+    class="w-80 flex-shrink-0 bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl cursor-pointer"
     data-modal-trigger="portfolio-modal"
-    data-image="httpsE://github.com/shanesri/CV/blob/3bc8486a261ab70a15ffde4ff87fcead4fc9ab1b/P5-1.jpg?raw=true"
+    data-image="https://github.com/shanesri/CV/blob/3bc8486a261ab70a15ffde4ff87fcead4fc9ab1b/P5-1.jpg?raw=true"
     data-title="AIGS (Asian Institute of Gemological Sciences)"
-    data-tags='["Gem Identification", "Jewelry Design", "Valuation"]'
+    data-tags='["Gems Identification", "Jewelry design"]'
     data-description='My goal was to find a way to combine my engineering methodology with the jewelry industry. I was especially interested in this field because Thailand is globally well-known for its gemstone cutting and production.
 
-To do this, I knew I needed deep, technical domain expertise. I didn&apos;t just want to be a designer; I needed to be a technical expert in valuation. That’S why I enrolled at the Asian Institute of Gemological Sciences (AIGS) .
+To do this, I knew I needed deep, technical domain expertise. I didn&apos;t just want to be a designer; I needed to be a technical expert in valuation. That’s why I enrolled at the Asian Institute of Gemological Sciences (AIGS) .
 
 Based on my research, AIGS is a world-renowned gemological institute and laboratory, and it’s based right here in Bangkok, which is a global hub for the gem trade. I focused on the core technical courses: Gem Identification, Diamond Identification, and Jewelry Design . I completed the program with second honors.
 
 That technical foundation from AIGS gave me the confidence and the specific expertise I needed to launch my first business, Personal Craft Co., Ltd. . My whole concept for that company was built on that idea of combining engineering methods, like the CAD-based design I used , with the asset valuation I&apos;d mastered.'
->
-    <img 
-        src="https://github.com/shanesri/CV/blob/3bc8486a261ab70a15ffde4ff87fcead4fc9ab1b/P5-1.jpg?raw=true" 
-        alt="AIGS Gemological Studies" 
-        class="w-full aspect-square object-cover"
-        onerror="this.src='https://placehold.co/600x400/e2e8f0/333333?text=Image+Error'"
     >
-    <div class="p-6">
-        <h3 class="text-xl font-semibold text-gray-900 mb-2">AIGS (Asian Institute of Gemological Sciences)</h3>
-        <p class="text-gray-700 mb-1 line-clamp-2">Gemological Studies & Jewelry Design</p>
-        <p class="text-sm text-gray-500 mb-4">2013 - 2014</p>
-        <div class="flex flex-wrap gap-2">
-            <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Gem Identification</span>
-            <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Jewelry Design</span>
-            <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Valuation</span>
+        <img 
+            src="https://github.com/shanesri/CV/blob/3bc8486a261ab70a15ffde4ff87fcead4fc9ab1b/P5-1.jpg?raw=true" 
+            alt="AIGS (Asian Institute of Gemological Sciences)" 
+            class="w-full aspect-square object-cover"
+            onerror="this.src='https::/placehold.co/600x400/e2e8f0/333333?text=Image+Error'"
+        >
+        <div class="p-6">
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">AIGS (Asian Institute of Gemological Sciences)</h3>
+            <p class="text-gray-700 mb-1 line-clamp-2">Gemological Studies & Jewelry Design</p>
+            <p class="text-sm text-gray-500 mb-4">2013 - 2014</p>
+            <div class="flex flex-wrap gap-2">
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Gems Identification</span>
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Jewelry design</span>
+            </div>
         </div>
     </div>
-</div>
 
-<!-- Portfolio Item 13 (Graduation Project) - 2012 -->
-<div 
-    class="bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl cursor-pointer w-80 flex-shrink-0"
+    <!-- Portfolio Card 13: Graduation Project -->
+    <div 
+    class="w-80 flex-shrink-0 bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl cursor-pointer"
     data-modal-trigger="portfolio-modal"
     data-image="https://github.com/shanesri/CV/blob/9e2eadcc5c3547b97c1526afa4310920ecf6e527/P13.jpg?raw=true"
-    data-title="Graduation Project: Lattice Fin Analysis"
+    data-title="Graduation Project: Grid Fin Aerodynamics"
     data-tags='["CFD Analysis", "Aerospace Engineering"]'
-    data-description='As a requirement for my Aerospace Engineering degree at Kasetsart University, I completed a research project on lattice fins (also known as grid fins).
+    data-description='To graduate with my B.Eng. in Aerospace Engineering, I completed a research project on the aerodynamics of grid fins (or lattice fins). These are the mesh-like fins now famously used by SpaceX to control their rockets during re-entry.
 
-These are the mesh-like fins now famously used by SpaceX for precise rocket control during descent. At the time, this was a niche field, as these fins generate significant drag in exchange for their high degree of control, and few applications required that level of precision in supersonic environments.
-
-My research involved using ANSYS, a computational fluid dynamics (CFD) tool, to simulate and analyze how different fin shapes would behave under various aerodynamic conditions.'
->
-    <img 
-        src="https://github.com/shanesri/CV/blob/9e2eadcc5c3547b97c1526afa4310920ecf6e527/P13.jpg?raw=true" 
-        alt="Graduation Project - Lattice Fin Analysis" 
-        class="w-full aspect-square object-cover"
-        onerror="this.src='https://placehold.co/600x400/e2e8f0/333333?text=Image+Error'"
+At the time, there was limited research on their use in supersonic environments, as they generate significant drag in exchange for their high degree of control. My project involved using ANSYS, a powerful Computational Fluid Dynamics (CFD) software, to model and simulate how different grid fin shapes would behave under various supersonic flight conditions. The research focused on analyzing the complex shockwave interactions and their effect on stability and drag.'
     >
-    <div class="p-6">
-        <h3 class="text-xl font-semibold text-gray-900 mb-2">Graduation Project</h3>
-        <p class="text-gray-700 mb-1 line-clamp-2">Engineering Research Project</p>
-        <p class="text-sm text-gray-500 mb-4">2012</p>
-        <div class="flex flex-wrap gap-2">
-            <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">CFD Analysis</span>
-            <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Aerospace Engineering</span>
+        <img 
+            src="https://github.com/shanesri/CV/blob/9e2eadcc5c3547b97c1526afa4310920ecf6e527/P13.jpg?raw=true" 
+            alt="Graduation Project" 
+            class="w-full aspect-square object-cover"
+            onerror="this.src='https::/placehold.co/600x400/e2e8f0/333333?text=Image+Error'"
+        >
+        <div class="p-6">
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Graduation Project: Grid Fin Aerodynamics</h3>
+            <p class="text-gray-700 mb-1 line-clamp-2">B.Eng. Research Project</p>
+            <p class="text-sm text-gray-500 mb-4">2012</p>
+            <div class="flex flex-wrap gap-2">
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">CFD Analysis</span>
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Aerospace Engineering</span>
+            </div>
         </div>
     </div>
-</div>
 
-<!-- Portfolio Item 14 (Singapore Internship) - 2011 -->
-<div 
-    class="bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl cursor-pointer w-80 flex-shrink-0"
+    <!-- Portfolio Card 14: Singapore Internship (FIXED POPUP) -->
+    <div 
+    class="w-80 flex-shrink-0 bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl cursor-pointer"
     data-modal-trigger="portfolio-modal"
-    data-image="httpsS://github.com/shanesri/CV/blob/9e2eadcc5c3547b97c1526afa4310920ecf6e527/P14.JPG?raw=true"
-    data-title="Singapore Internship"
-    data-tags='["CFD Analysis", "Aerospace Engineering"]'
-    data-description='This was my first hands-on experience as an analyst engineer. For 4 months, I worked in Singapore as an assistant researcher to Dr. Sutthiphong Srigrarom on a DTI rocket project. My role involved using computational fluid dynamics (CFD) software, specifically ANSYS13, to support the research.'
->
-    <img 
-        src="https://github.com/shanesri/CV/blob/9e2eadcc5c3547b97c1526afa4310920ecf6e527/P14.JPG?raw=true" 
-        alt="Singapore Internship" 
-        class="w-full aspect-square object-cover"
-        onerror="this.src='https://placehold.co/600x400/e2e8f0/333333?text=Image+Error'"
+    data-image="https://github.com/shanesri/CV/blob/9e2eadcc5c3547b97c1526afa4310920ecf6e527/P14.JPG?raw=true"
+    data-title="Singapore Internship: Rocket CFD Project"
+    data-tags='["CFD Analysis", "Engineering"]'
+    data-description='During my undergrad, I completed a 4-month internship in Singapore as an assistant researcher. I worked directly with Dr. Sutthiphong Srigrarom on a rocket project for the Defence Technology Institute (DTI).
+
+My role was to use Computational Fluid Dynamics (CFD) software (ANSYS) to analyze and simulate the rocket&apos;s aerodynamic properties. This was my first hands-on experience applying complex engineering principles in a professional research environment, solidifying my skills in simulation and data analysis.'
     >
-    <div class="p-6">
-        <h3 class="text-xl font-semibold text-gray-900 mb-2">Singapore Internship</h3>
-        <p class="text-gray-700 mb-1 line-clamp-2">Engineering Internship</p>
-        <p class="text-sm text-gray-500 mb-4">2011</p>
-        <div class="flex flex-wrap gap-2">
-            <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">CFD Analysis</span>
-            <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Aerospace Engineering</span>
+        <img 
+            src="https://github.com/shanesri/CV/blob/9e2eadcc5c3547b97c1526afa4310920ecf6e527/P14.JPG?raw=true" 
+            alt="Singapore Internship" 
+            class="w-full aspect-square object-cover"
+            onerror="this.src='https::/placehold.co/600x400/e2e8f0/333333?text=Image+Error'"
+        >
+        <div class="p-6">
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Singapore Internship: Rocket CFD Project</h3>
+            <p class="text-gray-700 mb-1 line-clamp-2">Research Assistant Internship</p>
+            <p class="text-sm text-gray-500 mb-4">2011</p>
+            <div class="flex flex-wrap gap-2">
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">CFD Analysis</span>
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Engineering</span>
+            </div>
         </div>
     </div>
-</div>
 
-<!-- Portfolio Item 15 (US Exchange) - 2005 -->
-<div 
-    class="bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl cursor-pointer w-80 flex-shrink-0"
+    <!-- Portfolio Card 15: US Exchange -->
+    <div 
+    class="w-80 flex-shrink-0 bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl cursor-pointer"
     data-modal-trigger="portfolio-modal"
     data-image="https://github.com/shanesri/CV/blob/9e2eadcc5c3547b97c1526afa4310920ecf6e527/P11.JPG?raw=true"
     data-title="US High School Exchange Program"
-    data-tags='["Cultural Exchange", "Personal Growth"]'
-    data-description='In 2005, I participated in a high school exchange program in the USA. I lived with a host family and studied in Grand Rapids, Michigan, which was a formative experience in learning American culture, building resilience, and broadening my worldview.'
->
-    <img 
-        src="https://github.com/shanesri/CV/blob/9e2eadcc5c3547b97c1526afa4310920ecf6e527/P11.JPG?raw=true" 
-        alt="US High School Exchange" 
-        class="w-full aspect-square object-cover"
-        onerror="this.src='https://placehold.co/600x400/e2e8f0/333333?text=Image+Error'"
+    data-tags='["Cross-Cultural", "Adaptability"]'
+    data-description='In 2005, I participated in a 1-semester high school exchange program in the United States. I lived with a host family in Grand Rapids, Michigan, and attended a local high school. This was a formative experience in cultural immersion, strengthening my English fluency and ability to adapt to new environments and social settings.'
     >
-    <div class="p-6">
-        <h3 class="text-xl font-semibold text-gray-900 mb-2">1 semester US high school exchange</h3>
-        <p class="text-gray-700 mb-1 line-clamp-2">Cultural Exchange Program</p>
-        <p class="text-sm text-gray-500 mb-4">2005</p>
-        <div class="flex flex-wrap gap-2">
-            <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Cultural Exchange</span>
-            <span classs="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Personal Growth</span>
+        <img 
+            src="https://github.com/shanesri/CV/blob/9e2eadcc5c3547b97c1526afa4310920ecf6e527/P11.JPG?raw=true" 
+            alt="US High School Exchange Program" 
+            class="w-full aspect-square object-cover"
+            onerror="this.src='https::/placehold.co/600x400/e2e8f0/333333?text=Image+Error'"
+        >
+        <div class="p-6">
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">US High School Exchange Program</h3>
+            <p class="text-gray-700 mb-1 line-clamp-2">Exchange Student</p>
+            <p class="text-sm text-gray-500 mb-4">2005</p>
+            <div class="flex flex-wrap gap-2">
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Cross-Cultural</span>
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Adaptability</span>
+            </div>
         </div>
     </div>
-</div>
 
-</div>
+
+</div> <!-- End of Scroll Container -->
 
 <!-- Scroll Buttons (Arrows) -->
 <button id="portfolio-scroll-right" class="absolute right-0 md:right-2 lg:right-4 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-lg opacity-80 hover:opacity-100 transition-opacity duration-300 z-10 hidden md:flex items-center justify-center border border-gray-200 w-10 h-10">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7" /></svg>
+<!-- SVG for Chevron Right -->
+<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7" /></svg>
 </button>
 </div>
 </div>
@@ -1029,15 +1026,15 @@ My research involved using ANSYS, a computational fluid dynamics (CFD) tool, to 
 <!-- Interest Card 1: Global Macro News -->
 <div class="w-72 flex-shrink-0 bg-white rounded-lg shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-shadow duration-300">
 <img 
-                src="https://github.com/shanesri/CV/blob/83542e0ccf925d2bf70a2602da39024d42abf278/Global.jpg?raw=true" 
-                alt="Image showing world map or stock charts" 
-                class="w-full aspect-square object-cover"
-                onerror="this.src='https://placehold.co/300x300/eeeeee/111111?text=Global+Macro'"
-            >
+                    src="https://github.com/shanesri/CV/blob/83542e0ccf925d2bf70a2602da39024d42abf278/Global.jpg?raw=true" 
+                    alt="Image showing world map or stock charts" 
+                    class="w-full aspect-square object-cover"
+                    onerror="this.src='https://placehold.co/300x300/eeeeee/111111?text=Global+Macro'"
+                >
 <div class="p-4">
 <h3 class="text-xl font-semibold text-gray-900 mb-2">Global Macro News</h3>
 <p class="text-gray-700 text-sm">
-                I follow **global economic and geopolitical events** by default, treating them like a weekly drama series on Saturday night. It's my ongoing addiction to understanding the complex narratives that shape the world around us.
+                    I follow **global economic and geopolitical events** by default, treating them like a weekly drama series on Saturday night. It's my ongoing addiction to understanding the complex narratives that shape the world around us.
 </p>
 </div>
 </div>
@@ -1045,15 +1042,15 @@ My research involved using ANSYS, a computational fluid dynamics (CFD) tool, to 
 <!-- Interest Card 2: Freediving -->
 <div class="w-72 flex-shrink-0 bg-white rounded-lg shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-shadow duration-300">
 <img 
-                src="https://github.com/shanesri/CV/blob/83542e0ccf925d2bf70a2602da39024d42abf278/Freedive.JPG?raw=true" 
-                alt="Image showing a person freediving" 
-                class="w-full aspect-square object-cover"
-                onerror="this.src='https://placehold.co/300x300/cccccc/111111?text=Freediving'"
-            >
+                    src="https://github.com/shanesri/CV/blob/83542e0ccf925d2bf70a2602da39024d42abf278/Freedive.JPG?raw=true" 
+                    alt="Image showing a person freediving" 
+                    class="w-full aspect-square object-cover"
+                    onerror="this.src='https://placehold.co/300x300/cccccc/111111?text=Freediving'"
+                >
 <div class="p-4">
 <h3 class="text-xl font-semibold text-gray-900 mb-2">Freediving</h3>
 <p class="text-gray-700 text-sm">
-                There's nothing like exploring the underwater world through intense line training or relaxing fundives; I even hold a Mochnov W3 license. I've enjoyed diving in Japan, Indonesia, and the Philippines, always seeking new depths and hidden seascapes to explore.
+                    There's nothing like exploring the underwater world through intense line training or relaxing fundives; I even hold a Mochnov W3 license. I've enjoyed diving in Japan, Indonesia, and the Philippines, always seeking new depths and hidden seascapes to explore.
 </p>
 </div>
 </div>
@@ -1061,15 +1058,15 @@ My research involved using ANSYS, a computational fluid dynamics (CFD) tool, to 
 <!-- Interest Card 3: Badminton -->
 <div class="w-72 flex-shrink-0 bg-white rounded-lg shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-shadow duration-300">
 <img 
-                src="https://github.com/shanesri/CV/blob/83542e0ccf925d2bf70a2602da39024d42abf278/Badminton.jpg?raw=true" 
-                alt="Image showing a badminton racket and shuttlecock" 
-                class="w-full aspect-square object-cover"
-                onerror="this.src='https://placehold.co/300x300/bbbbbb/111111?text=Badminton'"
-            >
+                    src="https://github.com/shanesri/CV/blob/83542e0ccf925d2bf70a2602da39024d42abf278/Badminton.jpg?raw=true" 
+                    alt="Image showing a badminton racket and shuttlecock" 
+                    class="w-full aspect-square object-cover"
+                    onerror="this.src='https://placehold.co/300x300/bbbbbb/111111?text=Badminton'"
+                >
 <div class="p-4">
 <h3 class="text-xl font-semibold text-gray-900 mb-2">Badminton</h3>
 <p class="text-gray-700 text-sm">
-                I've been playing since 2017 as a fun hobby to stay active and socialize with friends. I co-founded a local group called "Beerminton," where we get together weekly for a great workout—and maybe a few cold drinks afterwards 😉.
+                    I've been playing since 2017 as a fun hobby to stay active and socialize with friends. I co-founded a local group called "Beerminton," where we get together weekly for a great workout—and maybe a few cold drinks afterwards 😉.
 </p>
 </div>
 </div>
@@ -1077,15 +1074,15 @@ My research involved using ANSYS, a computational fluid dynamics (CFD) tool, to 
 <!-- Interest Card 4: Tennis -->
 <div class="w-72 flex-shrink-0 bg-white rounded-lg shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-shadow duration-300">
 <img 
-                src="https://github.com/shanesri/CV/blob/83542e0ccf925d2bf70a2602da39024d42abf278/Tennis.jpg?raw=true" 
-                alt="Image showing a tennis racket and ball" 
-                class="w-full aspect-square object-cover"
-                onerror="this.src='https://placehold.co/300x300/aaaaaa/111111?text=Tennis'"
-            >
+                    src="https://github.com/shanesri/CV/blob/83542e0ccf925d2bf70a2602da39024d42abf278/Tennis.jpg?raw=true" 
+                    alt="Image showing a tennis racket and ball" 
+                    class="w-full aspect-square object-cover"
+                    onerror="this.src='https://placehold.co/300x300/aaaaaa/111111?text=Tennis'"
+                >
 <div class="p-4">
 <h3 class="text-xl font-semibold text-gray-900 mb-2">Tennis</h3>
 <p class="text-gray-700 text-sm">
-                This is a new sport I've recently gotten completely hooked on, constantly striving to improve my footwork and powerful serve. It's a fantastic, high-energy way to unwind and focus purely on a physical challenge outside of my daily routine.
+                    This is a new sport I've recently gotten completely hooked on, constantly striving to improve my footwork and powerful serve. It's a fantastic, high-energy way to unwind and focus purely on a physical challenge outside of my daily routine.
 </p>
 </div>
 </div>
@@ -1093,15 +1090,15 @@ My research involved using ANSYS, a computational fluid dynamics (CFD) tool, to 
 <!-- Interest Card 5: Trek and Camp -->
 <div class="w-72 flex-shrink-0 bg-white rounded-lg shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-shadow duration-300">
 <img 
-                src="https://github.com/shanesri/CV/blob/83542e0ccf925d2bf70a2602da39024d42abf278/Camp.JPG?raw=true" 
-                alt="Image showing mountains or camping" 
-                class="w-full aspect-square object-cover"
-                onerror="this.src='https://placehold.co/300x300/888888/111111?text=Trek/Camp'"
-            >
+                    src="https://github.com/shanesri/CV/blob/83542e0ccf925d2bf70a2602da39024d42abf278/Camp.JPG?raw=true" 
+                    alt="Image showing mountains or camping" 
+                    class="w-full aspect-square object-cover"
+                    onerror="this.src='https://placehold.co/300x300/888888/111111?text=Trek/Camp'"
+                >
 <div class="p-4">
 <h3 class="text-xl font-semibold text-gray-900 mb-2">Trekking and Camping</h3>
 <p class="text-gray-700 text-sm">
-                I love getting away from the city lights and reconnecting with nature through long hikes and overnight camping trips. There's nothing quite as refreshing as fresh air, quiet wilderness, and managing your resources in the great outdoors.
+                    I love getting away from the city lights and reconnecting with nature through long hikes and overnight camping trips. There's nothing quite as refreshing as fresh air, quiet wilderness, and managing your resources in the great outdoors.
 </p>
 </div>
 </div>
@@ -1109,15 +1106,15 @@ My research involved using ANSYS, a computational fluid dynamics (CFD) tool, to 
 <!-- Interest Card 6: Cat Companion -->
 <div class="w-72 flex-shrink-0 bg-white rounded-lg shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-shadow duration-300">
 <img 
-                src="https://github.com/shanesri/CV/blob/83542e0ccf925d2bf70a2602da39024d42abf278/Cat.jpg?raw=true" 
-                alt="Image showing your cat companion" 
-                class="w-full aspect-square object-cover"
-                onerror="this.src='https://placehold.co/300x300/777777/111111?text=Cat'"
-            >
+                    src="https://github.com/shanesri/CV/blob/83542e0ccf925d2bf70a2602da39024d42abf278/Cat.jpg?raw=true" 
+                    alt="Image showing your cat companion" 
+                    class="w-full aspect-square object-cover"
+                    onerror="this.src='https://placehold.co/300x300/777777/111111?text=Cat'"
+                >
 <div class="p-4">
 <h3 class="text-xl font-semibold text-gray-900 mb-2">Cat Companion</h3>
 <p class="text-gray-700 text-sm">
-                I'm the proud owner of three lovely cats named **Rick, Morty, and Summer** (bet you can guess the inspiration for that!). They provide the perfect daily dose of amusing chaos and comforting companionship needed to keep life balanced.
+                    I'm the proud owner of three lovely cats named **Rick, Morty, and Summer** (bet you can guess the inspiration for that!). They provide the perfect daily dose of amusing chaos and comforting companionship needed to keep life balanced.
 </p>
 </div>
 </div>
@@ -1125,15 +1122,15 @@ My research involved using ANSYS, a computational fluid dynamics (CFD) tool, to 
 <!-- Interest Card 7: Manga & Anime (Updated Name) -->
 <div class="w-72 flex-shrink-0 bg-white rounded-lg shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-shadow duration-300">
 <img 
-                src="https://github.com/shanesri/CV/blob/83542e0ccf925d2bf70a2602da39024d42abf278/Anime.jpg?raw=true" 
-                alt="Image showing anime character or scene" 
-                class="w-full aspect-square object-cover"
-                onerror="this.src='https://placehold.co/300x300/999999/111111?text=Anime'"
-            >
+                    src="https://github.com/shanesri/CV/blob/83542e0ccf925d2bf70a2602da39024d42abf278/Anime.jpg?raw=true" 
+                    alt="Image showing anime character or scene" 
+                    class="w-full aspect-square object-cover"
+                    onerror="this.src='https://placehold.co/300x300/999999/111111?text=Anime'"
+                >
 <div class="p-4">
 <h3 class="text-xl font-semibold text-gray-900 mb-2">Manga & Anime</h3>
 <p class="text-gray-700 text-sm">
-                This is actually the main reason I decided to study Japanese—I wanted to experience the source material directly! My favorites span generations, from classics like *Fullmetal Alchemist* and *Guren Lagann* to modern gems like *Jujutsu Kaisen* and *Frieren*.
+                    This is actually the main reason I decided to study Japanese—I wanted to experience the source material directly! My favorites span generations, from classics like *Fullmetal Alchemist* and *Guren Lagann* to modern gems like *Jujutsu Kaisen* and *Frieren*.
 </p>
 </div>
 </div>
@@ -1191,7 +1188,7 @@ My research involved using ANSYS, a computational fluid dynamics (CFD) tool, to 
 <a href="https://www.instagram.com/shanesri" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center text-lg text-gray-700 hover:text-gray-900 hover:underline transition-colors">
 <!-- Instagram Icon SVG -->
 <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 24 24">
-<path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.148 3.227-1.669 4.771-4.919 4.919-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.07-1.646-.07-4.85s.012-3.584.07-4.85c.148-3.227 1.669 4.771 4.919 4.919 1.266.058 1.646.07 4.85.07zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.058 1.281-.072 1.689-.072 4.948s.014 3.668.072 4.948c.2 4.359 2.622 6.78 6.98 6.98 1.28.058 1.688.072 4.947.072s3.667-.014 4.947-.072c4.358-.2 6.78-2.618 6.98-6.98.058-1.28.072-1.688.072-4.947s-.014-3.667-.072-4.947c-.2-4.359-2.622-6.78-6.98-6.98-1.28-.058-1.688-.072-4.947-.072zM12 6.163c-3.204 0-5.837 2.633-5.837 5.837s2.633 5.837 5.837 5.837 5.837-2.633 5.837-5.837-2.633-5.837-5.837-5.837zm0 9.5c-2.021 0-3.663-1.642-3.663-3.663s1.642-3.663 3.663-3.663 3.663 1.642 3.663 3.663-1.642 3.663-3.663 3.663zm6.406-9.695c-.621 0-1.125.504-1.125 1.125s.504 1.125 1.125 1.125 1.125-.504 1.125-1.125-.504-1.125-1.125-1.125z"/>
+<path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.148 3.227-1.669 4.771-4.919 4.919-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.07-1.646-.07-4.85s.012-3.584.07-4.85c.148-3.227 1.669 4.771 4.919 4.919 1.266.058 1.646.07 4.85.07zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.058 1.281-.072 1.689-.072 4.948s.014 3.668.072 4.948c.2 4.359 2.622 6.78 6.98 6.98 1.28.058 1.688.072 4.947.072s3.667-.014 4.947-.072c4.358-.2 6.78-2.618 6.98-6.98.058-1.28.072-1.688.072-4.947s-.014-3.667-.072-4.947c-.2-4.359-2.622-6.78-6.98-6.98-1.28-.058-1.688-.072-4.947-.072zM12 6.163c-3.204 0-5.837 2.633-5.837 5.837s2.633 5.837 5.837 5.837 5.837-2.633 5.837-5.837-2.633-5.837-5.837-5.837zm0 9.5c-2.021 0-3.663-1.642-3.663-3.663s1.642-3.663 3.663-3.663 3.663 1.642 3.663 3.663-1.642 3.663-3.663 3.663zm6.406-9.695c-.621 0-1.125.504-1.125 1.125s.504 1.125 1.125 1.125 1.125-.504 1.125 1.125-.504-1.125-1.125-1.125z"/>
 </svg>
             Follow on Instagram
 </a>
@@ -1263,7 +1260,6 @@ My research involved using ANSYS, a computational fluid dynamics (CFD) tool, to 
                 threshold: 0.4 // 40% of the section must be visible
             };
 
-            // --- START: ADDED IntersectionObserver LOGIC ---
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
@@ -1284,23 +1280,21 @@ My research involved using ANSYS, a computational fluid dynamics (CFD) tool, to 
             sections.forEach(section => {
                 observer.observe(section);
             });
-            // --- END: ADDED IntersectionObserver LOGIC ---
-
-
-            // --- START: ADDED setupScroller FUNCTION DEFINITION ---
-            function setupScroller(containerId, leftBtnId, rightBtnId) {
+            
+            // --- Reusable Scroller Function ---
+            const setupScroller = (containerId, leftBtnId, rightBtnId) => {
                 const scrollContainer = document.getElementById(containerId);
                 const scrollLeftBtn = document.getElementById(leftBtnId);
                 const scrollRightBtn = document.getElementById(rightBtnId);
                 const scrollStep = 350; // Distance to scroll in pixels
 
                 if (!scrollContainer || !scrollLeftBtn || !scrollRightBtn) {
-                    // console.warn(`Scroller elements not found for ${containerId}`);
-                    return; // Exit if elements aren't found
+                    // If elements aren't found (e.g., on a different page), just exit
+                    return;
                 }
-
+                
+                // Function to check visibility of buttons based on scroll position
                 const checkScrollButtons = () => {
-                    // Check if container is scrollable
                     if (scrollContainer.scrollWidth > scrollContainer.clientWidth) {
                         
                         // Left button visibility check (hidden if at start)
@@ -1331,15 +1325,15 @@ My research involved using ANSYS, a computational fluid dynamics (CFD) tool, to 
                     }
                 };
 
-                // Event listeners
+                // Event listeners for scrolling
                 scrollContainer.addEventListener('scroll', checkScrollButtons);
                 window.addEventListener('resize', checkScrollButtons);
                 
                 // Initial check must happen after content renders
                 // Use a slight timeout to ensure all rendering/layout calculations are done
-                setTimeout(checkScrollButtons, 150);
+                setTimeout(checkScrollButtons, 100);
 
-                // Click handlers
+                // Click handlers for buttons
                 scrollLeftBtn.addEventListener('click', () => {
                     scrollContainer.scrollBy({
                         left: -scrollStep,
@@ -1353,15 +1347,13 @@ My research involved using ANSYS, a computational fluid dynamics (CFD) tool, to 
                         behavior: 'smooth'
                     });
                 });
-            }
-            // --- END: ADDED setupScroller FUNCTION DEFINITION ---
-
+            };
 
             // Setup all scrollers
             setupScroller('interests-scroll-container', 'scroll-left', 'scroll-right');
             setupScroller('portfolio-scroll-container', 'portfolio-scroll-left', 'portfolio-scroll-right');
             setupScroller('brandbuddy-scroll-container', 'brandbuddy-scroll-left', 'brandbuddy-scroll-right');
-            setupScroller('personalcraft-scroll-container', 'personalcraft-scroll-left', 'personalcraft-right');
+            setupScroller('personalcraft-scroll-container', 'personalcraft-scroll-left', 'personalcraft-scroll-right');
             setupScroller('kasetsart-scroll-container', 'kasetsart-scroll-left', 'kasetsart-scroll-right');
             setupScroller('cfa-scroll-container', 'cfa-scroll-left', 'cfa-scroll-right');
 
