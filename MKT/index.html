@@ -3,85 +3,227 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shane's Market Pulse | Macro Dashboard</title>
+    <title>The Abyss | Daily Update</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        :root { --bg: #0d1117; --card: #161b22; --text: #c9d1d9; --accent: #58a6ff; --danger: #f85149; --success: #3fb950; }
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding: 20px; line-height: 1.5; }
-        .container { max-width: 1000px; margin: 0 auto; }
-        header { border-bottom: 1px solid #30363d; padding-bottom: 20px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
-        h1 { color: var(--accent); margin: 0; font-size: 1.5rem; }
-        .chart-container { background: var(--card); border-radius: 8px; border: 1px solid #30363d; height: 450px; margin-bottom: 20px; overflow: hidden; }
-        .data-table { width: 100%; border-collapse: collapse; background: var(--card); border-radius: 8px; overflow: hidden; border: 1px solid #30363d; }
-        th { background: #21262d; padding: 12px; text-align: left; font-size: 0.85rem; text-transform: uppercase; color: #8b949e; }
-        td { padding: 12px; border-top: 1px solid #30363d; font-size: 0.95rem; }
-        tr:hover { background: #1c2128; }
-        .sentiment-tag { padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; }
-        .risk-off { background: rgba(248, 81, 73, 0.1); color: var(--danger); }
-        .supply-shock { background: rgba(88, 166, 255, 0.1); color: var(--accent); }
+        :root {
+            --iris: #818CF8;      /* Bioluminescent Iris */
+            --gold: #FACC15;      /* Relic Gold */
+            --layer-6: #020617;   /* The 6th Layer */
+            --carbon: #0F172A;    /* Carbon Zinc */
+            --ghost: #F8FAFC;     /* Ghost White */
+        }
+
+        body { 
+            background-color: var(--layer-6);
+            /* Artifact Glow Effect */
+            background-image: radial-gradient(circle at 50% -20%, rgba(129, 140, 248, 0.15), transparent 80%);
+            color: var(--ghost); 
+            font-family: 'Inter', -apple-system, sans-serif; 
+            min-height: 100vh;
+        }
+
+        .relic-card { 
+            background: rgba(15, 23, 42, 0.7); 
+            backdrop-filter: blur(16px); 
+            border: 1px solid rgba(129, 140, 248, 0.1); 
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+        }
+
+        .relic-text {
+            background: linear-gradient(135deg, #FFFFFF 0%, var(--iris) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .tradingview-widget-container { height: 450px !important; }
+
+        /* Custom scrollbar matching the Abyss */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: var(--layer-6); }
+        ::-webkit-scrollbar-thumb { background: var(--carbon); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--iris); }
+        
+        @keyframes scan {
+            0% { transform: translateY(-100%); opacity: 0; }
+            50% { opacity: 0.5; }
+            100% { transform: translateY(100%); opacity: 0; }
+        }
+        .scanner::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 2px;
+            background: var(--iris);
+            animation: scan 3s linear infinite;
+        }
+        
+        .gold-glow {
+            text-shadow: 0 0 10px rgba(250, 204, 21, 0.4);
+        }
     </style>
 </head>
-<body>
-    <div class="container">
-        <header>
+<body class="p-4 md:p-8">
+
+    <div class="max-w-6xl mx-auto">
+        <!-- Header -->
+        <header class="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 border-b border-white/5 pb-10 relative">
             <div>
-                <h1>Market Pulse: Morning Update</h1>
-                <small>Tracking Global Macro Finance for Shane</small>
+                <h1 class="text-5xl font-black tracking-tighter italic uppercase">
+                    <span class="relic-text">The Abyss</span>
+                    <span class="text-[14px] text-slate-500 font-bold tracking-[0.3em] ml-2 not-italic align-middle border-l border-slate-800 pl-4">Daily Update</span>
+                </h1>
+                <p class="text-slate-400 font-bold tracking-[0.15em] text-[11px] uppercase mt-3">Strategic Global Macro by Shane</p>
             </div>
-            <div id="last-updated" style="font-size: 0.8rem; color: #8b949e;">Refreshing data...</div>
+            <div class="mt-8 md:mt-0 text-right">
+                <div id="date-display" class="text-xl font-mono text-white tracking-widest">MAR 27, 2026</div>
+                <div id="status-tag" class="inline-block mt-3 px-5 py-1.5 rounded-sm text-[10px] font-black tracking-[0.25em] bg-[#FACC15] text-[#020617] uppercase gold-glow">
+                    Status: White Whistle
+                </div>
+            </div>
         </header>
 
-        <div class="chart-container">
-            <div class="tradingview-widget-container" style="height:100%;width:100%">
-                <iframe scrolling="no" allowtransparency="true" frameborder="0" src="https://s.tradingview.com/widgetembed/?symbol=TVC:UKOIL&interval=D&theme=dark&style=1&timezone=Etc%2FUTC&withdateranges=true&hide_side_toolbar=false&allow_symbol_change=true&save_image=false&details=true&hotlist=true&calendar=true" style="width: 100%; height: 100%;"></iframe>
+        <!-- Top Insights Ticker -->
+        <div class="relic-card rounded-sm p-4 mb-10 overflow-hidden border-l-4 border-[#818CF8] relative">
+            <div class="flex items-center space-x-6">
+                <span class="text-[#818CF8] text-[10px] font-black uppercase tracking-widest shrink-0">Relic Alert</span>
+                <p id="headline-ticker" class="text-xs text-slate-300 font-medium truncate italic tracking-wide">
+                    Hormuz Supply Shock: Brent hits $108.01 as FORCE MAJEURE declared across Gulf states...
+                </p>
             </div>
         </div>
 
-        <div id="data-container">
-            <table class="data-table">
-                <thead><tr><th>Asset</th><th>Value</th><th>Change</th><th>Sentiment</th></tr></thead>
-                <tbody id="sheet-data">
-                    <tr><td colspan="4" style="text-align:center; padding: 40px;">Fetching macro insights...</td></tr>
-                </tbody>
-            </table>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+            
+            <!-- Left: Live Chart -->
+            <div class="lg:col-span-2 space-y-10">
+                <div class="relic-card rounded-sm overflow-hidden relative">
+                    <div class="p-5 border-b border-white/5 flex justify-between items-center bg-[#0F172A]/40">
+                        <h3 class="font-black text-[11px] uppercase tracking-[0.3em] text-[#818CF8]">Depth Chart: UKOIL</h3>
+                        <span class="text-[9px] text-[#FACC15] font-black tracking-widest animate-pulse italic">SYSTEM ACTIVE</span>
+                    </div>
+                    <div class="tradingview-widget-container">
+                        <iframe scrolling="no" allowtransparency="true" frameborder="0" 
+                            src="https://s.tradingview.com/widgetembed/?symbol=TVC:UKOIL&interval=D&theme=dark&style=1&timezone=Etc%2FUTC&withdateranges=true&hide_side_toolbar=false&allow_symbol_change=true&save_image=false&details=true&hotlist=false&calendar=false" 
+                            style="width: 100%; height: 100%;"></iframe>
+                    </div>
+                </div>
+
+                <!-- Strategy Section -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="relic-card p-8 border-t-2 border-[#FACC15]">
+                        <h4 class="text-[9px] font-black text-[#FACC15] uppercase tracking-[0.4em] mb-4">Artifact Found</h4>
+                        <p class="text-white font-bold text-xl leading-none tracking-tight">Energy & Defense</p>
+                        <p class="text-slate-500 text-xs mt-4 leading-relaxed font-medium uppercase tracking-tighter">Hormuz closure hedge. Defense spending at decadal highs.</p>
+                    </div>
+                    <div class="relic-card p-8 border-t-2 border-white/10">
+                        <h4 class="text-[9px] font-black text-slate-500 uppercase tracking-[0.4em] mb-4">System Warning</h4>
+                        <p class="text-white font-bold text-xl leading-none tracking-tight">Nasdaq Overheat</p>
+                        <p class="text-slate-500 text-xs mt-4 leading-relaxed font-medium uppercase tracking-tighter">Yield pressure crushing multiples. Exit liquidity minimal.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Sheet Data -->
+            <div class="lg:col-span-1">
+                <div class="relic-card rounded-sm h-full flex flex-col overflow-hidden border-r-2 border-[#818CF8]/20">
+                    <div class="p-6 border-b border-white/5 flex justify-between items-center bg-[#0F172A]/60">
+                        <h3 class="font-black text-[11px] uppercase tracking-[0.3em] text-white">Relic Inventory</h3>
+                        <button onclick="fetchMarketData()" class="text-[#FACC15] hover:rotate-90 transition-transform duration-500">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+                        </button>
+                    </div>
+                    <div class="flex-grow overflow-auto relative">
+                        <div class="scanner sticky top-0 z-10 pointer-events-none"></div>
+                        <table class="w-full text-sm text-left border-collapse">
+                            <thead class="text-slate-600 uppercase text-[9px] font-black tracking-widest bg-[#020617]/80 sticky top-0">
+                                <tr>
+                                    <th class="px-6 py-5">Artifact</th>
+                                    <th class="px-6 py-5">Value</th>
+                                    <th class="px-6 py-5 text-right">Yield</th>
+                                </tr>
+                            </thead>
+                            <tbody id="sheet-data-body">
+                                <tr>
+                                    <td colspan="3" class="p-20 text-center">
+                                        <div class="inline-block w-8 h-8 border-t-2 border-[#FACC15] rounded-full animate-spin"></div>
+                                        <p class="text-[9px] text-slate-600 font-black uppercase tracking-[0.3em] mt-4">Descending Layers...</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="p-6 bg-black/40 text-[9px] text-slate-600 font-black uppercase tracking-[0.4em] text-center border-t border-white/5">
+                        Relic: The_Abyss_DB.csv
+                    </div>
+                </div>
+            </div>
+
         </div>
+
+        <!-- Footer -->
+        <footer class="mt-20 pt-10 border-t border-white/5 text-center">
+            <p class="text-slate-700 text-[9px] font-black uppercase tracking-[0.5em]">
+                Shane Sri • Abyssal Relic Technology • 2026
+            </p>
+        </footer>
     </div>
 
     <script>
         const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS8fh60-Fpxar3FKI8oEgH_UGHNVmBNE-t_HPUEmRrF4x1l3YDAs2NL2ptlt35mHSS__fuF_8Za5OUa/pub?output=csv';
 
         async function fetchMarketData() {
+            const tbody = document.getElementById('sheet-data-body');
             try {
-                const response = await fetch(CSV_URL);
+                const response = await fetch(`${CSV_URL}&t=${new Date().getTime()}`);
+                if (!response.ok) throw new Error('Sync failed');
                 const data = await response.text();
-                const rows = data.split('\n').map(row => row.split(','));
+                const lines = data.split(/\r?\n/);
+                const rows = lines.map(line => line.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(cell => cell.replace(/^"|"$/g, '').trim()));
                 
-                const tbody = document.getElementById('sheet-data');
-                tbody.innerHTML = ''; // Clear loading state
+                tbody.innerHTML = ''; 
+                const processedAssets = new Set();
+                const displayRows = [];
 
-                // Start from index 1 to skip headers
-                for (let i = 1; i < rows.length; i++) {
-                    const [date, category, asset, value, change, sentiment] = rows[i];
-                    if (!asset) continue;
+                for (let i = rows.length - 1; i >= 1; i--) {
+                    const row = rows[i];
+                    if (row.length < 3) continue;
+                    const [date, category, asset, value, change, sentiment] = row;
+                    if (asset && !processedAssets.has(asset)) {
+                        displayRows.push({ asset, value, change, sentiment });
+                        processedAssets.add(asset);
+                    }
+                    if (displayRows.length >= 10) break;
+                }
 
+                displayRows.forEach(item => {
+                    const changeValue = item.change || '0%';
+                    const isPositive = changeValue.includes('+') || (!changeValue.includes('-') && parseFloat(changeValue) > 0);
                     const tr = document.createElement('tr');
+                    tr.className = "border-t border-white/5 hover:bg-[#818CF8]/5 transition-all group cursor-crosshair";
                     tr.innerHTML = `
-                        <td><strong>${asset}</strong></td>
-                        <td>${value}</td>
-                        <td style="color: ${change.includes('+') ? '#3fb950' : '#f85149'}">${change}</td>
-                        <td><span class="sentiment-tag ${sentiment.toLowerCase().includes('shock') ? 'supply-shock' : 'risk-off'}">${sentiment}</span></td>
+                        <td class="px-6 py-5">
+                            <div class="font-bold text-slate-200 text-xs tracking-wide">${item.asset}</div>
+                            <div class="text-[9px] text-[#818CF8] uppercase font-black tracking-widest mt-1 opacity-80 group-hover:opacity-100">${item.sentiment || 'RELIC'}</div>
+                        </td>
+                        <td class="px-6 py-5 font-mono text-xs text-slate-400 group-hover:text-white transition-colors">${item.value || '---'}</td>
+                        <td class="px-6 py-5 font-mono text-xs text-right ${isPositive ? 'text-[#818CF8]' : 'text-red-400'}">
+                            ${changeValue}
+                        </td>
                     `;
                     tbody.appendChild(tr);
-                }
-                document.getElementById('last-updated').innerText = `Last Updated: ${new Date().toLocaleTimeString()}`;
+                });
             } catch (error) {
-                console.error('Error loading Sheet:', error);
-                document.getElementById('sheet-data').innerHTML = '<tr><td colspan="4" style="color:red; text-align:center;">Failed to load data. Ensure Sheet is Published to Web as CSV.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="3" class="p-10 text-center text-red-500 text-[10px] font-black">RELIC COMMUNICATION INTERRUPTED</td></tr>';
             }
         }
 
-        fetchMarketData();
-        // Refresh data every 5 minutes
-        setInterval(fetchMarketData, 300000);
+        window.onload = () => {
+            const options = { month: 'short', day: 'numeric', year: 'numeric' };
+            document.getElementById('date-display').textContent = new Date().toLocaleDateString('en-US', options).toUpperCase();
+            fetchMarketData();
+            setInterval(fetchMarketData, 300000);
+        };
     </script>
 </body>
 </html>
