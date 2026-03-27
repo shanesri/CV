@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shane's Market Pulse | Macro Dashboard</title>
+    <style>
+        :root { --bg: #0d1117; --card: #161b22; --text: #c9d1d9; --accent: #58a6ff; --danger: #f85149; --success: #3fb950; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding: 20px; line-height: 1.5; }
+        .container { max-width: 1000px; margin: 0 auto; }
+        header { border-bottom: 1px solid #30363d; padding-bottom: 20px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
+        h1 { color: var(--accent); margin: 0; font-size: 1.5rem; }
+        .chart-container { background: var(--card); border-radius: 8px; border: 1px solid #30363d; height: 450px; margin-bottom: 20px; overflow: hidden; }
+        .data-table { width: 100%; border-collapse: collapse; background: var(--card); border-radius: 8px; overflow: hidden; border: 1px solid #30363d; }
+        th { background: #21262d; padding: 12px; text-align: left; font-size: 0.85rem; text-transform: uppercase; color: #8b949e; }
+        td { padding: 12px; border-top: 1px solid #30363d; font-size: 0.95rem; }
+        tr:hover { background: #1c2128; }
+        .sentiment-tag { padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; }
+        .risk-off { background: rgba(248, 81, 73, 0.1); color: var(--danger); }
+        .supply-shock { background: rgba(88, 166, 255, 0.1); color: var(--accent); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div>
+                <h1>Market Pulse: Morning Update</h1>
+                <small>Tracking Global Macro Finance for Shane</small>
+            </div>
+            <div id="last-updated" style="font-size: 0.8rem; color: #8b949e;">Refreshing data...</div>
+        </header>
+
+        <div class="chart-container">
+            <div class="tradingview-widget-container" style="height:100%;width:100%">
+                <iframe scrolling="no" allowtransparency="true" frameborder="0" src="https://s.tradingview.com/widgetembed/?symbol=TVC:UKOIL&interval=D&theme=dark&style=1&timezone=Etc%2FUTC&withdateranges=true&hide_side_toolbar=false&allow_symbol_change=true&save_image=false&details=true&hotlist=true&calendar=true" style="width: 100%; height: 100%;"></iframe>
+            </div>
+        </div>
+
+        <div id="data-container">
+            <table class="data-table">
+                <thead><tr><th>Asset</th><th>Value</th><th>Change</th><th>Sentiment</th></tr></thead>
+                <tbody id="sheet-data">
+                    <tr><td colspan="4" style="text-align:center; padding: 40px;">Fetching macro insights...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS8fh60-Fpxar3FKI8oEgH_UGHNVmBNE-t_HPUEmRrF4x1l3YDAs2NL2ptlt35mHSS__fuF_8Za5OUa/pub?output=csv';
+
+        async function fetchMarketData() {
+            try {
+                const response = await fetch(CSV_URL);
+                const data = await response.text();
+                const rows = data.split('\n').map(row => row.split(','));
+                
+                const tbody = document.getElementById('sheet-data');
+                tbody.innerHTML = ''; // Clear loading state
+
+                // Start from index 1 to skip headers
+                for (let i = 1; i < rows.length; i++) {
+                    const [date, category, asset, value, change, sentiment] = rows[i];
+                    if (!asset) continue;
+
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td><strong>${asset}</strong></td>
+                        <td>${value}</td>
+                        <td style="color: ${change.includes('+') ? '#3fb950' : '#f85149'}">${change}</td>
+                        <td><span class="sentiment-tag ${sentiment.toLowerCase().includes('shock') ? 'supply-shock' : 'risk-off'}">${sentiment}</span></td>
+                    `;
+                    tbody.appendChild(tr);
+                }
+                document.getElementById('last-updated').innerText = `Last Updated: ${new Date().toLocaleTimeString()}`;
+            } catch (error) {
+                console.error('Error loading Sheet:', error);
+                document.getElementById('sheet-data').innerHTML = '<tr><td colspan="4" style="color:red; text-align:center;">Failed to load data. Ensure Sheet is Published to Web as CSV.</td></tr>';
+            }
+        }
+
+        fetchMarketData();
+        // Refresh data every 5 minutes
+        setInterval(fetchMarketData, 300000);
+    </script>
+</body>
+</html>
