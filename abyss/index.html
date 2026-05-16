@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ABYSS — Investment Intelligence</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Figtree:wght@300;400;500&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#04040a;
+  --surface:#080812;
+  --surface-2:#0e0e1c;
+  --surface-3:#141428;
+  --border:rgba(255,255,255,0.06);
+  --border-h:rgba(255,255,255,0.12);
+  --gold:#c9a84c;
+  --gold-dim:rgba(201,168,76,0.1);
+  --gold-border:rgba(201,168,76,0.2);
+  --blue:#4a9eff;
+  --blue-dim:rgba(74,158,255,0.1);
+  --text:#e8e8f0;
+  --muted:#6868a0;
+  --muted-2:#38384a;
+  --new:#34d399;
+  --new-dim:rgba(52,211,153,0.1);
+  --update:#60a5fa;
+  --update-dim:rgba(96,165,250,0.1);
+  --trending:#f472b6;
+  --trending-dim:rgba(244,114,182,0.1);
+  --red:#f87171;
+}
+body{background:var(--bg);color:var(--text);font-family:'Figtree',sans-serif;min-height:100vh;overflow-x:hidden}
+
+/* Noise overlay */
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:.4}
+
+/* Ticker */
+.ticker{background:linear-gradient(90deg,#0a0a1a,#0d0d20,#0a0a1a);border-bottom:1px solid var(--gold-border);padding:.4rem 0;overflow:hidden}
+.ticker-inner{display:flex;animation:tick 40s linear infinite;white-space:nowrap}
+.ticker-item{padding:0 3rem;font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:.15em;color:var(--gold);opacity:.7}
+.ticker-sep{color:var(--muted-2)}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* Header */
+.hdr{background:var(--surface);border-bottom:1px solid var(--border);padding:1.25rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;backdrop-filter:blur(20px)}
+.brand{display:flex;flex-direction:column;gap:.1rem}
+.brand-name{font-family:'Syne',sans-serif;font-weight:800;font-size:1.6rem;letter-spacing:.2em;color:var(--gold);line-height:1}
+.brand-sub{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.2em;color:var(--muted);text-transform:uppercase}
+.hdr-right{display:flex;flex-direction:column;align-items:flex-end;gap:.3rem}
+.clock{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--text);letter-spacing:.04em}
+.generated{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--muted);letter-spacing:.03em}
+
+/* Stats bar */
+.stats-bar{background:var(--surface-2);border-bottom:1px solid var(--border);padding:.75rem 2rem;display:flex;align-items:center;gap:2rem;flex-wrap:wrap}
+.stat{display:flex;flex-direction:column;gap:.1rem}
+.stat-val{font-family:'Syne',sans-serif;font-weight:700;font-size:1.1rem;color:var(--gold)}
+.stat-label{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+.stat-divider{width:1px;height:2rem;background:var(--border);flex-shrink:0}
+
+/* Filter bar */
+.filter-bar{padding:1rem 2rem;border-bottom:1px solid var(--border);background:var(--surface);display:flex;align-items:center;gap:.75rem;flex-wrap:wrap}
+.filter-label{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--muted);letter-spacing:.1em;white-space:nowrap}
+.filters{display:flex;gap:.5rem;flex-wrap:wrap}
+.filter-btn{background:none;border:1px solid var(--border);color:var(--muted);padding:.3rem .75rem;border-radius:3px;font-family:'JetBrains Mono',monospace;font-size:.65rem;cursor:pointer;transition:all .2s;letter-spacing:.06em;white-space:nowrap}
+.filter-btn:hover{border-color:var(--gold-border);color:var(--gold)}
+.filter-btn.active{border-color:var(--gold);color:var(--gold);background:var(--gold-dim)}
+.filter-btn.f-new.active{border-color:var(--new);color:var(--new);background:var(--new-dim)}
+.filter-btn.f-update.active{border-color:var(--update);color:var(--update);background:var(--update-dim)}
+.filter-btn.f-trending.active{border-color:var(--trending);color:var(--trending);background:var(--trending-dim)}
+.filter-divider{width:1px;height:1.2rem;background:var(--border)}
+
+/* Main */
+.main{padding:1.5rem 2rem;max-width:1400px;margin:0 auto}
+
+/* Cards */
+.cards{display:flex;flex-direction:column;gap:.75rem}
+
+.card{background:var(--surface);border:1px solid var(--border);border-radius:6px;overflow:hidden;transition:border-color .2s}
+.card:hover{border-color:var(--border-h)}
+.card.expanded .card-body{display:block}
+.card.expanded .expand-icon{transform:rotate(180deg)}
+
+.card-header{padding:1rem 1.25rem;cursor:pointer;display:grid;grid-template-columns:auto 1fr auto;gap:1rem;align-items:start}
+.card-left{display:flex;flex-direction:column;gap:.5rem;align-items:flex-start}
+.sig-score{font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;color:var(--gold);line-height:1;min-width:2rem}
+.type-badge{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.1em;padding:.15rem .5rem;border-radius:3px;white-space:nowrap}
+.badge-NEW{background:var(--new-dim);color:var(--new);border:1px solid rgba(52,211,153,.25)}
+.badge-UPDATE{background:var(--update-dim);color:var(--update);border:1px solid rgba(96,165,250,.25)}
+.badge-TRENDING{background:var(--trending-dim);color:var(--trending);border:1px solid rgba(244,114,182,.25)}
+
+.card-center{display:flex;flex-direction:column;gap:.4rem}
+.card-headline{font-family:'Figtree',sans-serif;font-weight:500;font-size:1rem;line-height:1.4;color:var(--text)}
+.card-meta{display:flex;align-items:center;gap:.75rem;flex-wrap:wrap}
+.group-tag{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--muted);letter-spacing:.08em;background:var(--surface-3);padding:.1rem .45rem;border-radius:3px}
+.card-date{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--muted-2)}
+.tickers{display:flex;gap:.35rem;flex-wrap:wrap}
+.ticker-chip{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--blue);background:var(--blue-dim);padding:.12rem .45rem;border-radius:3px;border:1px solid rgba(74,158,255,.2)}
+
+.card-right{display:flex;align-items:center}
+.expand-icon{color:var(--muted);font-size:1rem;transition:transform .3s;user-select:none}
+
+/* Card body (8 questions) */
+.card-body{display:none;border-top:1px solid var(--border);padding:0}
+.questions{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.q-block{padding:1rem 1.25rem;border-bottom:1px solid var(--border);border-right:1px solid var(--border)}
+.q-block:nth-child(even){border-right:none}
+.q-block:nth-last-child(-n+2){border-bottom:none}
+.q-block.full{grid-column:1/-1;border-right:none}
+.q-label{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.12em;color:var(--gold);text-transform:uppercase;margin-bottom:.4rem;opacity:.8}
+.q-text{font-size:.85rem;line-height:1.6;color:var(--text)}
+.q-text.muted{color:var(--muted)}
+.sources-list{display:flex;flex-direction:column;gap:.3rem}
+.source-item{display:flex;align-items:center;gap:.5rem}
+.source-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0}
+.source-link{font-size:.8rem;color:var(--blue);text-decoration:none}
+.source-link:hover{text-decoration:underline}
+.tickers-large{display:flex;gap:.5rem;flex-wrap:wrap}
+.ticker-large{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--gold);background:var(--gold-dim);padding:.25rem .65rem;border-radius:4px;border:1px solid var(--gold-border)}
+.original-event{font-size:.78rem;color:var(--muted);font-style:italic;margin-top:.35rem}
+
+/* States */
+.state{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:5rem 2rem;text-align:center;gap:1rem}
+.state-title{font-family:'Syne',sans-serif;font-size:1.2rem;color:var(--gold)}
+.state-text{font-size:.85rem;color:var(--muted);line-height:1.6;max-width:400px}
+.dots{display:flex;gap:8px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--gold);animation:pulse 1.2s ease-in-out infinite}
+.dot:nth-child(2){animation-delay:.2s}.dot:nth-child(3){animation-delay:.4s}
+@keyframes pulse{0%,80%,100%{opacity:.15;transform:scale(.7)}40%{opacity:1;transform:scale(1)}}
+
+/* Footer */
+.footer{padding:2rem;text-align:center;border-top:1px solid var(--border);margin-top:2rem}
+.footer-text{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--muted-2);letter-spacing:.08em}
+
+/* Responsive */
+@media(max-width:768px){
+  .hdr{padding:1rem}
+  .main{padding:1rem}
+  .filter-bar{padding:.75rem 1rem}
+  .stats-bar{padding:.75rem 1rem;gap:1rem}
+  .questions{grid-template-columns:1fr}
+  .q-block{border-right:none}
+  .q-block.full{grid-column:1}
+  .card-header{grid-template-columns:auto 1fr auto;gap:.75rem}
+}
+</style>
+</head>
+<body>
+
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="ticker-item">A B Y S S</span><span class="ticker-item ticker-sep">✦</span>
+    <span class="ticker-item">INVESTMENT INTELLIGENCE</span><span class="ticker-item ticker-sep">✦</span>
+    <span class="ticker-item">MACRO · GEOPOLITICS · MARKETS</span><span class="ticker-item ticker-sep">✦</span>
+    <span class="ticker-item">DEEP · WIDE · NOTHING SLIPS THROUGH</span><span class="ticker-item ticker-sep">✦</span>
+    <span class="ticker-item">A B Y S S</span><span class="ticker-item ticker-sep">✦</span>
+    <span class="ticker-item">INVESTMENT INTELLIGENCE</span><span class="ticker-item ticker-sep">✦</span>
+    <span class="ticker-item">MACRO · GEOPOLITICS · MARKETS</span><span class="ticker-item ticker-sep">✦</span>
+    <span class="ticker-item">DEEP · WIDE · NOTHING SLIPS THROUGH</span><span class="ticker-item ticker-sep">✦</span>
+  </div>
+</div>
+
+<header class="hdr">
+  <div class="brand">
+    <div class="brand-name">ABYSS</div>
+    <div class="brand-sub">Investment Intelligence Terminal</div>
+  </div>
+  <div class="hdr-right">
+    <div class="clock" id="clock">--:--:-- BKK</div>
+    <div class="generated" id="generated-at">Loading...</div>
+  </div>
+</header>
+
+<div class="stats-bar" id="stats-bar" style="display:none">
+  <div class="stat"><div class="stat-val" id="stat-total">0</div><div class="stat-label">Total Items</div></div>
+  <div class="stat-divider"></div>
+  <div class="stat"><div class="stat-val" style="color:var(--new)" id="stat-new">0</div><div class="stat-label">New Events</div></div>
+  <div class="stat-divider"></div>
+  <div class="stat"><div class="stat-val" style="color:var(--update)" id="stat-update">0</div><div class="stat-label">Updates</div></div>
+  <div class="stat-divider"></div>
+  <div class="stat"><div class="stat-val" style="color:var(--trending)" id="stat-trending">0</div><div class="stat-label">Trending</div></div>
+</div>
+
+<div class="filter-bar" id="filter-bar" style="display:none">
+  <span class="filter-label">FILTER</span>
+  <div class="filters">
+    <button class="filter-btn active" onclick="setFilter('ALL',this)">ALL</button>
+    <button class="filter-btn f-new" onclick="setFilter('NEW',this)">● NEW</button>
+    <button class="filter-btn f-update" onclick="setFilter('UPDATE',this)">● UPDATE</button>
+    <button class="filter-btn f-trending" onclick="setFilter('TRENDING',this)">● TRENDING</button>
+    <div class="filter-divider"></div>
+    <button class="filter-btn" onclick="expandAll()">EXPAND ALL</button>
+    <button class="filter-btn" onclick="collapseAll()">COLLAPSE ALL</button>
+  </div>
+</div>
+
+<main class="main">
+  <div class="cards" id="cards">
+    <div class="state">
+      <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+      <div class="state-title">ABYSS IS LOADING</div>
+      <div class="state-text">Pulling today's intelligence feed...</div>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="footer-text">ABYSS — shanesri.com/abyss &nbsp;·&nbsp; Powered by Claude AI &nbsp;·&nbsp; Auto-updates daily 06:00 BKK</div>
+</footer>
+
+<script>
+// ── CONFIG ─────────────────────────────────────────────────────────
+// Replace 'shanesri' with your actual GitHub username if different
+const JSON_URL = 'https://raw.githubusercontent.com/shanesri/abyss/main/data/news_today.json';
+
+let allItems = [];
+let currentFilter = 'ALL';
+
+// ── CLOCK ──────────────────────────────────────────────────────────
+function updateClock() {
+  const bkk = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Bangkok' }));
+  document.getElementById('clock').textContent =
+    bkk.toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit', second:'2-digit' }) + ' BKK';
+}
+setInterval(updateClock, 1000); updateClock();
+
+// ── FETCH DATA ─────────────────────────────────────────────────────
+async function loadNews() {
+  try {
+    const res = await fetch(JSON_URL + '?t=' + Date.now());
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    allItems = data.items || [];
+
+    document.getElementById('generated-at').textContent =
+      'Generated: ' + (data.generated_at_bkk || data.generated_at || 'Unknown');
+
+    updateStats();
+    renderCards(allItems);
+
+    document.getElementById('stats-bar').style.display = 'flex';
+    document.getElementById('filter-bar').style.display = 'flex';
+  } catch (e) {
+    document.getElementById('cards').innerHTML = `
+      <div class="state">
+        <div class="state-title" style="color:var(--red)">FEED UNAVAILABLE</div>
+        <div class="state-text">Could not load today's intelligence feed.<br>
+        This usually means the daily script hasn't run yet, or the data file doesn't exist yet.<br><br>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--muted-2)">Error: ${e.message}</span></div>
+      </div>`;
+    document.getElementById('generated-at').textContent = 'No data available';
+  }
+}
+
+// ── STATS ──────────────────────────────────────────────────────────
+function updateStats() {
+  const items = currentFilter === 'ALL' ? allItems : allItems.filter(i => i.type === currentFilter);
+  document.getElementById('stat-total').textContent = items.length;
+  document.getElementById('stat-new').textContent = allItems.filter(i => i.type === 'NEW').length;
+  document.getElementById('stat-update').textContent = allItems.filter(i => i.type === 'UPDATE').length;
+  document.getElementById('stat-trending').textContent = allItems.filter(i => i.type === 'TRENDING').length;
+}
+
+// ── FILTER ─────────────────────────────────────────────────────────
+function setFilter(type, btn) {
+  currentFilter = type;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const filtered = type === 'ALL' ? allItems : allItems.filter(i => i.type === type);
+  renderCards(filtered);
+}
+
+function expandAll()   { document.querySelectorAll('.card').forEach(c => c.classList.add('expanded')); }
+function collapseAll() { document.querySelectorAll('.card').forEach(c => c.classList.remove('expanded')); }
+
+// ── RENDER ─────────────────────────────────────────────────────────
+function renderCards(items) {
+  const container = document.getElementById('cards');
+  if (!items.length) {
+    container.innerHTML = `<div class="state"><div class="state-title">NO ITEMS</div><div class="state-text">No news matches the current filter.</div></div>`;
+    return;
+  }
+
+  container.innerHTML = items.map((item, idx) => {
+    const badgeClass = 'badge-' + (item.type || 'NEW');
+    const tickers = (item.affected_tickers || []).slice(0, 6);
+    const sources = item.sources || [];
+
+    const tickerChips = tickers.map(t => `<span class="ticker-chip">${t}</span>`).join('');
+    const tickersLarge = tickers.map(t => `<span class="ticker-large">${t}</span>`).join('');
+
+    const sourcesList = sources.map(s =>
+      `<div class="source-item"><div class="source-dot"></div><a class="source-link" href="${item.url}" target="_blank" rel="noopener">${s}</a></div>`
+    ).join('');
+
+    const updateNote = item.type === 'UPDATE' && item.original_event
+      ? `<div class="original-event">↳ Update from: ${item.original_event}</div>` : '';
+
+    return `
+    <div class="card" id="card-${idx}">
+      <div class="card-header" onclick="toggleCard(${idx})">
+        <div class="card-left">
+          <div class="sig-score">${item.significance || '—'}</div>
+          <span class="type-badge ${badgeClass}">${item.type || 'NEW'}</span>
+        </div>
+        <div class="card-center">
+          <div class="card-headline">${item.headline || 'No headline'}</div>
+          <div class="card-meta">
+            <span class="group-tag">${item.group || 'General'}</span>
+            <span class="card-date">${item.date || ''}</span>
+            ${tickerChips ? `<div class="tickers">${tickerChips}</div>` : ''}
+          </div>
+          ${updateNote}
+        </div>
+        <div class="card-right"><span class="expand-icon">▾</span></div>
+      </div>
+      <div class="card-body">
+        <div class="questions">
+          <div class="q-block full">
+            <div class="q-label">What Happened</div>
+            <div class="q-text">${item.detail || '—'}</div>
+          </div>
+          <div class="q-block">
+            <div class="q-label">Timeline</div>
+            <div class="q-text">${item.timeline || '—'}</div>
+          </div>
+          <div class="q-block">
+            <div class="q-label">Market Impact</div>
+            <div class="q-text">${item.market_impact || '—'}</div>
+          </div>
+          <div class="q-block">
+            <div class="q-label">Why It Matters</div>
+            <div class="q-text">${item.why || '—'}</div>
+          </div>
+          <div class="q-block">
+            <div class="q-label">Investor Action</div>
+            <div class="q-text">${item.investor_action || '—'}</div>
+          </div>
+          <div class="q-block">
+            <div class="q-label">Sources</div>
+            <div class="sources-list">${sourcesList || '<span class="q-text muted">—</span>'}</div>
+          </div>
+          <div class="q-block">
+            <div class="q-label">Affected Assets</div>
+            ${tickersLarge ? `<div class="tickers-large">${tickersLarge}</div>` : '<span class="q-text muted">—</span>'}
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleCard(idx) {
+  document.getElementById('card-' + idx).classList.toggle('expanded');
+}
+
+// ── INIT ──────────────────────────────────────────────────────────
+loadNews();
+</script>
+</body>
+</html>
