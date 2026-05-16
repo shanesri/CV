@@ -299,11 +299,11 @@ async function loadNews() {
     items.sort((a, b) => {
       const aPin = pinnedSet.has(itemId(a)) ? 1 : 0;
       const bPin = pinnedSet.has(itemId(b)) ? 1 : 0;
-      if (aPin !== bPin) return bPin - aPin;
-      const aSig = a.significance || 0;
-      const bSig = b.significance || 0;
-      if (aSig !== bSig) return bSig - aSig;
-      return new Date(b.date || 0) - new Date(a.date || 0);
+    if (aPin !== bPin) return bPin - aPin;
+    const aDate = new Date(a.date || 0);
+    const bDate = new Date(b.date || 0);
+    if (aDate.getTime() !== bDate.getTime()) return bDate - aDate;
+    return (b.significance || 0) - (a.significance || 0);
     });
 
     allItems = items;
@@ -410,10 +410,10 @@ function togglePin(idx, event) {
     const aPin = pinnedSet.has(itemId(a)) ? 1 : 0;
     const bPin = pinnedSet.has(itemId(b)) ? 1 : 0;
     if (aPin !== bPin) return bPin - aPin;
-    const aSig = a.significance || 0;
-    const bSig = b.significance || 0;
-    if (aSig !== bSig) return bSig - aSig;
-    return new Date(b.date || 0) - new Date(a.date || 0);
+    const aDate = new Date(a.date || 0);
+    const bDate = new Date(b.date || 0);
+    if (aDate.getTime() !== bDate.getTime()) return bDate - aDate;
+    return (b.significance || 0) - (a.significance || 0);
   });
   updateStats();
   applyFilters();
