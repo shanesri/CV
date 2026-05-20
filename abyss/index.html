@@ -33,8 +33,8 @@
   --trending-dim:rgba(244,114,182,0.1);
   --red:#f87171;
   --pinned-bg:rgba(232,194,100,0.05);
-  --highlight:rgba(255,221,87,0.35);
-  --highlight-strong:rgba(255,221,87,0.55);
+  --highlight:rgba(255,235,59,0.65);
+  --highlight-strong:rgba(255,235,59,0.85);
 }
 body{background:var(--bg);color:var(--text);font-family:'Figtree',sans-serif;min-height:100vh;overflow-x:hidden}
 body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:.4}
@@ -96,9 +96,10 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .card:hover{border-color:var(--border-h)}
 .card.pinned{border-color:var(--gold-bright);background:var(--pinned-bg);box-shadow:0 0 20px var(--gold-glow)}
 .card.expanded .card-body{display:block}
-.card.expanded .expand-icon{transform:rotate(180deg)}
+.card.expanded .toggle-zone{transform:rotate(180deg)}
 
-.card-header{padding:1rem 1.25rem;display:grid;grid-template-columns:auto 1fr auto auto;gap:1rem;align-items:start;cursor:pointer}
+/* Header - NO longer clickable as a whole. Only chevron toggles. */
+.card-header{padding:1rem 1.25rem;display:grid;grid-template-columns:auto 1fr auto auto;gap:1rem;align-items:start;cursor:default}
 .card-left{display:flex;flex-direction:column;gap:.5rem;align-items:flex-start;min-width:2.5rem}
 .sig-score{font-family:'Syne',sans-serif;font-weight:800;font-size:1.5rem;color:var(--gold);line-height:1}
 .card.pinned .sig-score{color:var(--gold-bright)}
@@ -114,7 +115,6 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .date-pill{font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:500;color:var(--gold-bright);background:var(--gold-dim);padding:.25rem .65rem;border-radius:4px;border:1px solid var(--gold-border);letter-spacing:.04em;white-space:nowrap}
 .group-tag{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--muted);letter-spacing:.08em;background:var(--surface-3);padding:.15rem .5rem;border-radius:3px}
 
-/* Tickers - now they're links to Yahoo Finance */
 .tickers{display:flex;gap:.35rem;flex-wrap:wrap}
 .ticker-chip{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--blue);background:var(--blue-dim);padding:.18rem .5rem;border-radius:3px;border:1px solid rgba(74,158,255,.2);cursor:pointer;transition:all .15s;user-select:none;text-decoration:none;display:inline-block}
 .ticker-chip:hover{background:var(--blue-hover);transform:translateY(-1px);color:var(--blue)}
@@ -124,7 +124,10 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .pin-btn.pinned{border-color:var(--gold-bright);background:var(--gold-dim);color:var(--gold-bright);text-shadow:0 0 8px var(--gold-glow)}
 
 .card-right{display:flex;align-items:center;gap:.4rem}
-.expand-icon{color:var(--muted);font-size:1rem;transition:transform .3s;user-select:none;padding-left:.25rem}
+
+/* Toggle zone - dedicated area for expand/collapse */
+.toggle-zone{display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:4px;border:1px solid var(--border);cursor:pointer;color:var(--muted);font-size:.95rem;transition:all .25s;user-select:none}
+.toggle-zone:hover{border-color:var(--gold);color:var(--gold);background:var(--gold-dim)}
 
 /* Card body */
 .card-body{display:none;border-top:1px solid var(--border)}
@@ -146,19 +149,19 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .ticker-large:hover{background:var(--gold);color:#000}
 .original-event{font-size:.78rem;color:var(--muted);font-style:italic;margin-top:.35rem}
 
-/* Highlight text */
-.hl{background:var(--highlight);border-radius:2px;padding:0 2px;cursor:pointer;transition:background .15s}
+/* Highlight text - BRIGHT YELLOW */
+.hl{background:var(--highlight);color:#000;border-radius:2px;padding:0 2px;cursor:pointer;transition:background .15s}
 .hl:hover{background:var(--highlight-strong)}
 
 /* Highlight popup button */
-.hl-popup{position:fixed;display:none;background:var(--gold);color:#000;border:none;padding:.45rem .85rem;border-radius:4px;font-family:'Syne',sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.1em;cursor:pointer;z-index:9000;box-shadow:0 4px 20px rgba(0,0,0,.5);text-transform:uppercase;transition:transform .15s}
+.hl-popup{position:fixed;display:none;background:#ffeb3b;color:#000;border:none;padding:.45rem .85rem;border-radius:4px;font-family:'Syne',sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.1em;cursor:pointer;z-index:9000;box-shadow:0 4px 20px rgba(0,0,0,.5);text-transform:uppercase;transition:transform .15s}
 .hl-popup:hover{transform:scale(1.05)}
 .hl-popup.show{display:block}
 
-/* Ticker tooltip (custom, dark theme) */
-.ticker-tooltip{position:fixed;background:var(--surface-3);color:var(--text);border:1px solid var(--gold-border);padding:.55rem .85rem;border-radius:4px;font-family:'Figtree',sans-serif;font-size:.78rem;font-weight:500;letter-spacing:.02em;pointer-events:none;z-index:9500;display:none;box-shadow:0 4px 20px rgba(0,0,0,.5);white-space:nowrap;max-width:300px;overflow:hidden;text-overflow:ellipsis}
+/* Ticker tooltip */
+.ticker-tooltip{position:fixed;background:var(--surface-3);color:var(--text);border:1px solid var(--gold-border);padding:.55rem .85rem;border-radius:4px;font-family:'Figtree',sans-serif;font-size:.78rem;font-weight:500;letter-spacing:.02em;pointer-events:none;z-index:9500;display:none;box-shadow:0 4px 20px rgba(0,0,0,.5);white-space:nowrap;max-width:340px;overflow:hidden;text-overflow:ellipsis}
 .ticker-tooltip.show{display:block}
-.ticker-tooltip-symbol{color:var(--gold-bright);font-family:'JetBrains Mono',monospace;font-size:.7rem;margin-right:.4rem}
+.ticker-tooltip-symbol{color:var(--gold-bright);font-family:'JetBrains Mono',monospace;font-size:.7rem;margin-right:.45rem;padding-right:.45rem;border-right:1px solid var(--border-h)}
 
 /* States */
 .state{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:5rem 2rem;text-align:center;gap:1rem}
@@ -267,8 +270,9 @@ let typeFilter = 'ALL';
 let showOlder = false;
 let pinnedSet = new Set(JSON.parse(localStorage.getItem('abyss_pinned') || '[]'));
 let highlights = JSON.parse(localStorage.getItem('abyss_highlights') || '{}');
-let tickerNames = JSON.parse(localStorage.getItem('abyss_ticker_names') || '{}');
-let tickerLookupInFlight = new Set();
+
+// Aggregated ticker -> name from all items
+let tickerNameMap = {};
 
 function updateClock() {
   const bkk = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Bangkok' }));
@@ -330,40 +334,27 @@ function renderTextWithHighlights(text, itemKey, fieldKey) {
   return result;
 }
 
-// ── TICKER URL + NAME LOOKUP ──────────────────────────────────────
 function yahooUrl(ticker) {
   return `https://finance.yahoo.com/quote/${encodeURIComponent(ticker)}`;
 }
 
-async function lookupTickerName(ticker) {
-  if (tickerNames[ticker]) return tickerNames[ticker];
-  if (tickerLookupInFlight.has(ticker)) return null;
-  tickerLookupInFlight.add(ticker);
-  try {
-    const res = await fetch(`https://query1.finance.yahoo.com/v1/finance/search?q=${encodeURIComponent(ticker)}&quotesCount=1&newsCount=0`, { mode: 'cors' });
-    if (!res.ok) throw new Error('lookup failed');
-    const data = await res.json();
-    const quote = data && data.quotes && data.quotes[0];
-    const name = quote ? (quote.longname || quote.shortname || quote.symbol || ticker) : ticker;
-    tickerNames[ticker] = name;
-    localStorage.setItem('abyss_ticker_names', JSON.stringify(tickerNames));
-    return name;
-  } catch (e) {
-    tickerNames[ticker] = ticker; // fall back to ticker itself, cache to avoid retries
-    localStorage.setItem('abyss_ticker_names', JSON.stringify(tickerNames));
-    return ticker;
-  } finally {
-    tickerLookupInFlight.delete(ticker);
-  }
-}
-
-// ── FETCH DATA ─────────────────────────────────────────────────────
 async function loadNews() {
   try {
     const res = await fetch(HISTORY_URL + '?t=' + Date.now());
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const data = await res.json();
     allItems = data.news_items || [];
+
+    // Build aggregated ticker -> name map from all items that have ticker_names
+    tickerNameMap = {};
+    allItems.forEach(item => {
+      const names = item.ticker_names || {};
+      Object.entries(names).forEach(([sym, name]) => {
+        if (sym && name && !tickerNameMap[sym]) {
+          tickerNameMap[sym] = name;
+        }
+      });
+    });
 
     const sortFn = (a, b) => {
       const aPin = pinnedSet.has(itemId(a)) ? 1 : 0;
@@ -415,19 +406,16 @@ async function loadNews() {
   }
 }
 
-// ── TABS ───────────────────────────────────────────────────────────
 function renderTabs() {
   const bar = document.getElementById('day-tabs-bar');
   const visible = dayGroups.slice(0, VISIBLE_DAYS);
   const older = dayGroups.slice(VISIBLE_DAYS);
-
   let html = visible.map(g =>
     `<button class="day-tab ${g.key === activeTabKey ? 'active' : ''}" onclick="setActiveTab('${g.key}')">
        <span class="day-tab-date">${g.label}</span>
        <span class="day-tab-count">${g.items.length} items</span>
      </button>`
   ).join('');
-
   if (older.length) {
     if (showOlder) {
       html += older.map(g =>
@@ -439,7 +427,6 @@ function renderTabs() {
     }
     html += `<button class="older-toggle ${showOlder ? 'active' : ''}" onclick="toggleOlder()">${showOlder ? '◀ HIDE OLDER' : 'OLDER →'}</button>`;
   }
-
   bar.innerHTML = html;
 }
 
@@ -467,13 +454,11 @@ function updateStats() {
 function applyFilters() {
   const activeGroup = dayGroups.find(g => g.key === activeTabKey);
   let items = activeGroup ? activeGroup.items.slice() : [];
-
   if (typeFilter === 'PINNED') {
     items = items.filter(i => pinnedSet.has(itemId(i)));
   } else if (typeFilter !== 'ALL') {
     items = items.filter(i => i.type === typeFilter);
   }
-
   renderCards(items);
   updateStats();
 }
@@ -487,6 +472,12 @@ function setFilter(type, btn) {
 
 function expandAll()   { document.querySelectorAll('.card').forEach(c => c.classList.add('expanded')); }
 function collapseAll() { document.querySelectorAll('.card').forEach(c => c.classList.remove('expanded')); }
+
+function toggleCard(idx, event) {
+  if (event) event.stopPropagation();
+  const card = document.getElementById('card-' + idx);
+  if (card) card.classList.toggle('expanded');
+}
 
 function togglePin(id, event) {
   if (event) event.stopPropagation();
@@ -524,7 +515,7 @@ function cardHTML(item, idx) {
   const isPinned = pinnedSet.has(id);
 
   const tickerChips = tickers.map(t =>
-    `<a class="ticker-chip" href="${yahooUrl(t)}" target="_blank" rel="noopener" data-ticker="${escapeHTML(t)}" onclick="event.stopPropagation()">${escapeHTML(t)}</a>`
+    `<a class="ticker-chip" href="${yahooUrl(t)}" target="_blank" rel="noopener" data-ticker="${escapeHTML(t)}">${escapeHTML(t)}</a>`
   ).join('');
 
   const tickersLarge = tickers.map(t =>
@@ -540,7 +531,7 @@ function cardHTML(item, idx) {
 
   return `
   <div class="card ${isPinned?'pinned':''}" id="card-${idx}" data-item-id="${escapeHTML(id)}">
-    <div class="card-header" onclick="document.getElementById('card-${idx}').classList.toggle('expanded')">
+    <div class="card-header">
       <div class="card-left">
         <div class="sig-score">${item.significance || '—'}</div>
         <span class="type-badge ${badgeClass}">${item.type || 'NEW'}</span>
@@ -556,7 +547,7 @@ function cardHTML(item, idx) {
       </div>
       <div class="card-right">
         <button class="pin-btn ${isPinned?'pinned':''}" onclick="togglePin('${escapeHTML(id)}',event)" title="${isPinned?'Unpin':'Pin'}">${isPinned?'★':'☆'}</button>
-        <span class="expand-icon">▾</span>
+        <div class="toggle-zone" onclick="toggleCard(${idx},event)" title="Expand or collapse">▾</div>
       </div>
     </div>
     <div class="card-body">
@@ -646,6 +637,7 @@ function handleSelection(e) {
 
 hlPopup.addEventListener('mousedown', (e) => {
   e.preventDefault();
+  e.stopPropagation();
   if (!pendingSelection) return;
   addHighlight(pendingSelection.itemKey, pendingSelection.fieldKey, pendingSelection.text);
   hlPopup.classList.remove('show');
@@ -660,7 +652,8 @@ function addHighlight(itemKey, fieldKey, snippet) {
     highlights[itemKey][fieldKey].push(snippet);
   }
   localStorage.setItem('abyss_highlights', JSON.stringify(highlights));
-  applyFilters();
+  // Re-render but preserve which cards are currently expanded
+  rerenderPreservingState();
 }
 
 function removeHighlight(itemKey, fieldKey, snippet) {
@@ -669,8 +662,22 @@ function removeHighlight(itemKey, fieldKey, snippet) {
     if (!highlights[itemKey][fieldKey].length) delete highlights[itemKey][fieldKey];
     if (!Object.keys(highlights[itemKey]).length) delete highlights[itemKey];
     localStorage.setItem('abyss_highlights', JSON.stringify(highlights));
-    applyFilters();
+    rerenderPreservingState();
   }
+}
+
+function rerenderPreservingState() {
+  const expandedIds = new Set();
+  document.querySelectorAll('.card.expanded').forEach(c => {
+    expandedIds.add(c.getAttribute('data-item-id'));
+  });
+  applyFilters();
+  // Restore expansion
+  document.querySelectorAll('.card').forEach(c => {
+    if (expandedIds.has(c.getAttribute('data-item-id'))) {
+      c.classList.add('expanded');
+    }
+  });
 }
 
 document.addEventListener('scroll', () => hlPopup.classList.remove('show'));
@@ -678,22 +685,17 @@ document.addEventListener('scroll', () => hlPopup.classList.remove('show'));
 // ── TICKER HOVER TOOLTIP ───────────────────────────────────────────
 const tickerTooltip = document.getElementById('ticker-tooltip');
 
-document.addEventListener('mouseover', async (e) => {
+document.addEventListener('mouseover', (e) => {
   const chip = e.target.closest('[data-ticker]');
   if (!chip) return;
   const ticker = chip.getAttribute('data-ticker');
+  const name = tickerNameMap[ticker] || ticker;
   const rect = chip.getBoundingClientRect();
-  tickerTooltip.innerHTML = `<span class="ticker-tooltip-symbol">${escapeHTML(ticker)}</span>Loading...`;
+  tickerTooltip.innerHTML = `<span class="ticker-tooltip-symbol">${escapeHTML(ticker)}</span>${escapeHTML(name)}`;
   tickerTooltip.style.left = (rect.left + rect.width / 2) + 'px';
   tickerTooltip.style.top = (rect.bottom + 8) + 'px';
   tickerTooltip.style.transform = 'translateX(-50%)';
   tickerTooltip.classList.add('show');
-
-  const name = await lookupTickerName(ticker);
-  // Only update tooltip if still hovering same element
-  if (tickerTooltip.classList.contains('show')) {
-    tickerTooltip.innerHTML = `<span class="ticker-tooltip-symbol">${escapeHTML(ticker)}</span>${escapeHTML(name || ticker)}`;
-  }
 });
 
 document.addEventListener('mouseout', (e) => {
