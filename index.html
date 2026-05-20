@@ -1,712 +1,1512 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-P9LWHHMC');</script>
+<!-- End Google Tag Manager -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ABYSS — Investment Intelligence</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Figtree:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<title>Rattapon's CV</title>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- Inter Font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script>
+        // Configure Tailwind to use the 'Inter' font
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#04040a;
-  --surface:#080812;
-  --surface-2:#0e0e1c;
-  --surface-3:#141428;
-  --border:rgba(255,255,255,0.06);
-  --border-h:rgba(255,255,255,0.14);
-  --gold:#c9a84c;
-  --gold-bright:#e8c264;
-  --gold-dim:rgba(201,168,76,0.1);
-  --gold-border:rgba(201,168,76,0.2);
-  --gold-glow:rgba(232,194,100,0.35);
-  --blue:#4a9eff;
-  --blue-dim:rgba(74,158,255,0.1);
-  --blue-hover:rgba(74,158,255,0.25);
-  --text:#e8e8f0;
-  --muted:#6868a0;
-  --muted-2:#38384a;
-  --new:#34d399;
-  --new-dim:rgba(52,211,153,0.1);
-  --update:#60a5fa;
-  --update-dim:rgba(96,165,250,0.1);
-  --trending:#f472b6;
-  --trending-dim:rgba(244,114,182,0.1);
-  --red:#f87171;
-  --pinned-bg:rgba(232,194,100,0.05);
-  --highlight:rgba(255,235,59,0.65);
-  --highlight-strong:rgba(255,235,59,0.85);
-}
-body{background:var(--bg);color:var(--text);font-family:'Figtree',sans-serif;min-height:100vh;overflow-x:hidden}
-body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:.4}
+        /* Small style tweaks */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f9fafb; /* bg-gray-50 */
+            color: #111827; /* text-gray-900 */
+        }
+        /* Style for the active nav link */
+        .nav-link.active {
+            font-weight: 600;
+            color: #111827; /* text-gray-900 */
+            border-bottom-color: #111827;
+        }
+        .nav-link {
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        /* Style for the details/summary accordion */
+        details > summary {
+            list-style: none; /* Remove default marker */
+            cursor: pointer;
+            display: flex; /* Enable flexbox for icon alignment */
+            align-items: center;
+        }
+        /* Custom Chevron Icon styling */
+        details > summary::before {
+            content: "";
+            /* SVG for Chevron Right */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='h-4 w-4' fill='none' viewBox='0 0 24 24' stroke='%234b5563'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 5l7 7-7 7' /%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: center;
+            height: 1rem;
+            width: 1rem;
+            margin-right: 0.5rem;
+            transition: transform 0.2s ease;
+        }
+        details[open] > summary::before {
+            /* Rotate to Chevron Down when open */
+            transform: rotate(90deg);
+        }
+        /* Optional: Hide scrollbar for a cleaner look */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none; /* IE and Edge */
+            scrollbar-width: none; /* Firefox */
+        }
 
-/* Ticker */
-.ticker{background:linear-gradient(90deg,#0a0a1a,#0d0d20,#0a0a1a);border-bottom:1px solid var(--gold-border);padding:.4rem 0;overflow:hidden}
-.ticker-inner{display:flex;animation:tick 40s linear infinite;white-space:nowrap}
-.ticker-item{padding:0 3rem;font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:.15em;color:var(--gold);opacity:.7}
-.ticker-sep{color:var(--muted-2)}
-@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+        /* --- Modal Styles --- */
+        /* The modal overlay (background) */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            display: none; /* Hidden by default */
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            padding: 1rem;
+        }
+        /* The modal content window */
+        .modal-content {
+            background-color: white;
+            border-radius: 0.5rem; /* 8px */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            max-width: 42rem; /* 672px */
+            width: 100%;
+            max-height: 90vh; /* Max 90% of viewport height */
+            overflow-y: auto; /* Enable scrolling if content is too long */
+            position: relative; /* For the close button */
+            padding: 1.5rem; /* 24px */
+        }
+        /* The close button (Updated Design) */
+        .modal-close-btn {
+            position: absolute;
+            top: 0.75rem; /* 12px */
+            right: 0.75rem; /* 12px */
+            color: #4b5563; /* text-gray-600 */
+            background-color: #f3f4f6; /* bg-gray-100 */
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem; /* 8px */
+            line-height: 1;
+            border-radius: 9999px; /* rounded-full */
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-close-btn:hover {
+            color: #111827; /* text-gray-900 */
+            background-color: #e5e7eb; /* bg-gray-200 */
+        }
+        /* Allow newlines in modal description */
+        #modal-description {
+            white-space: pre-line;
+            word-wrap: break-word; /* Ensure long text breaks */
+        }
+        /* Body class to prevent scrolling when modal is open */
+        body.modal-open {
+            overflow: hidden;
+        }
 
-/* Header */
-.hdr{background:var(--surface);border-bottom:1px solid var(--border);padding:1.25rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;backdrop-filter:blur(20px)}
-.brand{display:flex;flex-direction:column;gap:.1rem}
-.brand-name{font-family:'Syne',sans-serif;font-weight:800;font-size:1.6rem;letter-spacing:.2em;color:var(--gold);line-height:1}
-.brand-sub{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.2em;color:var(--muted);text-transform:uppercase}
-.hdr-right{display:flex;flex-direction:column;align-items:flex-end;gap:.3rem}
-.clock{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--text);letter-spacing:.04em}
-.generated{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--muted);letter-spacing:.03em}
-
-/* Day tabs */
-.day-tabs-bar{background:var(--surface-2);border-bottom:1px solid var(--border);padding:.5rem 2rem;display:flex;align-items:center;gap:.4rem;overflow-x:auto;scrollbar-width:thin}
-.day-tab{background:none;border:1px solid var(--border);color:var(--muted);padding:.55rem 1rem;border-radius:4px 4px 0 0;font-family:'JetBrains Mono',monospace;font-size:.7rem;cursor:pointer;transition:all .2s;letter-spacing:.05em;white-space:nowrap;display:flex;flex-direction:column;align-items:center;gap:.15rem;min-width:90px;border-bottom:none;position:relative;top:1px}
-.day-tab:hover{border-color:var(--gold-border);color:var(--gold)}
-.day-tab.active{border-color:var(--gold);color:var(--gold);background:var(--gold-dim);border-bottom:1px solid var(--bg)}
-.day-tab-date{font-weight:600;font-size:.78rem}
-.day-tab-count{font-size:.6rem;opacity:.7}
-.day-tab.active .day-tab-count{color:var(--gold-bright)}
-.older-toggle{background:none;border:1px solid var(--border);color:var(--muted);padding:.5rem .85rem;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:.7rem;cursor:pointer;transition:all .2s;letter-spacing:.05em;white-space:nowrap;margin-left:.4rem}
-.older-toggle:hover{border-color:var(--gold);color:var(--gold)}
-.older-toggle.active{border-color:var(--gold-bright);color:var(--gold-bright);background:var(--gold-dim)}
-
-/* Stats bar */
-.stats-bar{background:var(--surface-2);border-bottom:1px solid var(--border);padding:.75rem 2rem;display:flex;align-items:center;gap:2rem;flex-wrap:wrap}
-.stat{display:flex;flex-direction:column;gap:.1rem}
-.stat-val{font-family:'Syne',sans-serif;font-weight:700;font-size:1.1rem;color:var(--gold)}
-.stat-label{font-family:'JetBrains Mono',monospace;font-size:.58rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
-.stat-divider{width:1px;height:2rem;background:var(--border);flex-shrink:0}
-
-/* Filter bar */
-.filter-bar{padding:1rem 2rem;border-bottom:1px solid var(--border);background:var(--surface);display:flex;align-items:center;gap:.75rem;flex-wrap:wrap}
-.filter-label{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--muted);letter-spacing:.1em;white-space:nowrap}
-.filters{display:flex;gap:.5rem;flex-wrap:wrap}
-.filter-btn{background:none;border:1px solid var(--border);color:var(--muted);padding:.3rem .75rem;border-radius:3px;font-family:'JetBrains Mono',monospace;font-size:.65rem;cursor:pointer;transition:all .2s;letter-spacing:.06em;white-space:nowrap}
-.filter-btn:hover{border-color:var(--gold-border);color:var(--gold)}
-.filter-btn.active{border-color:var(--gold);color:var(--gold);background:var(--gold-dim)}
-.filter-btn.f-new.active{border-color:var(--new);color:var(--new);background:var(--new-dim)}
-.filter-btn.f-update.active{border-color:var(--update);color:var(--update);background:var(--update-dim)}
-.filter-btn.f-trending.active{border-color:var(--trending);color:var(--trending);background:var(--trending-dim)}
-.filter-btn.f-pinned.active{border-color:var(--gold-bright);color:var(--gold-bright);background:var(--gold-dim);box-shadow:0 0 12px var(--gold-glow)}
-.filter-divider{width:1px;height:1.2rem;background:var(--border)}
-
-/* Main */
-.main{padding:1.5rem 2rem;max-width:1400px;margin:0 auto}
-.cards{display:flex;flex-direction:column;gap:.75rem}
-
-/* Card */
-.card{background:var(--surface);border:1px solid var(--border);border-radius:6px;overflow:hidden;transition:border-color .2s,box-shadow .3s,background .2s}
-.card:hover{border-color:var(--border-h)}
-.card.pinned{border-color:var(--gold-bright);background:var(--pinned-bg);box-shadow:0 0 20px var(--gold-glow)}
-.card.expanded .card-body{display:block}
-.card.expanded .toggle-zone{transform:rotate(180deg)}
-
-/* Header - NO longer clickable as a whole. Only chevron toggles. */
-.card-header{padding:1rem 1.25rem;display:grid;grid-template-columns:auto 1fr auto auto;gap:1rem;align-items:start;cursor:default}
-.card-left{display:flex;flex-direction:column;gap:.5rem;align-items:flex-start;min-width:2.5rem}
-.sig-score{font-family:'Syne',sans-serif;font-weight:800;font-size:1.5rem;color:var(--gold);line-height:1}
-.card.pinned .sig-score{color:var(--gold-bright)}
-.type-badge{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.1em;padding:.15rem .5rem;border-radius:3px;white-space:nowrap}
-.badge-NEW{background:var(--new-dim);color:var(--new);border:1px solid rgba(52,211,153,.25)}
-.badge-UPDATE{background:var(--update-dim);color:var(--update);border:1px solid rgba(96,165,250,.25)}
-.badge-TRENDING{background:var(--trending-dim);color:var(--trending);border:1px solid rgba(244,114,182,.25)}
-
-.card-center{display:flex;flex-direction:column;gap:.5rem;min-width:0}
-.card-headline{font-family:'Figtree',sans-serif;font-weight:500;font-size:1rem;line-height:1.4;color:var(--text)}
-.card-meta{display:flex;align-items:center;gap:.6rem;flex-wrap:wrap}
-
-.date-pill{font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:500;color:var(--gold-bright);background:var(--gold-dim);padding:.25rem .65rem;border-radius:4px;border:1px solid var(--gold-border);letter-spacing:.04em;white-space:nowrap}
-.group-tag{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--muted);letter-spacing:.08em;background:var(--surface-3);padding:.15rem .5rem;border-radius:3px}
-
-.tickers{display:flex;gap:.35rem;flex-wrap:wrap}
-.ticker-chip{font-family:'JetBrains Mono',monospace;font-size:.62rem;color:var(--blue);background:var(--blue-dim);padding:.18rem .5rem;border-radius:3px;border:1px solid rgba(74,158,255,.2);cursor:pointer;transition:all .15s;user-select:none;text-decoration:none;display:inline-block}
-.ticker-chip:hover{background:var(--blue-hover);transform:translateY(-1px);color:var(--blue)}
-
-.pin-btn{background:none;border:1px solid var(--border);color:var(--muted);width:32px;height:32px;border-radius:4px;cursor:pointer;font-size:.95rem;display:flex;align-items:center;justify-content:center;transition:all .2s;padding:0}
-.pin-btn:hover{border-color:var(--gold);color:var(--gold)}
-.pin-btn.pinned{border-color:var(--gold-bright);background:var(--gold-dim);color:var(--gold-bright);text-shadow:0 0 8px var(--gold-glow)}
-
-.card-right{display:flex;align-items:center;gap:.4rem}
-
-/* Toggle zone - dedicated area for expand/collapse */
-.toggle-zone{display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:4px;border:1px solid var(--border);cursor:pointer;color:var(--muted);font-size:.95rem;transition:all .25s;user-select:none}
-.toggle-zone:hover{border-color:var(--gold);color:var(--gold);background:var(--gold-dim)}
-
-/* Card body */
-.card-body{display:none;border-top:1px solid var(--border)}
-.questions{display:grid;grid-template-columns:1fr 1fr;gap:0}
-.q-block{padding:1rem 1.25rem;border-bottom:1px solid var(--border);border-right:1px solid var(--border)}
-.q-block:nth-child(even){border-right:none}
-.q-block:nth-last-child(-n+2){border-bottom:none}
-.q-block.full{grid-column:1/-1;border-right:none}
-.q-label{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.12em;color:var(--gold);text-transform:uppercase;margin-bottom:.4rem;opacity:.8}
-.q-text{font-size:.85rem;line-height:1.6;color:var(--text)}
-.q-text.muted{color:var(--muted)}
-.sources-list{display:flex;flex-direction:column;gap:.3rem}
-.source-item{display:flex;align-items:center;gap:.5rem}
-.source-dot{width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0}
-.source-link{font-size:.8rem;color:var(--blue);text-decoration:none}
-.source-link:hover{text-decoration:underline}
-.tickers-large{display:flex;gap:.5rem;flex-wrap:wrap}
-.ticker-large{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--gold);background:var(--gold-dim);padding:.3rem .7rem;border-radius:4px;border:1px solid var(--gold-border);cursor:pointer;transition:all .15s;text-decoration:none;display:inline-block}
-.ticker-large:hover{background:var(--gold);color:#000}
-.original-event{font-size:.78rem;color:var(--muted);font-style:italic;margin-top:.35rem}
-
-/* Highlight text - BRIGHT YELLOW */
-.hl{background:var(--highlight);color:#000;border-radius:2px;padding:0 2px;cursor:pointer;transition:background .15s}
-.hl:hover{background:var(--highlight-strong)}
-
-/* Highlight popup button */
-.hl-popup{position:fixed;display:none;background:#ffeb3b;color:#000;border:none;padding:.45rem .85rem;border-radius:4px;font-family:'Syne',sans-serif;font-weight:700;font-size:.72rem;letter-spacing:.1em;cursor:pointer;z-index:9000;box-shadow:0 4px 20px rgba(0,0,0,.5);text-transform:uppercase;transition:transform .15s}
-.hl-popup:hover{transform:scale(1.05)}
-.hl-popup.show{display:block}
-
-/* Ticker tooltip */
-.ticker-tooltip{position:fixed;background:var(--surface-3);color:var(--text);border:1px solid var(--gold-border);padding:.55rem .85rem;border-radius:4px;font-family:'Figtree',sans-serif;font-size:.78rem;font-weight:500;letter-spacing:.02em;pointer-events:none;z-index:9500;display:none;box-shadow:0 4px 20px rgba(0,0,0,.5);white-space:nowrap;max-width:340px;overflow:hidden;text-overflow:ellipsis}
-.ticker-tooltip.show{display:block}
-.ticker-tooltip-symbol{color:var(--gold-bright);font-family:'JetBrains Mono',monospace;font-size:.7rem;margin-right:.45rem;padding-right:.45rem;border-right:1px solid var(--border-h)}
-
-/* States */
-.state{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:5rem 2rem;text-align:center;gap:1rem}
-.state-title{font-family:'Syne',sans-serif;font-size:1.2rem;color:var(--gold)}
-.state-text{font-size:.85rem;color:var(--muted);line-height:1.6;max-width:400px}
-.dots{display:flex;gap:8px}
-.dot{width:8px;height:8px;border-radius:50%;background:var(--gold);animation:pulse 1.2s ease-in-out infinite}
-.dot:nth-child(2){animation-delay:.2s}.dot:nth-child(3){animation-delay:.4s}
-@keyframes pulse{0%,80%,100%{opacity:.15;transform:scale(.7)}40%{opacity:1;transform:scale(1)}}
-
-/* Footer */
-.footer{padding:2rem;text-align:center;border-top:1px solid var(--border);margin-top:2rem}
-.footer-text{font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--muted-2);letter-spacing:.08em}
-
-@media(max-width:768px){
-  .hdr,.day-tabs-bar,.filter-bar,.stats-bar{padding-left:1rem;padding-right:1rem}
-  .main{padding:1rem}
-  .questions{grid-template-columns:1fr}
-  .q-block{border-right:none}
-  .q-block.full{grid-column:1}
-  .card-header{grid-template-columns:auto 1fr auto;gap:.75rem}
-  .card-right{flex-direction:column}
-  .ticker-tooltip{display:none !important}
-}
-</style>
+    </style>
 </head>
-<body>
+<body class="antialiased">
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P9LWHHMC"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+<!-- Header & Navigation -->
+<header class="bg-white/95 backdrop-blur-sm shadow-sm sticky top-0 z-50">
+<nav class="container mx-auto px-4 md:px-8 py-4 flex justify-between items-center">
+<!-- Logo/Name -->
+<a href="#home" class="text-2xl font-bold text-gray-900">
+            Rattapon <span class="text-gray-600">Sriphathoorat (SHANE)</span>
+</a>
 
-<div class="ticker">
-  <div class="ticker-inner">
-    <span class="ticker-item">A B Y S S</span><span class="ticker-item ticker-sep">✦</span>
-    <span class="ticker-item">INVESTMENT INTELLIGENCE</span><span class="ticker-item ticker-sep">✦</span>
-    <span class="ticker-item">MACRO · GEOPOLITICS · MARKETS</span><span class="ticker-item ticker-sep">✦</span>
-    <span class="ticker-item">DEEP · WIDE · NOTHING SLIPS THROUGH</span><span class="ticker-item ticker-sep">✦</span>
-    <span class="ticker-item">A B Y S S</span><span class="ticker-item ticker-sep">✦</span>
-    <span class="ticker-item">INVESTMENT INTELLIGENCE</span><span class="ticker-item ticker-sep">✦</span>
-    <span class="ticker-item">MACRO · GEOPOLITICS · MARKETS</span><span class="ticker-item ticker-sep">✦</span>
-    <span class="ticker-item">DEEP · WIDE · NOTHING SLIPS THROUGH</span><span class="ticker-item ticker-sep">✦</span>
-  </div>
+<!-- Mobile Menu Button (Hamburger) -->
+<button id="mobile-menu-btn" class="md:hidden p-2 rounded-md text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300">
+<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+</svg>
+</button>
+
+<!-- Desktop Navigation -->
+<ul class="hidden md:flex space-x-6">
+<li><a href="#home" class="nav-link text-gray-600 hover:text-gray-900 py-1">Greeting!</a></li>
+<li><a href="#about" class="nav-link text-gray-600 hover:text-gray-900 py-1">About</a></li>
+<li><a href="#projects" class="nav-link text-gray-600 hover:text-gray-900 py-1">Projects</a></li> <!-- Added Project Link -->
+<li><a href="#experience" class="nav-link text-gray-600 hover:text-gray-900 py-1">Experience</a></li>
+<li><a href="#portfolio" class="nav-link text-gray-600 hover:text-gray-900 py-1">Portfolio</a></li>
+<li><a href="#interests" class="nav-link text-gray-600 hover:text-gray-900 py-1">Interests</a></li>
+<li><a href="#contact" class="nav-link text-gray-600 hover:text-gray-900 py-1">Contact</a></li>
+</ul>
+</nav>
+
+<!-- Mobile Menu (Hidden by default) -->
+<div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg">
+<ul class="flex flex-col space-y-1 px-4 pt-2 pb-4">
+<li><a href="#home" class="nav-link-mobile block w-full px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">Greeting!</a></li>
+<li><a href="#about" class="nav-link-mobile block w-full px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">About</a></li>
+<li><a href="#projects" class="nav-link-mobile block w-full px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">Projects</a></li> <!-- Added Project Link -->
+<li><a href="#experience" class="nav-link-mobile block w-full px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">Experience</a></li>
+<li><a href="#portfolio" class="nav-link-mobile block w-full px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">Portfolio</a></li>
+<li><a href="#interests" class="nav-link-mobile block w-full px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">Interests</a></li>
+<li><a href="#contact" class="nav-link-mobile block w-full px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">Contact</a></li>
+</ul>
 </div>
-
-<header class="hdr">
-  <div class="brand">
-    <div class="brand-name">ABYSS</div>
-    <div class="brand-sub">Investment Intelligence Terminal</div>
-  </div>
-  <div class="hdr-right">
-    <div class="clock" id="clock">--:--:-- BKK</div>
-    <div class="generated" id="generated-at">Loading...</div>
-  </div>
 </header>
 
-<div class="day-tabs-bar" id="day-tabs-bar" style="display:none"></div>
+<!-- Main Content -->
+<main>
 
-<div class="stats-bar" id="stats-bar" style="display:none">
-  <div class="stat"><div class="stat-val" id="stat-total">0</div><div class="stat-label">Items in tab</div></div>
-  <div class="stat-divider"></div>
-  <div class="stat"><div class="stat-val" style="color:var(--new)" id="stat-new">0</div><div class="stat-label">New</div></div>
-  <div class="stat-divider"></div>
-  <div class="stat"><div class="stat-val" style="color:var(--update)" id="stat-update">0</div><div class="stat-label">Updates</div></div>
-  <div class="stat-divider"></div>
-  <div class="stat"><div class="stat-val" style="color:var(--trending)" id="stat-trending">0</div><div class="stat-label">Trending</div></div>
-  <div class="stat-divider"></div>
-  <div class="stat"><div class="stat-val" style="color:var(--gold-bright)" id="stat-pinned">0</div><div class="stat-label">★ Pinned (all)</div></div>
+<!-- Section 1: Hero -->
+<section id="home" class="bg-white py-24 md:py-32">
+<div class="container mx-auto px-4 md:px-8 text-center">
+<h1 class="text-4xl md:text-6xl font-bold text-gray-900 leading-tight">
+            Hello, welcome to my Curriculum Vitae (CV)
+        </h1>
+<p class="mt-4 text-xl md:text-2xl text-gray-600">
+<!-- This line was intentionally removed by user request -->
+</p>
+<p class="mt-6 max-w-2xl mx-auto text-lg text-gray-700">
+            This Online CV is a comprehensive look at my work, projects, and portfolio all in one place. You can reach me via the "Contact" section at the bottom of the page.
+</p>
+<div class="mt-10 flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+<a href="#contact" class="px-8 py-3 bg-white text-gray-900 font-medium rounded-lg border border-gray-300 shadow-sm hover:bg-gray-100 transition-colors duration-300">
+                Contact Me
+</a>
+</div>
+</div>
+</section>
+
+<!-- Section 2: About Me -->
+<section id="about" class="py-20 md:py-24">
+<div class="container mx-auto px-4 md:px-8">
+<div class="grid grid-cols-1 md:grid-cols-5 gap-12 items-center">
+<div class="md:col-span-2">
+<img 
+                    src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/about/profile_about.jpg" 
+                    alt="A professional headshot of Shane"
+                    class="rounded-lg shadow-xl w-full h-auto object-cover aspect-square"
+                    onerror="this.src='https://placehold.co/500x500/cccccc/444444?text=Image+Load+Error'"
+                >
+</div>
+<div class="md:col-span-3">
+<h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">About Me</h2>
+<p class="text-lg text-gray-700 mb-6">
+                    I'm a recent CFA Level III passer with a unique background combining a quantitative Aerospace Engineering degree with hands-on entrepreneurial experience, where I managed full P&L and financial operations. I am now making a focused career transition and am actively pursuing investment/ finance related role.
+</p>
+
+<!-- Start of Updated Skills Section -->
+
+<!-- Core Skills -->
+<h3 class="text-2xl font-semibold text-gray-900 mb-4 mt-6">Core Skills</h3>
+<div class="flex flex-wrap gap-2">
+<span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full font-medium">Financial Statement Analysis</span>
+<span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full font-medium">Equity Analysis</span>
+<span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full font-medium">Valuation</span>
+<span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full font-medium">Portfolio Management</span>
+<span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full font-medium">Fixed Income Analysis</span>
+<span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full font-medium">Investment Principles & Ethic</span>
+<span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full font-medium">Financial Modelling</span>
+<span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full font-medium">Quantitative Analysis</span>
+<span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full font-medium">Corporate Investment Analyst</span>
 </div>
 
-<div class="filter-bar" id="filter-bar" style="display:none">
-  <span class="filter-label">FILTER</span>
-  <div class="filters">
-    <button class="filter-btn active" data-filter="ALL" onclick="setFilter('ALL',this)">ALL</button>
-    <button class="filter-btn f-new" data-filter="NEW" onclick="setFilter('NEW',this)">● NEW</button>
-    <button class="filter-btn f-update" data-filter="UPDATE" onclick="setFilter('UPDATE',this)">● UPDATE</button>
-    <button class="filter-btn f-trending" data-filter="TRENDING" onclick="setFilter('TRENDING',this)">● TRENDING</button>
-    <button class="filter-btn f-pinned" data-filter="PINNED" onclick="setFilter('PINNED',this)">★ PINNED</button>
-    <div class="filter-divider"></div>
-    <button class="filter-btn" onclick="expandAll()">EXPAND ALL</button>
-    <button class="filter-btn" onclick="collapseAll()">COLLAPSE ALL</button>
-  </div>
+<!-- Soft Skills -->
+<h3 class="text-2xl font-semibold text-gray-900 mb-4 mt-6">Other Skills</h3>
+<div class="flex flex-wrap gap-2">
+<span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full font-medium">Operations Management</span>
+<span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full font-medium">Quantitative Problem-Solving</span>
+<span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full font-medium">Project Management</span>
+<span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full font-medium">Digital Marketing</span>
+<span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full font-medium">Community Management</span>
+<span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full font-medium">Python</span>
+<span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full font-medium">Data Analysis</span>
+<span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full font-medium">Team Leading</span>
+<span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full font-medium">Presentation</span>
+<span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full font-medium">Communication</span>
+<span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full font-medium">Strategic Planning</span>
+<span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full font-medium">SQL</span>
+<span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full font-medium">Office tools (eg.Excel, Word, etc.)</span>
 </div>
 
-<main class="main">
-  <div class="cards" id="cards">
-    <div class="state">
-      <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
-      <div class="state-title">ABYSS IS LOADING</div>
-      <div class="state-text">Pulling intelligence feed...</div>
+<!-- Language Skills -->
+<h3 class="text-2xl font-semibold text-gray-900 mb-4 mt-6">Language Skills</h3>
+<div class="flex flex-wrap gap-2">
+<span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full font-medium">Thai (Native)</span>
+<span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full font-medium">English (Fluent-TOEIC915)</span>
+<span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full font-medium">Chinese (Beginner-HSK2)</span>
+<span class="bg-gray-200 text-gray-800 px-3 py-1 rounded-full font-medium">Japanese (Beginner)</span>
+</div>
+
+<!-- End of Updated Skills Section -->
+
+</div>
+</div>
+</div>
+</section>
+
+<!-- Section: Projects (Updated Fix) -->
+<section id="projects" class="bg-white py-20 md:py-24 border-t border-gray-100">
+    <div class="container mx-auto px-4 md:px-8">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-12 text-center">Projects</h2>
+        
+        <!-- Projects Wrapper for Arrows -->
+        <div class="relative max-w-6xl mx-auto">
+            <!-- Left Scroll Button -->
+            <button id="projects-scroll-left" class="absolute left-0 md:-left-4 lg:-left-12 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-lg opacity-80 hover:opacity-100 transition-opacity duration-300 z-10 hidden md:flex items-center justify-center border border-gray-200 w-10 h-10">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7" /></svg>
+            </button>
+
+            <!-- Projects Scroll Container -->
+            <div id="projects-scroll-container" class="flex space-x-6 overflow-x-auto pb-8 hide-scrollbar snap-x snap-mandatory">
+            
+                <!-- Project Card: Economic Cycle Dashboard -->
+                <div class="relative w-[85vw] md:w-[900px] flex-shrink-0 snap-center rounded-2xl shadow-2xl overflow-hidden group">
+                    <div class="absolute inset-0 w-full h-full">
+                        <img src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/project/CYCLE.png" alt="Global Economic Cycle Background" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gray-900/90"></div> 
+                    </div>
+                
+                    <div class="relative p-8 md:p-12 z-10 text-white">
+                        <div class="flex flex-col md:flex-row gap-8 md:gap-12 items-start">
+                            <div class="w-full md:w-1/3 flex-shrink-0">
+                                <img 
+                                    src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/project/CYCLE.png" 
+                                    alt="Global Economic Cycle Thumbnail" 
+                                    class="w-full aspect-square object-cover rounded-xl shadow-lg border border-gray-700"
+                                >
+                            </div>
+                
+                            <div class="w-full md:w-2/3">
+                                <h3 class="text-2xl md:text-3xl font-bold text-white mb-4">Global Economic Cycle Dashboard</h3>
+                                <p class="text-lg text-gray-300 mb-8 leading-relaxed">
+                                    A macro tool that maps major global economies across the four stages of the business cycle. By synthesizing GDP growth trends and inflationary pressures, the dashboard provides a forward-looking visual roadmap of the global macro landscape through 2027. It’s designed to help identify regime shifts, aiding in tactical asset allocation and top-down investment strategy.
+                                </p>
+                
+                                <div class="mb-8">
+                                    <h4 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3">Technologies & Skills Used</h4>
+                                    <div class="flex flex-wrap gap-3">
+                                        <span class="bg-gray-800 text-blue-300 border border-gray-700 px-4 py-2 rounded-full font-medium text-sm">Global Macro Finance</span>
+                                        <span class="bg-gray-800 text-yellow-300 border border-gray-700 px-4 py-2 rounded-full font-medium text-sm">Economic Analysis</span>
+                                        <span class="bg-gray-800 text-teal-300 border border-gray-700 px-4 py-2 rounded-full font-medium text-sm">Tableau</span>
+                                        <span class="bg-gray-800 text-green-300 border border-gray-700 px-4 py-2 rounded-full font-medium text-sm">Data Visualization</span>
+                                    </div>
+                                </div>
+                
+                                <div class="flex flex-col sm:flex-row gap-4">
+                                    <a href="https://public.tableau.com/app/profile/rattapon.sriphathoorat/viz/Econ_Cycle/Global_Econ_Cycle2027" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center px-6 py-3 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 transition-colors shadow-md">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                                        View Dashboard
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card: Efficient Frontier -->
+                <div class="relative w-[85vw] md:w-[900px] flex-shrink-0 snap-center rounded-2xl shadow-2xl overflow-hidden group">
+                    <div class="absolute inset-0 w-full h-full">
+                        <img src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/project/EF2.jpg" alt="Efficient Frontier Background" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gray-900/90"></div> 
+                    </div>
+
+                    <div class="relative p-8 md:p-12 z-10 text-white">
+                        <div class="flex flex-col md:flex-row gap-8 md:gap-12 items-start">
+                            <div class="w-full md:w-1/3 flex-shrink-0">
+                                <img 
+                                    src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/project/EF1.jpg" 
+                                    alt="Weight Optimizer Thumbnail" 
+                                    class="w-full aspect-square object-cover rounded-xl shadow-lg border border-gray-700"
+                                >
+                            </div>
+
+                            <div class="w-full md:w-2/3">
+                                <h3 class="text-2xl md:text-3xl font-bold text-white mb-4">Weight Optimizer using Efficient Frontier</h3>
+                                <p class="text-lg text-gray-300 mb-8 leading-relaxed">
+                                    A quantitative tool built to identify the "Optimal Portfolio" by applying Modern Portfolio Theory (MPT). Using Python’s optimization libraries, the engine calculates the Efficient Frontier, allowing users to find the specific asset weights that maximize the Sharpe Ratio (Tangency Portfolio) or minimize variance for a target return.
+                                </p>
+
+                                <div class="mb-8">
+                                    <h4 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3">Technologies & Skills Used</h4>
+                                    <div class="flex flex-wrap gap-3">
+                                        <span class="bg-gray-800 text-blue-300 border border-gray-700 px-4 py-2 rounded-full font-medium text-sm">Portfolio Management</span>
+                                        <span class="bg-gray-800 text-yellow-300 border border-gray-700 px-4 py-2 rounded-full font-medium text-sm">Python</span>
+                                        <span class="bg-gray-800 text-green-300 border border-gray-700 px-4 py-2 rounded-full font-medium text-sm">Data Visualization</span>
+                                        <span class="bg-gray-800 text-indigo-300 border border-gray-700 px-4 py-2 rounded-full font-medium text-sm">GitHub</span>
+                                        <span class="bg-gray-800 text-red-300 border border-gray-700 px-4 py-2 rounded-full font-medium text-sm">Streamlit</span>
+                                    </div>
+                                </div>
+
+                                <div class="flex flex-col sm:flex-row gap-4">
+                                    <a href="https://portoptimizebyshane.streamlit.app/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center px-6 py-3 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 transition-colors shadow-md">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                                        🚀 Launch App
+                                    </a>
+                                    <a href="https://github.com/shanesri/portoptimize" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center px-6 py-3 bg-gray-700 text-white border border-gray-600 font-medium rounded-lg hover:bg-gray-600 transition-colors shadow-sm">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                                        View Code
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project Card: Monte Carlo Simulator -->
+                <div class="relative w-[85vw] md:w-[900px] flex-shrink-0 snap-center rounded-2xl shadow-2xl overflow-hidden group">
+                    <div class="absolute inset-0 w-full h-full">
+                        <img src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/project/MCS2.jpg" alt="Monte Carlo Background" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gray-900/90"></div> 
+                    </div>
+                    <div class="relative p-8 md:p-12 z-10 text-white">
+                        <div class="flex flex-col md:flex-row gap-8 md:gap-12 items-start">
+                            <div class="w-full md:w-1/3 flex-shrink-0">
+                                <img 
+                                    src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/project/MCS1.jpg" 
+                                    alt="Monte Carlo Simulator Thumbnail" 
+                                    class="w-full aspect-square object-cover rounded-xl shadow-lg border border-gray-700"
+                                >
+                            </div>
+                            <div class="w-full md:w-2/3">
+                                <h3 class="text-2xl md:text-3xl font-bold text-white mb-4">Monte Carlo Portfolio Simulator</h3>
+                                <p class="text-lg text-gray-300 mb-8 leading-relaxed">
+                                    Sandbox for turning CFA textbook theory into "Finance Made Easy" tools. It utilizes Python for its efficiency in automating complex financial math and running Monte Carlo simulations to visualize portfolio risk. Managed via GitHub and deployed through Streamlit, the terminal transforms scripts into an interactive interface where data results become clear and meaningful.
+                                </p>
+                                <div class="mb-8">
+                                    <h4 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3">Technologies & Skills Used</h4>
+                                    <div class="flex flex-wrap gap-3">
+                                        <span class="bg-gray-800 text-blue-300 border border-gray-700 px-4 py-2 rounded-full font-medium text-sm">Portfolio Management</span>
+                                        <span class="bg-gray-800 text-yellow-300 border border-gray-700 px-4 py-2 rounded-full font-medium text-sm">Python</span>
+                                        <span class="bg-gray-800 text-green-300 border border-gray-700 px-4 py-2 rounded-full font-medium text-sm">Data Visualization</span>
+                                        <span class="bg-gray-800 text-indigo-300 border border-gray-700 px-4 py-2 rounded-full font-medium text-sm">GitHub</span>
+                                        <span class="bg-gray-800 text-red-300 border border-gray-700 px-4 py-2 rounded-full font-medium text-sm">Streamlit</span>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col sm:flex-row gap-4">
+                                    <a href="https://mcsbyshane.streamlit.app/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center px-6 py-3 bg-red-600 text-white font-medium rounded-lg hover:bg-red-700 transition-colors shadow-md">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                                        🚀 Launch App
+                                    </a>
+                                    <a href="https://github.com/shanesri/portmng" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center px-6 py-3 bg-gray-700 text-white border border-gray-600 font-medium rounded-lg hover:bg-gray-600 transition-colors shadow-sm">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                                        View Code
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project Card: AOT Strategic Valuation -->
+                <div class="relative w-[85vw] md:w-[900px] flex-shrink-0 snap-center rounded-2xl shadow-2xl overflow-hidden group">
+                    <div class="absolute inset-0 w-full h-full">
+                        <img src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/project/AOT.jpg" alt="Background" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gray-900/90"></div> 
+                    </div>
+                    <div class="relative p-8 md:p-12 z-10 text-white">
+                        <div class="flex flex-col md:flex-row gap-8 md:gap-12 items-start">
+                            <div class="w-full md:w-1/3 flex-shrink-0">
+                                <img 
+                                    src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/project/AOT2.jpg" 
+                                    alt="AOT Project Thumbnail" 
+                                    class="w-full aspect-square object-cover rounded-xl shadow-lg border border-gray-700"
+                                >
+                            </div>
+                            <div class="w-full md:w-2/3">
+                                <h3 class="text-2xl md:text-3xl font-bold text-white mb-4">Airports of Thailand (AOT) – Strategic Valuation & Financial Model Forecast</h3>
+                                <p class="text-lg text-gray-300 mb-8 leading-relaxed">
+                                    AOT Financial model, built entirely from scratch, analyzes Airports of Thailand (AOT). It features a dynamic three-case scenario analysis with granular drivers for PSC fee hikes, concession sharing, and office occupancy, alongside a robust valuation triangulated via FCFF, FCFE, DDM, and global peer benchmarking.
+                                </p>
+                                <div class="mb-8">
+                                    <h4 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3">Technologies & Skills Used</h4>
+                                    <div class="flex flex-wrap gap-3">
+                                        <span class="bg-gray-800 text-blue-300 border border-gray-700 px-4 py-2 rounded-full font-medium text-sm">Financial Statement Analysis</span>
+                                        <span class="bg-gray-800 text-green-300 border border-gray-700 px-4 py-2 rounded-full font-medium text-sm">Equity Analysis</span>
+                                        <span class="bg-gray-800 text-purple-300 border border-gray-700 px-4 py-2 rounded-full font-medium text-sm">Valuation</span>
+                                        <span class="bg-gray-800 text-yellow-300 border border-gray-700 px-4 py-2 rounded-full font-medium text-sm">Financial Modelling</span>
+                                        <span class="bg-gray-800 text-indigo-300 border border-gray-700 px-4 py-2 rounded-full font-medium text-sm">Data Analysis</span>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col sm:flex-row gap-4">
+                                    <a href="https://github.com/shanesri/CV/blob/main/download-doc/FinanceModelForecast_AOT.pdf?raw=true" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center px-6 py-3 bg-white text-gray-900 font-medium rounded-lg hover:bg-gray-200 transition-colors shadow-md">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                                        Download Report
+                                    </a>
+                                    <a href="https://docs.google.com/spreadsheets/d/1X3HiQk-a1z6XDLsGNXnp1fk8iloI8338EvxbrPxJ2Xk/edit?usp=sharing" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center px-6 py-3 bg-green-600 text-white border border-transparent font-medium rounded-lg hover:bg-green-700 transition-colors shadow-sm">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                                        Download Google Sheet
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right Scroll Button -->
+            <button id="projects-scroll-right" class="absolute right-0 md:-right-4 lg:-right-12 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-lg opacity-80 hover:opacity-100 transition-opacity duration-300 z-10 hidden md:flex items-center justify-center border border-gray-200 w-10 h-10">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7" /></svg>
+            </button>
+        </div>
     </div>
-  </div>
+</section>
+
+<!-- Section 3: Experience (CV) -->
+<section id="experience" class="bg-white py-20 md:py-24">
+<div class="container mx-auto px-4 md:px-8">
+<h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-12 text-center">Experience & Education</h2>
+
+<!-- Single Column Timeline Container -->
+<div class="max-w-3xl mx-auto">
+
+<!-- Work Experience -->
+<h3 class="text-2xl font-semibold text-gray-900 mb-6">Work Experience</h3>
+<div class="space-y-10">
+
+<!-- Job 1 -->
+<div class="relative pl-8">
+<div class="absolute left-0 top-1 h-full border-l-2 border-gray-300"></div>
+<div class="absolute left-[-6px] top-1 w-4 h-4 bg-gray-900 rounded-full border-4 border-white"></div>
+<h4 class="text-xl font-semibold text-gray-900">Co-Owner, Head of Media & Operations</h4>
+<p class="text-md text-gray-600 mb-1">Brand Buddy TH | Bangkok City, Thailand</p>
+<p class="text-sm text-gray-500 mb-3">Jan 2019 – Nov 2023 (4 yrs 11 mos)</p>
+<details>
+<summary class="text-gray-700 font-semibold hover:text-gray-900">Job Description</summary>
+<p class="mt-2 text-gray-700">
+                                As Co-Owner, my core responsibilities covered two main areas: leading the digital marketing department and managing the company's internal operations. My marketing duties involved developing client media strategies, managing the end-to-end media buying process on platforms like Google and Facebook, and analyzing campaign data for performance reports. On the operations side, I was responsible for designing all internal project workflows and coordinating between the creative, marketing, and client service teams to ensure projects were delivered smoothly and efficiently.
+</p>
+<!-- Image Scroller for Brand Buddy -->
+<div class="relative mt-6">
+    <!-- Scroll Buttons (Smaller) -->
+    <button id="brandbuddy-scroll-left" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white p-1 rounded-full shadow-md opacity-80 hover:opacity-100 transition-opacity duration-300 z-10 hidden md:flex items-center justify-center border border-gray-200 w-8 h-8">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7" /></svg>
+    </button>
+    
+    <!-- Horizontal Scroll Container -->
+    <div id="brandbuddy-scroll-container" class="flex space-x-4 overflow-x-auto pb-2 hide-scrollbar md:px-10">
+        <!-- Image 1 -->
+        <img src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/work/BB1.jpg" alt="Brand Buddy Image 1" class="w-64 aspect-square object-cover rounded-lg flex-shrink-0 shadow-sm">
+        <!-- Image 2 (FIXED) -->
+        <img src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/work/BB2.png" alt="Brand Buddy Image 2" class="w-64 aspect-square object-cover rounded-lg flex-shrink-0 shadow-sm">
+        <!-- Image 3 -->
+        <img src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/work/BB3.jpg" alt="Brand Buddy Image 3" class="w-64 aspect-square object-cover rounded-lg flex-shrink-0 shadow-sm">
+        <!-- Image 4 (NEW BB5) -->
+        <img src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/work/BB5.png" alt="Brand Buddy Image 5" class="w-64 aspect-square object-cover rounded-lg flex-shrink-0 shadow-sm">
+        <!-- Image 5 (FIXED) -->
+        <img src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/work/BB4.jpg" alt="Brand Buddy Image 4" class="w-64 aspect-square object-cover rounded-lg flex-shrink-0 shadow-sm">
+    </div>
+    
+    <!-- Scroll Buttons (Smaller) -->
+    <button id="brandbuddy-scroll-right" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white p-1 rounded-full shadow-md opacity-80 hover:opacity-100 transition-opacity duration-300 z-10 hidden md:flex items-center justify-center border border-gray-200 w-8 h-8">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7" /></svg>
+    </button>
+</div>
+<!-- END: Image Scroller -->
+</details>
+</div>
+
+<!-- Job 2 -->
+<div class="relative pl-8">
+<div class="absolute left-0 top-1 h-full border-l-2 border-gray-300"></div>
+<div class="absolute left-[-6px] top-1 w-4 h-4 bg-gray-900 rounded-full border-4 border-white"></div>
+<h4 class="text-xl font-semibold text-gray-900">Community & Strategic Marketing Lead</h4>
+<p class="text-md text-gray-600 mb-1">PFP NFT Collection Project</p>
+<p class="text-sm text-gray-500 mb-3">Jun 2021 – Aug 2022 (1 yr 3 mos)</p>
+<details>
+<summary class="text-gray-700 font-semibold hover:text-gray-900">Job Description</summary>
+<p class="mt-2 text-gray-700">
+                                Community-led marketing strategy for an NFT project of ~3000 unique characters. I was responsible for establishing and scaling the project's core community on Discord and Twitter, creating the content roadmap, and executing engagement campaigns to build presale hype. By fostering a loyal and active community from the ground up, I built the foundational momentum that resulted in a complete project sell-out within 4 minutes of the public launch.
+</p>
+<!-- Single Image Added -->
+<img 
+    src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/port/P4-1.jpg" 
+    alt="NFT Project Image" 
+    class="mt-6 w-64 aspect-square object-cover rounded-lg shadow-sm"
+    onerror="this.src='https://placehold.co/600x600/e2e8f0/333333?text=Image+Error'"
+>
+</details>
+</div>
+
+<!-- Job 3 -->
+<div class="relative pl-8">
+<div class="absolute left-0 top-1 h-full border-l-2 border-gray-300"></div>
+<div class="absolute left-[-6px] top-1 w-4 h-4 bg-gray-900 rounded-full border-4 border-white"></div>
+<h4 class="text-xl font-semibold text-gray-900">Owner & Operator</h4>
+<p class="text-md text-gray-600 mb-1">Personal Craft Co., Ltd. | Thailand</p>
+<p class="text-sm text-gray-500 mb-3">Feb 2015 – Apr 2020 (5 yrs 3 mos)</p>
+<details>
+<summary class="text-gray-700 font-semibold hover:text-gray-900">Job Description</summary>
+<p class="mt-2 text-gray-700">
+                                A direct-to-consumer (D2C) brand I founded to create and sell personalized, custom-made jewelry online. As the owner and operator, I was responsible for all functions of the business. My role included the end-to-end product lifecycle, from initial jewelry design using CAD to final production. I also managed the brand's entire online presence, which involved running our social commerce channels, handling all digital marketing, and overseeing the company's finances and daily operations.
+</p>
+<!-- Image Scroller for Personal Craft -->
+<div class="relative mt-6">
+    <!-- Scroll Buttons (Smaller) -->
+    <button id="personalcraft-scroll-left" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white p-1 rounded-full shadow-md opacity-80 hover:opacity-100 transition-opacity duration-300 z-10 hidden md:flex items-center justify-center border border-gray-200 w-8 h-8">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7" /></svg>
+    </button>
+    
+    <!-- Horizontal Scroll Container -->
+    <div id="personalcraft-scroll-container" class="flex space-x-4 overflow-x-auto pb-2 hide-scrollbar md:px-10">
+        <!-- Image 1 -->
+        <img src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/work/PS1.png" alt="Personal Craft Image 1" class="w-64 aspect-square object-cover rounded-lg flex-shrink-0 shadow-sm">
+        <!-- Image 2 -->
+        <img src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/work/PS2.png" alt="Personal Craft Image 2" class="w-64 aspect-square object-cover rounded-lg flex-shrink-0 shadow-sm">
+        <!-- Image 3 -->
+        <img src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/work/PS3.png" alt="Personal Craft Image 3" class="w-64 aspect-square object-cover rounded-lg flex-shrink-0 shadow-sm">
+        <!-- Image 4 -->
+        <img src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/work/PS4.png" alt="Personal Craft Image 4" class="w-64 aspect-square object-cover rounded-lg flex-shrink-0 shadow-sm">
+        <!-- Image 5 (FIXED) -->
+        <img src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/work/PS5.JPG" alt="Personal Craft Image 5" class="w-64 aspect-square object-cover rounded-lg flex-shrink-0 shadow-sm">
+    </div>
+    
+    <!-- Scroll Buttons (Smaller) -->
+    <button id="personalcraft-scroll-right" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white p-1 rounded-full shadow-md opacity-80 hover:opacity-100 transition-opacity duration-300 z-10 hidden md:flex items-center justify-center border border-gray-200 w-8 h-8">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7" /></svg>
+    </button>
+</div>
+<!-- END: Image Scroller -->
+</details>
+</div>
+
+<!-- Job 4 -->
+<div class="relative pl-8">
+<div class="absolute left-0 top-1 h-full"></div> <!-- No line needed for last item -->
+<div class="absolute left-[-6px] top-1 w-4 h-4 bg-gray-900 rounded-full border-4 border-white"></div>
+<h4 class="text-xl font-semibold text-gray-900">Application Engineer</h4>
+<p class="text-md text-gray-600 mb-1">Enjoy & The Progress Co., Ltd. | Bangkok</p>
+<p class="text-sm text-gray-500 mb-3">May 2012 – May 2013 (1 yr 1 mo)</p>
+<details>
+<summary class="text-gray-700 font-semibold hover:text-gray-900">Job Description</summary>
+<p class="mt-2 text-gray-700">
+                                In this role, I served as a key engineer for a strategic partnership between E&T Corporation and HONDA R&D ASIA PACIFIC (HRAP). My responsibilities included providing technical sales and consultation for advanced CAE software and CAD outsourcing services. I also managed aspects of our collaborative projects, including the application of a cutting-edge fluid dynamics simulation technique known as the particle method.
+</p>
+</details>
+</div>
+</div>
+
+<!-- Education -->
+<h3 class="text-2xl font-semibold text-gray-900 mb-6 mt-16">Education</h3>
+<div class="space-y-10">
+
+<!-- Certification -->
+<div class="relative pl-8">
+<div class="absolute left-0 top-1 h-full border-l-2 border-gray-300"></div>
+<div class="absolute left-[-6px] top-1 w-4 h-4 bg-gray-900 rounded-full border-4 border-white"></div>
+<!-- Updated line with icon link -->
+<h4 class="text-xl font-semibold text-gray-900 inline-flex items-center">
+                        Passed All 3 Levels of CFA Program
+                        <a 
+                            href="https://raw.githubusercontent.com/shanesri/CV/34787cc6425e4ffcd41586b2d8d6ab70b6cd760d/download-doc/RattaponSriphathoorat_CFAProgramVerificationLetter.pdf" 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            title="Download Verification Letter"
+                            class="ml-2 text-gray-500 hover:text-gray-800 transition-colors"
+                            download
+                        >
+                            <!-- Download icon SVG -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                            </svg>
+                        </a>
+</h4>
+<p class="text-md text-gray-600 mb-1">CFA Institute</p>
+<p class="text-sm text-gray-500 mb-3">2023 - 2025</p>
+<details>
+<summary class="text-gray-700 font-semibold hover:text-gray-900">Description</summary>
+<p class="mt-2 text-gray-700">
+                        The Chartered Financial Analyst (CFA) charter is a globally respected designation in investment management, measuring and certifying the competence and integrity of financial analysts.
+                        <br><br>
+                        Completed Practical Skills Modules including: Financial Modeling, Portfolio Development and Construction, Python, Data Science & AI, and Python Programming Fundamentals.
+</p>
+
+<!-- NEW: Image Scroller for CFA -->
+<div class="relative mt-6">
+    <!-- Scroll Buttons (Smaller) -->
+    <button id="cfa-scroll-left" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white p-1 rounded-full shadow-md opacity-80 hover:opacity-100 transition-opacity duration-300 z-10 hidden md:flex items-center justify-center border border-gray-200 w-8 h-8">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7" /></svg>
+    </button>
+    
+    <!-- Horizontal Scroll Container -->
+    <div id="cfa-scroll-container" class="flex space-x-4 overflow-x-auto pb-2 hide-scrollbar md:px-10">
+        <!-- Image 1 -->
+        <img src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/port/CFA1.jpg" alt="CFA Image 1" class="w-64 aspect-square object-cover rounded-lg flex-shrink-0 shadow-sm">
+        <!-- Image 2 -->
+        <img src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/port/CFA2.jpg" alt="CFA Image 2" class="w-64 aspect-square object-cover rounded-lg flex-shrink-0 shadow-sm">
+        <!-- Image 3 (SWAPPED) -->
+        <img src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/port/P15.jpg" alt="CFA Image 4" class="w-64 aspect-square object-cover rounded-lg flex-shrink-0 shadow-sm">
+        <!-- Image 4 (SWAPPED) -->
+        <img src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/port/P3.jpg" alt="CFA Image 3" class="w-64 aspect-square object-cover rounded-lg flex-shrink-0 shadow-sm">
+    </div>
+    
+    <!-- Scroll Buttons (Smaller) -->
+    <button id="cfa-scroll-right" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white p-1 rounded-full shadow-md opacity-80 hover:opacity-100 transition-opacity duration-300 z-10 hidden md:flex items-center justify-center border border-gray-200 w-8 h-8">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7" /></svg>
+    </button>
+</div>
+<!-- END: Image Scroller -->
+
+</details>
+</div>
+
+<!-- Degree 1 (Moved Up) -->
+<div class="relative pl-8">
+<div class="absolute left-0 top-1 h-full border-l-2 border-gray-300"></div>
+<div class="absolute left-[-6px] top-1 w-4 h-4 bg-gray-900 rounded-full border-4 border-white"></div>
+<h4 class="text-xl font-semibold text-gray-900">Bachelor's Degree, Aerospace Engineering</h4>
+<p class="text-md text-gray-600 mb-1">Kasetsart University</p>
+<p class="text-sm text-gray-500 mb-3">2008 - 2012</p>
+<details>
+<summary class="text-gray-700 font-semibold hover:text-gray-900">Description</summary>
+<p class="mt-2 text-gray-700">
+                        Activities and societies: 2011 Internship: Gained hands-on experience as an assistant to Dr. Sutthiphong Srigrarom in a DTI rocket project using CFD (ANSYS13) in Singapore.
+                        <br><br>
+                        2009-2011 Volunteer Teaching: Volunteered at "Vichakarn Club" to educate high school student.
+                        <br><br>
+                        Engineering Fundamentals: Strong grasp of engineering basics, with a focus on aerospace engineering, including aerodynamics, aircraft structure, and knowledge in mechanical engineering and mechanical engineering and manufacturing. Versatile skillset that can be applied to various engineering fields.
+</p>
+
+<!-- NEW: Image Scroller for Kasetsart -->
+<div class="relative mt-6">
+    <!-- Scroll Buttons (Smaller) -->
+    <button id="kasetsart-scroll-left" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white p-1 rounded-full shadow-md opacity-80 hover:opacity-100 transition-opacity duration-300 z-10 hidden md:flex items-center justify-center border border-gray-200 w-8 h-8">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7" /></svg>
+    </button>
+    
+    <!-- Horizontal Scroll Container -->
+    <div id="kasetsart-scroll-container" class="flex space-x-4 overflow-x-auto pb-2 hide-scrollbar md:px-10">
+        <!-- Image 1 -->
+        <img src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/edu/KU1.jpg" alt="Kasetsart Image 1" class="w-64 aspect-square object-cover rounded-lg flex-shrink-0 shadow-sm">
+        <!-- Image 2 -->
+        <img src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/edu/KU2.jpg" alt="Kasetsart Image 2" class="w-64 aspect-square object-cover rounded-lg flex-shrink-0 shadow-sm">
+        <!-- Image 3 -->
+        <img src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/edu/KU3.jpg" alt="Kasetsart Image 3" class="w-64 aspect-square object-cover rounded-lg flex-shrink-0 shadow-sm">
+    </div>
+    
+    <!-- Scroll Buttons (Smaller) -->
+    <button id="kasetsart-scroll-right" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white p-1 rounded-full shadow-md opacity-80 hover:opacity-100 transition-opacity duration-300 z-10 hidden md:flex items-center justify-center border border-gray-200 w-8 h-8">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7" /></svg>
+    </button>
+</div>
+<!-- END: Image Scroller -->
+
+</details>
+</div>
+
+<!-- Degree 0 - High School (Now Last) -->
+<div class="relative pl-8">
+<div class="absolute left-0 top-1 h-full"></div> <!-- Removed border -->
+<div class="absolute left-[-6px] top-1 w-4 h-4 bg-gray-900 rounded-full border-4 border-white"></div>
+<h4 class="text-xl font-semibold text-gray-900">High School, Science - Math</h4>
+<p class="text-md text-gray-600 mb-1">Assumption College, Thailand</p>
+<p class="text-sm text-gray-500 mb-3">2005 - 2008</p>
+<!-- <p class="text-sm text-gray-600 mb-3">Grade: Second Horner</p>  REMOVED -->
+<details>
+<summary class="text-gray-700 font-semibold hover:text-gray-900">Description</summary>
+<p class="mt-2 text-gray-700">
+                        High School and Exchange Studies: Completed high school at Assumption College (Bangkok) and had an enriching experience as an exchange student in America for one year in 2005. This experience provided valuable exposure to new cultures and educational systems.
+</p>
+
+<!-- NEW: Single Image Added -->
+<img 
+    src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/edu/AC.jpg" 
+    alt="Assumption College Image" 
+    class="mt-6 w-64 aspect-square object-cover rounded-lg shadow-sm"
+    onerror="this.src='https://placehold.co/600x600/e2e8f0/333333?text=Image+Error'"
+>
+<!-- END: Single Image -->
+
+</details>
+</div>
+</div>
+
+</div>
+</div>
+</section>
+
+<!-- Section 4: Portfolio -->
+<section id="portfolio" class="py-20 md:py-24">
+<div class="container mx-auto px-4 md:px-8">
+<h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-8 text-center">Portfolio</h2>
+<p class="text-lg text-gray-700 mb-12 text-center max-w-3xl mx-auto">
+    Here's a collection of my projects, awards, and training. Scroll horizontally or use the arrows to see more.
+</p>
+
+<!-- Wrapper for horizontal scrolling (Relative position for arrows) -->
+<div class="relative">
+<!-- Scroll Buttons (Arrows) -->
+<button id="portfolio-scroll-left" class="absolute left-0 md:left-2 lg:left-4 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-lg opacity-80 hover:opacity-100 transition-opacity duration-300 z-10 hidden md:flex items-center justify-center border border-gray-200 w-10 h-10">
+<!-- SVG for Chevron Left -->
+<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7" /></svg>
+</button>
+
+<!-- Horizontal Scroll Container -->
+<div id="portfolio-scroll-container" class="flex space-x-6 overflow-x-auto pb-4 hide-scrollbar md:px-12">
+    
+    <!-- Portfolio Card 1: CFA L2 (Newest) -->
+    <div 
+    class="w-80 flex-shrink-0 bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl cursor-pointer"
+    data-modal-trigger="portfolio-modal"
+    data-image="https://raw.githubusercontent.com/shanesri/CV/main/image/home/port/P15.jpg"
+    data-title="CFA Program Level II Passed"
+    data-tags='["Asset Valuation", "Portfolio Management", "Financial Analysis"]'
+    data-description='Passing Level II demonstrates a mastery of complex asset valuation methods, including in-depth analysis of equities, fixed income, derivatives, and alternative investments. This stage heavily emphasizes the practical application of investment tools and concepts in real-world valuation scenarios.'
+    >
+        <img 
+            src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/port/P15.jpg" 
+            alt="CFA Program Level II Passed" 
+            class="w-full aspect-square object-cover"
+            onerror="this.src='https://placehold.co/600x400/e2e8f0/333333?text=Image+Error'"
+        >
+        <div class="p-6">
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">CFA Program Level II Passed</h3>
+            <p class="text-gray-700 mb-1 line-clamp-2">Professional Certification</p>
+            <p class="text-sm text-gray-500 mb-4">JAN 2025</p>
+            <div class="flex flex-wrap gap-2">
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Asset Valuation</span>
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Portfolio Management</span>
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Financial Analysis</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Portfolio Card 2: CFA L1 -->
+    <div 
+    class="w-80 flex-shrink-0 bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl cursor-pointer"
+    data-modal-trigger="portfolio-modal"
+    data-image="https://raw.githubusercontent.com/shanesri/CV/main/image/home/port/P3.jpg"
+    data-title="CFA Program Level I Passed"
+    data-tags='["Investment Tools", "Ethical Standards", "Quantitative Methods"]'
+    data-description='Passing Level I confirms a strong understanding of the foundational knowledge for investment management. This includes mastery of investment tools, quantitative methods, economics, financial statement analysis, and corporate finance, all bound by the CFA Institutes strict ethical standards.'
+    >
+        <img 
+            src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/port/P3.jpg" 
+            alt="CFA Program Level I Passed" 
+            class="w-full aspect-square object-cover"
+            onerror="this.src='https://placehold.co/600x400/e2e8f0/333333?text=Image+Error'"
+        >
+        <div class="p-6">
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">CFA Program Level I Passed</h3>
+            <p class="text-gray-700 mb-1 line-clamp-2">Professional Certification</p>
+            <p class="text-sm text-gray-500 mb-4">Jul 2024</p>
+            <div class="flex flex-wrap gap-2">
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Investment Tools</span>
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Ethical Standards</span>
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Quantitative Methods</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Portfolio Card 3: Google Data Analytics -->
+    <div 
+    class="w-80 flex-shrink-0 bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl cursor-pointer"
+    data-modal-trigger="portfolio-modal"
+    data-image="https://raw.githubusercontent.com/shanesri/CV/main/image/home/port/P2-1.jpg"
+    data-title="Google Data Analytics Professional Certificate"
+    data-tags='["Data Analyst", "SQL", "Tableau", "R"]'
+    data-description='A comprehensive certification focused on the entire data analysis lifecycle. This program provided hands-on experience with in-demand tools and skills, including data collection (SQL), data transformation (Spreadsheets, R), data visualization (Tableau), and analysis (R). The course culminated in a capstone project demonstrating the ability to ask the right questions and solve business problems using data.'
+    >
+        <img 
+            src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/port/P2-1.jpg" 
+            alt="Google Data Analytics Professional Certificate" 
+            class="w-full aspect-square object-cover"
+            onerror="this.src='https://placehold.co/600x400/e2e8f0/333333?text=Image+Error'"
+        >
+        <div class="p-6">
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Google Data Analytics Professional Certificate</h3>
+            <p class="text-gray-700 mb-1 line-clamp-2">Professional Certificate</p>
+            <p class="text-sm text-gray-500 mb-4">Jan 2024</p>
+            <div class="flex flex-wrap gap-2">
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Data Analyst</span>
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">SQL</span>
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Tableau</span>
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">R</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Portfolio Card 4: Ad World 2022 -->
+    <div 
+    class="w-80 flex-shrink-0 bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl cursor-pointer"
+    data-modal-trigger="portfolio-modal"
+    data-image="https://raw.githubusercontent.com/shanesri/CV/main/image/home/port/P9-1.jpg"
+    data-title="Ad World Conference 2022"
+    data-tags='["Marketing Strategy", "Digital Trends", "Agency Growth"]'
+    data-description='Attended the 2022 Ad World Conference, a premier global event for the marketing industry. This multi-day conference featured insights from top-tier brand leaders and marketing pioneers on the latest trends in media buying, content marketing, and agency operations. My attendance was focused on absorbing cutting-edge strategies to ensure our agency (Brand Buddy) remained competitive and provided clients with the most modern marketing solutions.'
+    >
+        <img 
+            src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/port/P9-1.jpg" 
+            alt="Ad World Conference 2022" 
+            class="w-full aspect-square object-cover"
+            onerror="this.src='https://placehold.co/600x400/e2e8f0/333333?text=Image+Error'"
+        >
+        <div class="p-6">
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Ad World Conference 2022</h3>
+            <p class="text-gray-700 mb-1 line-clamp-2">Industry Event & Training</p>
+            <p class="text-sm text-gray-500 mb-4">May 2022</p>
+            <div class="flex flex-wrap gap-2">
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Marketing Strategy</span>
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Digital Trends</span>
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Agency Growth</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Portfolio Card 5: NFT Project -->
+    <div 
+    class="w-80 flex-shrink-0 bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl cursor-pointer"
+    data-modal-trigger="portfolio-modal"
+    data-image="https://raw.githubusercontent.com/shanesri/CV/main/image/home/port/P4-1.jpg"
+    data-title="NFT (PFPs) Project"
+    data-tags='["NFT", "Community Marketing"]'
+    data-description='The Setup: Identifying the Opportunity
+"In 2021, my partners and I were closely watching the crypto boom in SEA. We saw a high-risk, high-return opportunity in the emerging NFT market.
+We made a key strategic decision: rather than being passive investors in someone else&apos;s project, we would be the operators and create one ourselves. We targeted the PFP (Profile Picture) market, as our analysis showed the most successful projects weren&apos;t just selling art; they were building dedicated communities—essentially, a loyal investor base."
+
+My Role: The Architect
+"As one of the five core team members, my official role was Community & Strategic Marketing Lead. In practice, I was the architect for our go-to-market strategy. I was responsible for building our &apos;investor base&apos; from zero, designing the entire communications and marketing plan, and overseeing its execution."
+
+The Crisis: The Terra Crash
+"We were targeting a 2022 launch. Then, an unexpected macro event hit: the Terra/Luna crash. The entire DeFi market seized up, and sentiment turned from euphoria to extreme fear. Our original bull-market launch plan was now completely obsolete.
+This became a real-time test of crisis management. We had to stay flexible and adjust our plan day by day. My job shifted to managing community panic, reassessing risk, and rebuilding confidence in our project while the rest of the market was in freefall."
+
+The Result: Executing Under Pressure
+"Despite launching into a full-blown bear market—the hardest possible time to launch—our new, adapted strategy worked. We successfully launched the collection of ~3,000 PFPs on Ethereum, and it completely sold out in 4 minutes.
+"This project was a high-speed lesson in market dynamics, risk management, and the importance of adaptability. It proved we could execute a high-stakes strategy, even when the entire market was moving against us."'
+    >
+    <img 
+        src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/port/P4-1.jpg" 
+        alt="NFT (PFPs) Project" 
+        class="w-full aspect-square object-cover"
+        onerror="this.src='https://placehold.co/600x400/e2e8f0/333333?text=Image+Error'"
+    >
+    <div class="p-6">
+        <h3 class="text-xl font-semibold text-gray-900 mb-2">NFT (PFPs) Project</h3>
+        <!-- Updated to separate Role and Date -->
+        <p class="text-gray-700 mb-1 line-clamp-2">Community & Strategic Marketing Lead</p>
+        <p class="text-sm text-gray-500 mb-4">Jun 2021 - Aug 2022</p>
+        <div class="flex flex-wrap gap-2">
+            <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">NFT</span>
+            <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Community Marketing</span>
+        </div>
+    </div>
+    </div>
+
+    <!-- Portfolio Card 6: Ad World 2021 -->
+    <div 
+    class="w-80 flex-shrink-0 bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl cursor-pointer"
+    data-modal-trigger="portfolio-modal"
+    data-image="https://raw.githubusercontent.com/shanesri/CV/main/image/home/port/P10-1.jpg"
+    data-title="Ad World Conference 2021"
+    data-tags='["Post-Pandemic Marketing", "E-commerce Trends", "Content Strategy"]'
+    data-description='Attended the 2021 Ad World Conference to capture the rapid shifts in digital marketing following the pandemic. Key topics included the explosion of e-commerce, the rise of the creator economy, and new content strategies for engaging a remote audience. This event provided critical, timely insights that helped my team pivot our client strategies to align with the "new normal" of consumer behavior.'
+    >
+        <img 
+            src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/port/P10-1.jpg" 
+            alt="Ad World Conference 2021" 
+            class="w-full aspect-square object-cover"
+            onerror="this.src='https://placehold.co/600x400/e2e8f0/333333?text=Image+Error'"
+        >
+        <div class="p-6">
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Ad World Conference 2021</h3>
+            <p class="text-gray-700 mb-1 line-clamp-2">Industry Event & Training</p>
+            <p class="text-sm text-gray-500 mb-4">Nov 2021</p>
+            <div class="flex flex-wrap gap-2">
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Post-Pandemic Marketing</span>
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">E-commerce Trends</span>
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Content Strategy</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Portfolio Card 7: Google Ads Video -->
+    <div 
+    class="w-80 flex-shrink-0 bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl cursor-pointer"
+    data-modal-trigger="portfolio-modal"
+    data-image="https://raw.githubusercontent.com/shanesri/CV/main/image/home/port/P8-1.jpg"
+    data-title="Google Ads Video Certificate"
+    data-tags='["YouTube Ads", "Video Marketing", "Brand Awareness"]'
+    data-description='This certification validates expertise in creating and optimizing Google Video ad campaigns, primarily on YouTube. It covers strategies for reaching audiences with different video ad formats (e.g., skippable in-stream, bumper ads), driving brand awareness, and measuring campaign effectiveness to maximize client ROI on video spend.'
+    >
+        <img 
+            src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/port/P8-1.jpg" 
+            alt="Google Ads Video Certificate" 
+            class="w-full aspect-square object-cover"
+            onerror="this.src='https://placehold.co/600x400/e2e8f0/333333?text=Image+Error'"
+        >
+        <div class="p-6">
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Google Ads Video Certificate</h3>
+            <p class="text-gray-700 mb-1 line-clamp-2">Professional Certificate</p>
+            <p class="text-sm text-gray-500 mb-4">May 2021</p>
+            <div class="flex flex-wrap gap-2">
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">YouTube Ads</span>
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Video Marketing</span>
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Brand Awareness</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Portfolio Card: Google Ads Display -->
+    <div 
+    class="w-80 flex-shrink-0 bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl cursor-pointer"
+    data-modal-trigger="portfolio-modal"
+    data-image="https://raw.githubusercontent.com/shanesri/CV/main/image/home/port/P6-1.jpg"
+    data-title="Google Ads Display Certificate"
+    data-tags='["Display Ads", "Remarketing", "Audience Targeting"]'
+    data-description='This certification demonstrates proficiency in using the Google Display Network to deliver results. It covers developing effective display advertising strategies, including audience targeting (e.g., remarketing, in-market audiences), creative best practices, and bidding strategies to achieve brand awareness and conversion goals.'
+    >
+        <img 
+            src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/port/P6-1.jpg" 
+            alt="Google Ads Display Certificate" 
+            class="w-full aspect-square object-cover"
+            onerror="this.src='https://placehold.co/600x400/e2e8f0/333333?text=Image+Error'"
+        >
+        <div class="p-6">
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Google Ads Display Certificate</h3>
+            <p class="text-gray-700 mb-1 line-clamp-2">Professional Certificate</p>
+            <p class="text-sm text-gray-500 mb-4">Jan 2021</p>
+            <div class="flex flex-wrap gap-2">
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Display Ads</span>
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Remarketing</span>
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Audience Targeting</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Portfolio Card: Google Ads Search -->
+    <div 
+    class="w-80 flex-shrink-0 bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl cursor-pointer"
+    data-modal-trigger="portfolio-modal"
+    data-image="https://raw.githubusercontent.com/shanesri/CV/main/image/home/port/P7-1.jpg"
+    data-title="Google Ads Search Certificate"
+    data-tags='["Search (SEM)", "PPC", "Keyword Strategy"]'
+    data-description='This certification shows a mastery of building and optimizing Google Search campaigns. It covers the full scope of SEM (Search Engine Marketing), from keyword research and strategy to ad copy creation, bid management, and performance optimization (e.g., Quality Score, conversion tracking). This was a core skill for managing client budgets at Brand Buddy.'
+    >
+        <img 
+            src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/port/P7-1.jpg" 
+            alt="Google Ads Search Certificate" 
+            class="w-full aspect-square object-cover"
+            onerror="this.src='https://placehold.co/600x400/e2e8f0/333333?text=Image+Error'"
+        >
+        <div class="p-6">
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Google Ads Search Certificate</h3>
+            <p class="text-gray-700 mb-1 line-clamp-2">Professional Certificate</p>
+            <p class="text-sm text-gray-500 mb-4">Jan 2021</p>
+            <div class="flex flex-wrap gap-2">
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Search (SEM)</span>
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">PPC</span>
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Keyword Strategy</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Portfolio Card: Meta Buying -->
+    <div 
+    class="w-80 flex-shrink-0 bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl cursor-pointer"
+    data-modal-trigger="portfolio-modal"
+    data-image="https://raw.githubusercontent.com/shanesri/CV/main/image/home/port/P1-1.jpg"
+    data-title="Meta Certified Media Buying Professional"
+    data-tags='["Digital marketing", "Media Buying", "Facebook Ads"]'
+    data-description='This professional certification from Meta validates the advanced skills required to manage media buying campaigns on the Facebook and Instagram platforms. The exam covers all aspects of the campaign lifecycle, from planning and setup (e.g., audience targeting, budget strategy, ad placements) to optimization (e.g., A/B testing, scaling) and reporting. It demonstrates a high-level competency in using Meta&apos;s tools to achieve specific business goals.'
+    >
+        <img 
+            src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/port/P1-1.jpg" 
+            alt="Meta Certified Media Buying Professional" 
+            class="w-full aspect-square object-cover"
+            onerror="this.src='https://placehold.co/600x400/e2e8f0/333333?text=Image+Error'"
+        >
+        <div class="p-6">
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Meta Certified Media Buying Professional</h3>
+            <p class="text-gray-700 mb-1 line-clamp-2">Professional Certificate</p>
+            <p class="text-sm text-gray-500 mb-4">August 2019</p>
+            <div class="flex flex-wrap gap-2">
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Digital marketing</span>
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Media Buying</span>
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Facebook Ads</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Portfolio Card: BaanBaiCha -->
+    <div 
+    class="w-80 flex-shrink-0 bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl cursor-pointer"
+    data-modal-trigger="portfolio-modal"
+    data-image="https://raw.githubusercontent.com/shanesri/CV/main/image/home/port/P12.JPG"
+    data-title="BaanBaiCha (Thai Tea formula)"
+    data-tags='["Entrepreneurship", "Product Development"]'
+    data-description='This was my first experience as a small business owner. Three friends and I co-founded BaanBaiCha to create a unique, premium Thai Tea formula from scratch. Our key differentiator was our blend: we spent months developing a proprietary recipe combining 5 different types of tea. We launched as a pivot tea stall near a major office building, and it was an immediate local hit, selling ~350 glasses per day at its peak.'
+    >
+        <img 
+            src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/port/P12.JPG" 
+            alt="BaanBaiCha (Thai Tea formula)" 
+            class="w-full aspect-square object-cover"
+            onerror="this.src='https://placehold.co/600x400/e2e8f0/333333?text=Image+Error'"
+        >
+        <div class="p-6">
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">BaanBaiCha (Thai Tea formula)</h3>
+            <p class="text-gray-700 mb-1 line-clamp-2">Business Co-founder</p>
+            <p class="text-sm text-gray-500 mb-4">2014 - 2015</p>
+            <div class="flex flex-wrap gap-2">
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Entrepreneurship</span>
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Product Development</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Portfolio Card: AIGS -->
+    <div 
+    class="w-80 flex-shrink-0 bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl cursor-pointer"
+    data-modal-trigger="portfolio-modal"
+    data-image="https://raw.githubusercontent.com/shanesri/CV/main/image/home/port/P5-1.jpg"
+    data-title="AIGS (Asian Institute of Gemological Sciences)"
+    data-tags='["Gems Identification", "Jewelry design"]'
+    data-description='I enrolled at the Asian Institute of Gemological Sciences (AIGS) to combine engineering methodology with the jewelry industry. I focused on technical courses: Gem Identification, Diamond Identification, and Jewelry Design. This technical foundation gave me the confidence to launch my first business, Personal Craft Co., Ltd., which utilized CAD-based design.'
+    >
+        <img 
+            src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/port/P5-1.jpg" 
+            alt="AIGS (Asian Institute of Gemological Sciences)" 
+            class="w-full aspect-square object-cover"
+            onerror="this.src='https://placehold.co/600x400/e2e8f0/333333?text=Image+Error'"
+        >
+        <div class="p-6">
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">AIGS (Asian Institute of Gemological Sciences)</h3>
+            <p class="text-gray-700 mb-1 line-clamp-2">Gemological Studies & Jewelry Design</p>
+            <p class="text-sm text-gray-500 mb-4">2013 - 2014</p>
+            <div class="flex flex-wrap gap-2">
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Gems Identification</span>
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Jewelry design</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Portfolio Card: Graduation Project -->
+    <div 
+    class="w-80 flex-shrink-0 bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl cursor-pointer"
+    data-modal-trigger="portfolio-modal"
+    data-image="https://raw.githubusercontent.com/shanesri/CV/main/image/home/port/P13.jpg"
+    data-title="Graduation Project: Grid Fin Aerodynamics"
+    data-tags='["CFD Analysis", "Aerospace Engineering"]'
+    data-description='Research project on the aerodynamics of grid fins using ANSYS Computational Fluid Dynamics (CFD). Analyzed complex shockwave interactions and their effect on stability and drag during supersonic flight conditions.'
+    >
+        <img 
+            src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/port/P13.jpg" 
+            alt="Graduation Project" 
+            class="w-full aspect-square object-cover"
+            onerror="this.src='https://placehold.co/600x400/e2e8f0/333333?text=Image+Error'"
+        >
+        <div class="p-6">
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Graduation Project: Grid Fin Aerodynamics</h3>
+            <p class="text-gray-700 mb-1 line-clamp-2">B.Eng. Research Project</p>
+            <p class="text-sm text-gray-500 mb-4">2012</p>
+            <div class="flex flex-wrap gap-2">
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">CFD Analysis</span>
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Aerospace Engineering</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Portfolio Card: Singapore Internship -->
+    <div 
+    class="w-80 flex-shrink-0 bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl cursor-pointer"
+    data-modal-trigger="portfolio-modal"
+    data-image="https://raw.githubusercontent.com/shanesri/CV/main/image/home/port/P14.JPG"
+    data-title="Singapore Internship: Rocket CFD Project"
+    data-tags='["CFD Analysis", "Engineering"]'
+    data-description='Completed a 4-month internship in Singapore using Computational Fluid Dynamics (CFD) software (ANSYS) to analyze a rocket project for the Defence Technology Institute (DTI).'
+    >
+        <img 
+            src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/port/P14.JPG" 
+            alt="Singapore Internship" 
+            class="w-full aspect-square object-cover"
+            onerror="this.src='https://placehold.co/600x400/e2e8f0/333333?text=Image+Error'"
+        >
+        <div class="p-6">
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Singapore Internship: Rocket CFD Project</h3>
+            <p class="text-gray-700 mb-1 line-clamp-2">Research Assistant Internship</p>
+            <p class="text-sm text-gray-500 mb-4">2011</p>
+            <div class="flex flex-wrap gap-2">
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">CFD Analysis</span>
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Engineering</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Portfolio Card: US Exchange -->
+    <div 
+    class="w-80 flex-shrink-0 bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl cursor-pointer"
+    data-modal-trigger="portfolio-modal"
+    data-image="https://raw.githubusercontent.com/shanesri/CV/main/image/home/port/P11.JPG"
+    data-title="US High School Exchange Program"
+    data-tags='["Cross-Cultural", "Adaptability"]'
+    data-description='Participated in a 1-semester high school exchange program in Grand Rapids, Michigan. This formative experience strengthened my English fluency and ability to adapt to new environments.'
+    >
+        <img 
+            src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/port/P11.JPG" 
+            alt="US High School Exchange Program" 
+            class="w-full aspect-square object-cover"
+            onerror="this.src='https://placehold.co/600x400/e2e8f0/333333?text=Image+Error'"
+        >
+        <div class="p-6">
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">US High School Exchange Program</h3>
+            <p class="text-gray-700 mb-1 line-clamp-2">Exchange Student</p>
+            <p class="text-sm text-gray-500 mb-4">2005</p>
+            <div class="flex flex-wrap gap-2">
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Cross-Cultural</span>
+                <span class="text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full">Adaptability</span>
+            </div>
+        </div>
+    </div>
+
+
+</div> <!-- End of Scroll Container -->
+
+<!-- Scroll Buttons (Arrows) -->
+<button id="portfolio-scroll-right" class="absolute right-0 md:right-2 lg:right-4 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-lg opacity-80 hover:opacity-100 transition-opacity duration-300 z-10 hidden md:flex items-center justify-center border border-gray-200 w-10 h-10">
+<!-- SVG for Chevron Right -->
+<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7" /></svg>
+</button>
+</div>
+</div>
+</section>
+
+<!-- Section 5: Interests (Updated to Horizontal Scroll with Arrows) -->
+<section id="interests" class="bg-white py-20 md:py-24">
+<div class="container mx-auto px-4 md:px-8">
+<h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-8 text-center">Interests & Personal Passions</h2>
+<p class="text-center text-gray-600 mb-12">Scroll horizontally or use the arrows to see what drives me outside of finance.</p>
+
+<!-- Wrapper for horizontal scrolling (Relative position for arrows) -->
+<div class="relative">
+<!-- Scroll Buttons (Arrows) -->
+<button id="scroll-left" class="absolute left-0 md:left-2 lg:left-4 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-lg opacity-80 hover:opacity-100 transition-opacity duration-300 z-10 hidden md:flex items-center justify-center border border-gray-200 w-10 h-10">
+<!-- SVG for Chevron Left -->
+<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M15 19l-7-7 7-7" /></svg>
+</button>
+
+<!-- Horizontal Scroll Container -->
+<div id="interests-scroll-container" class="flex space-x-6 overflow-x-auto pb-4 hide-scrollbar md:px-12">
+
+<!-- Interest Card 1: Global Macro News -->
+<div class="w-72 flex-shrink-0 bg-white rounded-lg shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-shadow duration-300">
+<img 
+                    src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/interest/Global.jpg" 
+                    alt="Image showing world map or stock charts" 
+                    class="w-full aspect-square object-cover"
+                    onerror="this.src='https://placehold.co/300x300/eeeeee/111111?text=Global+Macro'"
+                >
+<div class="p-4">
+<h3 class="text-xl font-semibold text-gray-900 mb-2">Global Macro News</h3>
+<p class="text-gray-700 text-sm">
+                    I follow **global economic and geopolitical events** by default, treating them like a weekly drama series on Saturday night. It's my ongoing addiction to understanding the complex narratives that shape the world around us.
+</p>
+</div>
+</div>
+
+<!-- Interest Card 2: Freediving -->
+<div class="w-72 flex-shrink-0 bg-white rounded-lg shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-shadow duration-300">
+<img 
+                    src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/interest/Freedive.JPG" 
+                    alt="Image showing a person freediving" 
+                    class="w-full aspect-square object-cover"
+                    onerror="this.src='https://placehold.co/300x300/cccccc/111111?text=Freediving'"
+                >
+<div class="p-4">
+<h3 class="text-xl font-semibold text-gray-900 mb-2">Freediving</h3>
+<p class="text-gray-700 text-sm">
+                    There's nothing like exploring the underwater world through intense line training or relaxing fundives; I even hold a Mochnov W3 license. I've enjoyed diving in Japan, Indonesia, and the Philippines, always seeking new depths and hidden seascapes to explore.
+</p>
+</div>
+</div>
+
+<!-- Interest Card 3: Badminton -->
+<div class="w-72 flex-shrink-0 bg-white rounded-lg shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-shadow duration-300">
+<img 
+                    src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/interest/Badminton.jpg" 
+                    alt="Image showing a badminton racket and shuttlecock" 
+                    class="w-full aspect-square object-cover"
+                    onerror="this.src='https://placehold.co/300x300/bbbbbb/111111?text=Badminton'"
+                >
+<div class="p-4">
+<h3 class="text-xl font-semibold text-gray-900 mb-2">Badminton</h3>
+<p class="text-gray-700 text-sm">
+                    I've been playing since 2017 as a fun hobby to stay active and socialize with friends. I co-founded a local group called "Beerminton," where we get together weekly for a great workout—and maybe a few cold drinks afterwards 😉.
+</p>
+</div>
+</div>
+
+<!-- Interest Card 4: Tennis -->
+<div class="w-72 flex-shrink-0 bg-white rounded-lg shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-shadow duration-300">
+<img 
+                    src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/interest/Tennis.jpg" 
+                    alt="Image showing a tennis racket and ball" 
+                    class="w-full aspect-square object-cover"
+                    onerror="this.src='https://placehold.co/300x300/aaaaaa/111111?text=Tennis'"
+                >
+<div class="p-4">
+<h3 class="text-xl font-semibold text-gray-900 mb-2">Tennis</h3>
+<p class="text-gray-700 text-sm">
+                    This is a new sport I've recently gotten completely hooked on, constantly striving to improve my footwork and powerful serve. It's a fantastic, high-energy way to unwind and focus purely on a physical challenge outside of my daily routine.
+</p>
+</div>
+</div>
+
+<!-- Interest Card 5: Trek and Camp -->
+<div class="w-72 flex-shrink-0 bg-white rounded-lg shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-shadow duration-300">
+<img 
+                    src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/interest/Camp.JPG" 
+                    alt="Image showing mountains or camping" 
+                    class="w-full aspect-square object-cover"
+                    onerror="this.src='https://placehold.co/300x300/888888/111111?text=Trek/Camp'"
+                >
+<div class="p-4">
+<h3 class="text-xl font-semibold text-gray-900 mb-2">Trekking and Camping</h3>
+<p class="text-gray-700 text-sm">
+                    I love getting away from the city lights and reconnecting with nature through long hikes and overnight camping trips. There's nothing quite as refreshing as fresh air, quiet wilderness, and managing your resources in the great outdoors.
+</p>
+</div>
+</div>
+
+<!-- Interest Card 6: Cat Companion -->
+<div class="w-72 flex-shrink-0 bg-white rounded-lg shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-shadow duration-300">
+<img 
+                    src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/interest/Cat.jpg" 
+                    alt="Image showing your cat companion" 
+                    class="w-full aspect-square object-cover"
+                    onerror="this.src='https://placehold.co/300x300/777777/111111?text=Cat'"
+                >
+<div class="p-4">
+<h3 class="text-xl font-semibold text-gray-900 mb-2">Cat Companion</h3>
+<p class="text-gray-700 text-sm">
+                    I'm the proud owner of three lovely cats named **Rick, Morty, and Summer** (bet you can guess the inspiration for that!). They provide the perfect daily dose of amusing chaos and comforting companionship needed to keep life balanced.
+</p>
+</div>
+</div>
+
+<!-- Interest Card 7: Manga & Anime (Updated Name) -->
+<div class="w-72 flex-shrink-0 bg-white rounded-lg shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-shadow duration-300">
+<img 
+                    src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/interest/Anime.jpg" 
+                    alt="Image showing anime character or scene" 
+                    class="w-full aspect-square object-cover"
+                    onerror="this.src='https://placehold.co/300x300/999999/111111?text=Anime'"
+                >
+<div class="p-4">
+<h3 class="text-xl font-semibold text-gray-900 mb-2">Manga & Anime</h3>
+<p class="text-gray-700 text-sm">
+                    This is actually the main reason I decided to study Japanese—I wanted to experience the source material directly! My favorites span generations, from classics like *Fullmetal Alchemist* and *Guren Lagann* to modern gems like *Jujutsu Kaisen* and *Frieren*.
+</p>
+</div>
+</div>
+</div>
+
+<!-- Scroll Buttons (Arrows) -->
+<button id="scroll-right" class="absolute right-0 md:right-2 lg:right-4 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-lg opacity-80 hover:opacity-100 transition-opacity duration-300 z-10 hidden md:flex items-center justify-center border border-gray-200 w-10 h-10">
+<!-- SVG for Chevron Right -->
+<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M9 5l7 7-7 7" /></svg>
+</button>
+</div>
+</div>
+</section>
+
+<!-- Section 6: Contact (Updated Layout) -->
+<section id="contact" class="bg-white py-20 md:py-24">
+<div class="container mx-auto px-4 md:px-8 text-center">
+<h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Get In Touch</h2>
+<p class="text-lg text-gray-700 mb-10 max-w-2xl mx-auto">
+            I'm currently open to discussing new opportunities. 
+            Feel free to send me an email, give me a call, or connect with me on social media.
+</p>
+
+<!-- UPDATED: IG/MAIL/LINKEDIN on the same line for Desktop -->
+<div class="flex flex-col md:flex-row flex-wrap justify-center items-center gap-x-12 gap-y-6">
+    <!-- Email -->
+    <a href="mailto:R.Sriphathoorat@gmail.com" class="flex items-center text-lg text-gray-700 hover:text-gray-900 hover:underline transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+        </svg>
+        R.Sriphathoorat@gmail.com
+    </a>
+
+    <!-- LinkedIn -->
+    <a href="https://www.linkedin.com/in/shanesri" target="_blank" rel="noopener noreferrer" class="flex items-center text-lg text-gray-700 hover:text-gray-900 hover:underline transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
+        </svg>
+        Connect on LinkedIn
+    </a>
+
+    <!-- Instagram -->
+    <a href="https://www.instagram.com/shanesri" target="_blank" rel="noopener noreferrer" class="flex items-center text-lg text-gray-700 hover:text-gray-900 hover:underline transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.148 3.227-1.669 4.771-4.919 4.919-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.07-1.646-.07-4.85s.012-3.584.07-4.85c.148-3.227 1.669 4.771 4.919 4.919 1.266.058 1.646.07 4.85.07zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.058 1.281-.072 1.689-.072 4.948s.014 3.668.072 4.948c.2 4.359 2.622 6.78 6.98 6.98 1.28.058 1.688.072 4.947.072s3.667-.014 4.947-.072c4.358-.2 6.78-2.618 6.98-6.98.058-1.28.072-1.688.072-4.947s-.014-3.667-.072-4.947c-.2-4.359-2.622-6.78-6.98-6.98-1.28-.058-1.688-.072-4.947-.072zM12 6.163c-3.204 0-5.837 2.633-5.837 5.837s2.633 5.837 5.837 5.837 5.837-2.633 5.837-5.837-2.633-5.837-5.837-5.837zm0 9.5c-2.021 0-3.663-1.642-3.663-3.663s1.642-3.663 3.663-3.663 3.663 1.642 3.663 3.663-1.642 3.663-3.663 3.663zm6.406-9.695c-.621 0-1.125.504-1.125 1.125s.504 1.125 1.125 1.125 1.125-.504 1.125 1.125-.504-1.125-1.125-1.125z"/>
+        </svg>
+        Follow on Instagram
+    </a>
+</div>
+</div>
+</section>
+
 </main>
 
-<button class="hl-popup" id="hl-popup">✏️ HIGHLIGHT</button>
-<div class="ticker-tooltip" id="ticker-tooltip"></div>
+<!-- MODAL HTML -->
+<div id="portfolio-modal" class="modal-overlay">
+    <div class="modal-content">
+        <button class="modal-close-btn" data-modal-close>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+        <img id="modal-image" src="" alt="Project Image" class="w-full aspect-square object-cover rounded-lg mb-4">
+        <h3 id="modal-title" class="text-2xl font-bold text-gray-900 mb-2"></h3>
+        <div id="modal-tags" class="flex flex-wrap gap-2 mb-4"></div>
+        <p id="modal-description" class="text-gray-700"></p>
+    </div>
+</div>
 
-<footer class="footer">
-  <div class="footer-text">ABYSS — shanesri.com/abyss &nbsp;·&nbsp; Powered by Claude AI &nbsp;·&nbsp; Auto-updates daily 06:00 BKK</div>
+<!-- Footer -->
+<footer class="bg-gray-900 text-gray-400 py-10">
+<div class="container mx-auto px-4 md:px-8 text-center">
+<p>&copy; 2025 Rattapon Sriphathoorat. All rights reserved.</p>
+</div>
 </footer>
 
 <script>
-const HISTORY_URL = 'https://raw.githubusercontent.com/shanesri/abyss/main/data/news_history.json';
-const VISIBLE_DAYS = 5;
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const mobileNavLinks = document.querySelectorAll('.nav-link-mobile');
+            const sections = document.querySelectorAll('section');
 
-let allItems = [];
-let dayGroups = [];
-let activeTabKey = null;
-let typeFilter = 'ALL';
-let showOlder = false;
-let pinnedSet = new Set(JSON.parse(localStorage.getItem('abyss_pinned') || '[]'));
-let highlights = JSON.parse(localStorage.getItem('abyss_highlights') || '{}');
+            // Toggle mobile menu
+            menuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
 
-// Aggregated ticker -> name from all items
-let tickerNameMap = {};
+            // Close mobile menu when a link is clicked
+            mobileNavLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                });
+            });
 
-function updateClock() {
-  const bkk = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Bangkok' }));
-  document.getElementById('clock').textContent =
-    bkk.toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit', second:'2-digit' }) + ' BKK';
-}
-setInterval(updateClock, 1000); updateClock();
+            // Intersection Observer
+            const observerOptions = { root: null, rootMargin: '0px', threshold: 0.4 };
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.getAttribute('id');
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === `#${id}`) link.classList.add('active');
+                        });
+                    }
+                });
+            }, observerOptions);
+            sections.forEach(section => observer.observe(section));
+            
+            // Reusable Scroller
+            const setupScroller = (containerId, leftBtnId, rightBtnId, scrollStep = 350) => {
+                const scrollContainer = document.getElementById(containerId);
+                const scrollLeftBtn = document.getElementById(leftBtnId);
+                const scrollRightBtn = document.getElementById(rightBtnId);
+                if (!scrollContainer || !scrollLeftBtn || !scrollRightBtn) return;
+                
+                const checkScrollButtons = () => {
+                    if (scrollContainer.scrollWidth > scrollContainer.clientWidth) {
+                        if (scrollContainer.scrollLeft < 5) scrollLeftBtn.classList.add('hidden');
+                        else {
+                            scrollLeftBtn.classList.remove('hidden');
+                            if (window.innerWidth >= 768) scrollLeftBtn.classList.add('md:flex');
+                        }
+                        if (scrollContainer.scrollLeft + scrollContainer.clientWidth >= scrollContainer.scrollWidth - 5) scrollRightBtn.classList.add('hidden');
+                        else {
+                            scrollRightBtn.classList.remove('hidden');
+                            if (window.innerWidth >= 768) scrollRightBtn.classList.add('md:flex');
+                        }
+                    } else {
+                        scrollLeftBtn.classList.add('hidden');
+                        scrollRightBtn.classList.add('hidden');
+                    }
+                };
+                scrollContainer.addEventListener('scroll', checkScrollButtons);
+                window.addEventListener('resize', checkScrollButtons);
+                setTimeout(checkScrollButtons, 100);
+                scrollLeftBtn.addEventListener('click', () => scrollContainer.scrollBy({ left: -scrollStep, behavior: 'smooth' }));
+                scrollRightBtn.addEventListener('click', () => scrollContainer.scrollBy({ left: scrollStep, behavior: 'smooth' }));
+            };
 
-function itemId(item) { return item.url || item.headline; }
+            setupScroller('interests-scroll-container', 'scroll-left', 'scroll-right');
+            setupScroller('portfolio-scroll-container', 'portfolio-scroll-left', 'portfolio-scroll-right');
+            setupScroller('brandbuddy-scroll-container', 'brandbuddy-scroll-left', 'brandbuddy-scroll-right');
+            setupScroller('personalcraft-scroll-container', 'personalcraft-scroll-left', 'personalcraft-scroll-right');
+            setupScroller('kasetsart-scroll-container', 'kasetsart-scroll-left', 'kasetsart-scroll-right');
+            setupScroller('cfa-scroll-container', 'cfa-scroll-left', 'cfa-scroll-right');
+            setupScroller('projects-scroll-container', 'projects-scroll-left', 'projects-scroll-right', 800);
 
-function formatEventDate(dateStr) {
-  if (!dateStr) return '';
-  try {
-    const d = new Date(dateStr);
-    if (isNaN(d)) return dateStr;
-    return d.toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' }).toUpperCase();
-  } catch { return dateStr; }
-}
-
-function fetchDayKey(item) {
-  const raw = item._fetched_at || item.date || '';
-  if (!raw) return 'unknown';
-  try {
-    const d = new Date(raw);
-    const bkk = new Date(d.toLocaleString('en-US', { timeZone: 'Asia/Bangkok' }));
-    const y = bkk.getFullYear();
-    const m = String(bkk.getMonth()+1).padStart(2,'0');
-    const dd = String(bkk.getDate()).padStart(2,'0');
-    return `${y}-${m}-${dd}`;
-  } catch { return 'unknown'; }
-}
-
-function fetchDayLabel(key) {
-  if (key === 'unknown') return 'UNKNOWN';
-  const [y,m,d] = key.split('-');
-  const dt = new Date(Number(y), Number(m)-1, Number(d));
-  return dt.toLocaleDateString('en-GB', { day:'2-digit', month:'short' }).toUpperCase();
-}
-
-function escapeHTML(s) {
-  if (typeof s !== 'string') return '';
-  return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-}
-
-function renderTextWithHighlights(text, itemKey, fieldKey) {
-  if (!text) return '';
-  const safeText = escapeHTML(text);
-  const itemHls = (highlights[itemKey] || {})[fieldKey] || [];
-  if (!itemHls.length) return safeText;
-  let result = safeText;
-  const sorted = [...itemHls].sort((a,b) => b.length - a.length);
-  sorted.forEach(snippet => {
-    const escSnip = escapeHTML(snippet);
-    if (!escSnip) return;
-    const safe = escSnip.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    const re = new RegExp(`(${safe})(?![^<]*>)`, 'g');
-    result = result.replace(re, `<mark class="hl" data-snippet="${escSnip}">$1</mark>`);
-  });
-  return result;
-}
-
-function yahooUrl(ticker) {
-  return `https://finance.yahoo.com/quote/${encodeURIComponent(ticker)}`;
-}
-
-async function loadNews() {
-  try {
-    const res = await fetch(HISTORY_URL + '?t=' + Date.now());
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    const data = await res.json();
-    allItems = data.news_items || [];
-
-    // Build aggregated ticker -> name map from all items that have ticker_names
-    tickerNameMap = {};
-    allItems.forEach(item => {
-      const names = item.ticker_names || {};
-      Object.entries(names).forEach(([sym, name]) => {
-        if (sym && name && !tickerNameMap[sym]) {
-          tickerNameMap[sym] = name;
-        }
-      });
-    });
-
-    const sortFn = (a, b) => {
-      const aPin = pinnedSet.has(itemId(a)) ? 1 : 0;
-      const bPin = pinnedSet.has(itemId(b)) ? 1 : 0;
-      if (aPin !== bPin) return bPin - aPin;
-      const aDate = new Date(a.date || 0);
-      const bDate = new Date(b.date || 0);
-      if (aDate.getTime() !== bDate.getTime()) return bDate - aDate;
-      return (b.significance || 0) - (a.significance || 0);
-    };
-
-    const groupMap = {};
-    allItems.forEach(item => {
-      const k = fetchDayKey(item);
-      if (!groupMap[k]) groupMap[k] = [];
-      groupMap[k].push(item);
-    });
-    dayGroups = Object.keys(groupMap)
-      .filter(k => k !== 'unknown')
-      .sort((a, b) => b.localeCompare(a))
-      .map(k => ({ key: k, items: groupMap[k].sort(sortFn), label: fetchDayLabel(k) }));
-    if (groupMap['unknown'] && groupMap['unknown'].length) {
-      dayGroups.push({ key: 'unknown', items: groupMap['unknown'].sort(sortFn), label: 'OLDER' });
-    }
-
-    if (dayGroups.length > 0) {
-      activeTabKey = dayGroups[0].key;
-      const latest = allItems.reduce((m, x) => (x._fetched_at || x.date || '') > m ? (x._fetched_at || x.date || '') : m, '');
-      document.getElementById('generated-at').textContent =
-        'Latest update: ' + (latest ? new Date(latest).toLocaleString('en-GB',{timeZone:'Asia/Bangkok'}) + ' BKK' : 'Unknown');
-    } else {
-      document.getElementById('generated-at').textContent = 'No items yet';
-    }
-
-    renderTabs();
-    updateStats();
-    applyFilters();
-    document.getElementById('day-tabs-bar').style.display = dayGroups.length ? 'flex' : 'none';
-    document.getElementById('stats-bar').style.display = 'flex';
-    document.getElementById('filter-bar').style.display = 'flex';
-  } catch (e) {
-    document.getElementById('cards').innerHTML = `
-      <div class="state">
-        <div class="state-title" style="color:var(--red)">FEED UNAVAILABLE</div>
-        <div class="state-text">Could not load the intelligence feed.<br><br>
-        <span style="font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--muted-2)">Error: ${escapeHTML(e.message)}</span></div>
-      </div>`;
-    document.getElementById('generated-at').textContent = 'No data available';
-  }
-}
-
-function renderTabs() {
-  const bar = document.getElementById('day-tabs-bar');
-  const visible = dayGroups.slice(0, VISIBLE_DAYS);
-  const older = dayGroups.slice(VISIBLE_DAYS);
-  let html = visible.map(g =>
-    `<button class="day-tab ${g.key === activeTabKey ? 'active' : ''}" onclick="setActiveTab('${g.key}')">
-       <span class="day-tab-date">${g.label}</span>
-       <span class="day-tab-count">${g.items.length} items</span>
-     </button>`
-  ).join('');
-  if (older.length) {
-    if (showOlder) {
-      html += older.map(g =>
-        `<button class="day-tab ${g.key === activeTabKey ? 'active' : ''}" onclick="setActiveTab('${g.key}')">
-           <span class="day-tab-date">${g.label}</span>
-           <span class="day-tab-count">${g.items.length} items</span>
-         </button>`
-      ).join('');
-    }
-    html += `<button class="older-toggle ${showOlder ? 'active' : ''}" onclick="toggleOlder()">${showOlder ? '◀ HIDE OLDER' : 'OLDER →'}</button>`;
-  }
-  bar.innerHTML = html;
-}
-
-function setActiveTab(key) {
-  activeTabKey = key;
-  renderTabs();
-  applyFilters();
-}
-
-function toggleOlder() {
-  showOlder = !showOlder;
-  renderTabs();
-}
-
-function updateStats() {
-  const activeGroup = dayGroups.find(g => g.key === activeTabKey);
-  const items = activeGroup ? activeGroup.items : [];
-  document.getElementById('stat-total').textContent = items.length;
-  document.getElementById('stat-new').textContent = items.filter(i => i.type === 'NEW').length;
-  document.getElementById('stat-update').textContent = items.filter(i => i.type === 'UPDATE').length;
-  document.getElementById('stat-trending').textContent = items.filter(i => i.type === 'TRENDING').length;
-  document.getElementById('stat-pinned').textContent = allItems.filter(i => pinnedSet.has(itemId(i))).length;
-}
-
-function applyFilters() {
-  const activeGroup = dayGroups.find(g => g.key === activeTabKey);
-  let items = activeGroup ? activeGroup.items.slice() : [];
-  if (typeFilter === 'PINNED') {
-    items = items.filter(i => pinnedSet.has(itemId(i)));
-  } else if (typeFilter !== 'ALL') {
-    items = items.filter(i => i.type === typeFilter);
-  }
-  renderCards(items);
-  updateStats();
-}
-
-function setFilter(type, btn) {
-  typeFilter = type;
-  document.querySelectorAll('.filter-btn[data-filter]').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  applyFilters();
-}
-
-function expandAll()   { document.querySelectorAll('.card').forEach(c => c.classList.add('expanded')); }
-function collapseAll() { document.querySelectorAll('.card').forEach(c => c.classList.remove('expanded')); }
-
-function toggleCard(idx, event) {
-  if (event) event.stopPropagation();
-  const card = document.getElementById('card-' + idx);
-  if (card) card.classList.toggle('expanded');
-}
-
-function togglePin(id, event) {
-  if (event) event.stopPropagation();
-  if (pinnedSet.has(id)) pinnedSet.delete(id);
-  else pinnedSet.add(id);
-  localStorage.setItem('abyss_pinned', JSON.stringify([...pinnedSet]));
-  const sortFn = (a, b) => {
-    const aPin = pinnedSet.has(itemId(a)) ? 1 : 0;
-    const bPin = pinnedSet.has(itemId(b)) ? 1 : 0;
-    if (aPin !== bPin) return bPin - aPin;
-    const aDate = new Date(a.date || 0);
-    const bDate = new Date(b.date || 0);
-    if (aDate.getTime() !== bDate.getTime()) return bDate - aDate;
-    return (b.significance || 0) - (a.significance || 0);
-  };
-  dayGroups.forEach(g => g.items.sort(sortFn));
-  updateStats();
-  applyFilters();
-}
-
-function renderCards(items) {
-  const container = document.getElementById('cards');
-  if (!items.length) {
-    container.innerHTML = `<div class="state"><div class="state-title">NO ITEMS</div><div class="state-text">No news matches the current filter for this day.</div></div>`;
-    return;
-  }
-  container.innerHTML = items.map((item, idx) => cardHTML(item, idx)).join('');
-}
-
-function cardHTML(item, idx) {
-  const badgeClass = 'badge-' + (item.type || 'NEW');
-  const tickers = (item.affected_tickers || []).slice(0, 8);
-  const sources = item.sources || [];
-  const id = itemId(item);
-  const isPinned = pinnedSet.has(id);
-
-  const tickerChips = tickers.map(t =>
-    `<a class="ticker-chip" href="${yahooUrl(t)}" target="_blank" rel="noopener" data-ticker="${escapeHTML(t)}">${escapeHTML(t)}</a>`
-  ).join('');
-
-  const tickersLarge = tickers.map(t =>
-    `<a class="ticker-large" href="${yahooUrl(t)}" target="_blank" rel="noopener" data-ticker="${escapeHTML(t)}">${escapeHTML(t)}</a>`
-  ).join('');
-
-  const sourcesList = sources.map(s =>
-    `<div class="source-item"><div class="source-dot"></div><a class="source-link" href="${escapeHTML(item.url)}" target="_blank" rel="noopener">${escapeHTML(s)}</a></div>`
-  ).join('');
-
-  const updateNote = item.type === 'UPDATE' && item.original_event
-    ? `<div class="original-event">↳ Update from: ${escapeHTML(item.original_event)}</div>` : '';
-
-  return `
-  <div class="card ${isPinned?'pinned':''}" id="card-${idx}" data-item-id="${escapeHTML(id)}">
-    <div class="card-header">
-      <div class="card-left">
-        <div class="sig-score">${item.significance || '—'}</div>
-        <span class="type-badge ${badgeClass}">${item.type || 'NEW'}</span>
-      </div>
-      <div class="card-center">
-        <div class="card-headline highlightable" data-field="headline">${renderTextWithHighlights(item.headline || 'No headline', id, 'headline')}</div>
-        <div class="card-meta">
-          <span class="date-pill">${formatEventDate(item.date)}</span>
-          <span class="group-tag">${escapeHTML(item.group || 'General')}</span>
-          ${tickerChips ? `<div class="tickers">${tickerChips}</div>` : ''}
-        </div>
-        ${updateNote}
-      </div>
-      <div class="card-right">
-        <button class="pin-btn ${isPinned?'pinned':''}" onclick="togglePin('${escapeHTML(id)}',event)" title="${isPinned?'Unpin':'Pin'}">${isPinned?'★':'☆'}</button>
-        <div class="toggle-zone" onclick="toggleCard(${idx},event)" title="Expand or collapse">▾</div>
-      </div>
-    </div>
-    <div class="card-body">
-      <div class="questions">
-        <div class="q-block full">
-          <div class="q-label">What Happened</div>
-          <div class="q-text highlightable" data-field="detail">${renderTextWithHighlights(item.detail || '—', id, 'detail')}</div>
-        </div>
-        <div class="q-block">
-          <div class="q-label">Timeline</div>
-          <div class="q-text highlightable" data-field="timeline">${renderTextWithHighlights(item.timeline || '—', id, 'timeline')}</div>
-        </div>
-        <div class="q-block">
-          <div class="q-label">Market Impact</div>
-          <div class="q-text highlightable" data-field="market_impact">${renderTextWithHighlights(item.market_impact || '—', id, 'market_impact')}</div>
-        </div>
-        <div class="q-block">
-          <div class="q-label">Why It Matters</div>
-          <div class="q-text highlightable" data-field="why">${renderTextWithHighlights(item.why || '—', id, 'why')}</div>
-        </div>
-        <div class="q-block">
-          <div class="q-label">Investor Action</div>
-          <div class="q-text highlightable" data-field="investor_action">${renderTextWithHighlights(item.investor_action || '—', id, 'investor_action')}</div>
-        </div>
-        <div class="q-block">
-          <div class="q-label">Sources</div>
-          <div class="sources-list">${sourcesList || '<span class="q-text muted">—</span>'}</div>
-        </div>
-        <div class="q-block">
-          <div class="q-label">Affected Assets · click to open Yahoo Finance</div>
-          ${tickersLarge ? `<div class="tickers-large">${tickersLarge}</div>` : '<span class="q-text muted">—</span>'}
-        </div>
-      </div>
-    </div>
-  </div>`;
-}
-
-// ── HIGHLIGHT FEATURE ──────────────────────────────────────────────
-const hlPopup = document.getElementById('hl-popup');
-let pendingSelection = null;
-
-document.addEventListener('mouseup', handleSelection);
-document.addEventListener('touchend', handleSelection);
-
-function handleSelection(e) {
-  if (e.target && e.target.classList && e.target.classList.contains('hl')) {
-    const card = e.target.closest('.card');
-    const field = e.target.closest('.highlightable');
-    if (card && field) {
-      const itemKey = card.getAttribute('data-item-id');
-      const fieldKey = field.getAttribute('data-field');
-      const snippet = e.target.getAttribute('data-snippet') || e.target.textContent;
-      removeHighlight(itemKey, fieldKey, snippet);
-    }
-    hlPopup.classList.remove('show');
-    return;
-  }
-
-  setTimeout(() => {
-    const sel = window.getSelection();
-    const text = sel ? sel.toString().trim() : '';
-    if (!text || text.length < 2) {
-      hlPopup.classList.remove('show');
-      pendingSelection = null;
-      return;
-    }
-    const range = sel.getRangeAt(0);
-    const container = range.commonAncestorContainer;
-    const fieldEl = (container.nodeType === 1 ? container : container.parentElement).closest('.highlightable');
-    const cardEl = (container.nodeType === 1 ? container : container.parentElement).closest('.card');
-    if (!fieldEl || !cardEl) {
-      hlPopup.classList.remove('show');
-      pendingSelection = null;
-      return;
-    }
-    pendingSelection = {
-      itemKey: cardEl.getAttribute('data-item-id'),
-      fieldKey: fieldEl.getAttribute('data-field'),
-      text: text
-    };
-    const rect = range.getBoundingClientRect();
-    hlPopup.style.left = (rect.left + window.scrollX + rect.width / 2 - 50) + 'px';
-    hlPopup.style.top = (rect.top + window.scrollY - 42) + 'px';
-    hlPopup.classList.add('show');
-  }, 10);
-}
-
-hlPopup.addEventListener('mousedown', (e) => {
-  e.preventDefault();
-  e.stopPropagation();
-  if (!pendingSelection) return;
-  addHighlight(pendingSelection.itemKey, pendingSelection.fieldKey, pendingSelection.text);
-  hlPopup.classList.remove('show');
-  window.getSelection().removeAllRanges();
-  pendingSelection = null;
-});
-
-function addHighlight(itemKey, fieldKey, snippet) {
-  if (!highlights[itemKey]) highlights[itemKey] = {};
-  if (!highlights[itemKey][fieldKey]) highlights[itemKey][fieldKey] = [];
-  if (!highlights[itemKey][fieldKey].includes(snippet)) {
-    highlights[itemKey][fieldKey].push(snippet);
-  }
-  localStorage.setItem('abyss_highlights', JSON.stringify(highlights));
-  // Re-render but preserve which cards are currently expanded
-  rerenderPreservingState();
-}
-
-function removeHighlight(itemKey, fieldKey, snippet) {
-  if (highlights[itemKey] && highlights[itemKey][fieldKey]) {
-    highlights[itemKey][fieldKey] = highlights[itemKey][fieldKey].filter(s => s !== snippet);
-    if (!highlights[itemKey][fieldKey].length) delete highlights[itemKey][fieldKey];
-    if (!Object.keys(highlights[itemKey]).length) delete highlights[itemKey];
-    localStorage.setItem('abyss_highlights', JSON.stringify(highlights));
-    rerenderPreservingState();
-  }
-}
-
-function rerenderPreservingState() {
-  const expandedIds = new Set();
-  document.querySelectorAll('.card.expanded').forEach(c => {
-    expandedIds.add(c.getAttribute('data-item-id'));
-  });
-  applyFilters();
-  // Restore expansion
-  document.querySelectorAll('.card').forEach(c => {
-    if (expandedIds.has(c.getAttribute('data-item-id'))) {
-      c.classList.add('expanded');
-    }
-  });
-}
-
-document.addEventListener('scroll', () => hlPopup.classList.remove('show'));
-
-// ── TICKER HOVER TOOLTIP ───────────────────────────────────────────
-const tickerTooltip = document.getElementById('ticker-tooltip');
-
-document.addEventListener('mouseover', (e) => {
-  const chip = e.target.closest('[data-ticker]');
-  if (!chip) return;
-  const ticker = chip.getAttribute('data-ticker');
-  const name = tickerNameMap[ticker] || ticker;
-  const rect = chip.getBoundingClientRect();
-  tickerTooltip.innerHTML = `<span class="ticker-tooltip-symbol">${escapeHTML(ticker)}</span>${escapeHTML(name)}`;
-  tickerTooltip.style.left = (rect.left + rect.width / 2) + 'px';
-  tickerTooltip.style.top = (rect.bottom + 8) + 'px';
-  tickerTooltip.style.transform = 'translateX(-50%)';
-  tickerTooltip.classList.add('show');
-});
-
-document.addEventListener('mouseout', (e) => {
-  const chip = e.target.closest('[data-ticker]');
-  const related = e.relatedTarget && e.relatedTarget.closest && e.relatedTarget.closest('[data-ticker]');
-  if (chip && !related) tickerTooltip.classList.remove('show');
-});
-
-document.addEventListener('scroll', () => tickerTooltip.classList.remove('show'));
-
-loadNews();
-</script>
+            // Modal Logic
+            const modal = document.getElementById('portfolio-modal');
+            if (modal) {
+                const modalImage = document.getElementById('modal-image');
+                const modalTitle = document.getElementById('modal-title');
+                const modalTags = document.getElementById('modal-tags');
+                const modalDescription = document.getElementById('modal-description');
+                const openModal = (trigger) => {
+                    modalImage.src = trigger.dataset.image;
+                    modalTitle.textContent = trigger.dataset.title;
+                    modalDescription.textContent = trigger.dataset.description;
+                    modalTags.innerHTML = '';
+                    JSON.parse(trigger.dataset.tags || '[]').forEach(tag => {
+                        const span = document.createElement('span');
+                        span.className = 'text-sm bg-gray-200 text-gray-800 px-3 py-1 rounded-full';
+                        span.textContent = tag;
+                        modalTags.appendChild(span);
+                    });
+                    modal.style.display = 'flex';
+                    document.body.classList.add('modal-open');
+                };
+                document.querySelectorAll('[data-modal-trigger]').forEach(t => t.addEventListener('click', () => openModal(t)));
+                const closeModal = () => { modal.style.display = 'none'; document.body.classList.remove('modal-open'); };
+                document.querySelectorAll('[data-modal-close]').forEach(b => b.addEventListener('click', closeModal));
+                modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+            }
+        });
+    </script>
 </body>
 </html>
