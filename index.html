@@ -207,11 +207,11 @@ const SKILL_CATEGORY_ORDER = ['finance','quant','business','language'];
    A category with no theme falls back to `_default`, so nothing breaks if you add a
    category and style it later. `chip` = tag pill classes, `dot` = the heading marker. ---- */
 const SKILL_THEME = {
-  finance:  { chip: 'bg-blue-100 text-blue-800 border border-blue-200',        dot: 'bg-blue-500'    },
-  quant:    { chip: 'bg-teal-100 text-teal-800 border border-teal-200',        dot: 'bg-teal-500'    },
-  business: { chip: 'bg-amber-100 text-amber-800 border border-amber-200',     dot: 'bg-amber-500'  },
+  finance:  { chip: 'bg-blue-100 text-blue-800 border border-blue-200',       dot: 'bg-blue-500'   },
+  quant:    { chip: 'bg-teal-100 text-teal-800 border border-teal-200',       dot: 'bg-teal-500'   },
+  business: { chip: 'bg-amber-100 text-amber-800 border border-amber-200',    dot: 'bg-amber-500'  },
   language: { chip: 'bg-purple-100 text-purple-800 border border-purple-200', dot: 'bg-purple-500' },
-  _default: { chip: 'bg-gray-100 text-gray-700 border border-gray-300',        dot: 'bg-gray-400'    },
+  _default: { chip: 'bg-gray-100 text-gray-700 border border-gray-300',       dot: 'bg-gray-400'   },
 };
 const themeFor = key => SKILL_THEME[key] || SKILL_THEME._default;
 
@@ -455,8 +455,10 @@ function scroller(innerHTML, trackClass, opts){
   const small = !!opts.small, step = opts.step || 350;
   const size = small ? 'p-1 w-8 h-8' : 'p-2 w-10 h-10';
   const svg  = small ? 'h-4 w-4' : 'h-6 w-6';
-  const btn = dir => `<button class="scroller-${dir} absolute ${dir==='left'?'left-0':'right-0'} top-1/2 -translate-y-1/2 bg-white ${size} rounded-full shadow-lg opacity-80 hover:opacity-100 transition-opacity z-10 hidden md:flex items-center justify-center border border-gray-200"><svg xmlns="http://www.w3.org/2000/svg" class="${svg}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="${dir==='left'?'M15 19l-7-7 7-7':'M9 5l7 7-7 7'}"/></svg></button>`;
-  return `<div class="scroller relative" data-step="${step}">${btn('left')}<div class="scroller-track flex ${trackClass}">${innerHTML}</div>${btn('right')}</div>`;
+  // Arrows are flex siblings BESIDE the track (their own columns) — not absolute overlays —
+  // so they never sit on top of a card. Hidden on mobile (swipe); shown on desktop.
+  const btn = dir => `<button class="scroller-${dir} shrink-0 bg-white ${size} rounded-full shadow-lg opacity-80 hover:opacity-100 transition-opacity z-10 hidden md:flex items-center justify-center border border-gray-200"><svg xmlns="http://www.w3.org/2000/svg" class="${svg}" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="${dir==='left'?'M15 19l-7-7 7-7':'M9 5l7 7-7 7'}"/></svg></button>`;
+  return `<div class="scroller flex items-center gap-2 md:gap-3" data-step="${step}">${btn('left')}<div class="scroller-track flex-1 min-w-0 flex ${trackClass}">${innerHTML}</div>${btn('right')}</div>`;
 }
 
 /* =========================================================================
@@ -513,7 +515,7 @@ function renderProjects(){
         </div>
       </div>`;
   }).join('');
-  document.getElementById('projects-container').innerHTML = scroller(cards, 'space-x-6 overflow-x-auto pb-8 hide-scrollbar snap-x snap-mandatory md:px-12', {step:800});
+  document.getElementById('projects-container').innerHTML = scroller(cards, 'space-x-6 overflow-x-auto pb-8 hide-scrollbar snap-x snap-mandatory', {step:800});
 }
 
 function renderTimelineItem(c, isLast){
@@ -524,7 +526,7 @@ function renderTimelineItem(c, isLast){
   let media = '';
   if(c.descriptionImages && c.descriptionImages.length > 1){
     const imgs = c.descriptionImages.map(src => `<img src="${src}" alt="${esc(c.headline)}" class="w-64 aspect-square object-cover rounded-lg flex-shrink-0 shadow-sm">`).join('');
-    media = `<div class="mt-6">${scroller(imgs, 'space-x-4 overflow-x-auto pb-2 hide-scrollbar md:px-10', {small:true})}</div>`;
+    media = `<div class="mt-6">${scroller(imgs, 'space-x-4 overflow-x-auto pb-2 hide-scrollbar', {small:true})}</div>`;
   } else if(c.descriptionImages && c.descriptionImages.length === 1){
     media = `<img src="${c.descriptionImages[0]}" alt="${esc(c.headline)}" class="mt-6 w-64 aspect-square object-cover rounded-lg shadow-sm" onerror="this.src='https://placehold.co/600x600/e2e8f0/333333?text=Image+Error'">`;
   }
@@ -571,7 +573,7 @@ function renderPortfolio(){
         </div>
       </div>`;
   }).join('');
-  document.getElementById('portfolio-container').innerHTML = scroller(cards, 'space-x-6 overflow-x-auto pb-4 hide-scrollbar md:px-12');
+  document.getElementById('portfolio-container').innerHTML = scroller(cards, 'space-x-6 overflow-x-auto pb-4 hide-scrollbar');
 }
 
 function renderInterests(){
@@ -583,7 +585,7 @@ function renderInterests(){
         <p class="text-gray-700 text-sm">${c.description||''}</p>
       </div>
     </div>`).join('');
-  document.getElementById('interests-container').innerHTML = scroller(cards, 'space-x-6 overflow-x-auto pb-4 hide-scrollbar md:px-12');
+  document.getElementById('interests-container').innerHTML = scroller(cards, 'space-x-6 overflow-x-auto pb-4 hide-scrollbar');
 }
 
 /* =========================================================================
@@ -596,50 +598,25 @@ function initScrollers(){
     const R = sc.querySelector('.scroller-right');
     if(!track || !L || !R) return;
     const step = parseInt(sc.dataset.step || '350', 10);
-    // Control visibility with inline style — it overrides the base `hidden md:flex`
-    // classes (which otherwise fight each other and keep the left arrow stuck visible).
-    const setVis = (btn, show) => { btn.style.display = show ? 'flex' : 'none'; };
+    // Toggle with `visibility` so the arrow's column stays reserved (cards don't shift
+    // when the left arrow appears/disappears). Mobile hiding is handled by `hidden md:flex`.
+    const setVis = (btn, show) => { btn.style.visibility = show ? 'visible' : 'hidden'; };
     const check = () => {
       const scrollable = track.scrollWidth > track.clientWidth + 1;
-      const desktop = window.innerWidth >= 768;
-      setVis(L, desktop && scrollable && track.scrollLeft > 5);
-      setVis(R, desktop && scrollable && (track.scrollLeft + track.clientWidth < track.scrollWidth - 5));
+      setVis(L, scrollable && track.scrollLeft > 5);
+      setVis(R, scrollable && (track.scrollLeft + track.clientWidth < track.scrollWidth - 5));
     };
     track.addEventListener('scroll', check);
     window.addEventListener('resize', check);
     setTimeout(check, 100);
-    
-    // Calculate width of one card + the gap (e.g. 24px from space-x-6).
+    // Scroll by the real width of one card (+gap). A fixed step smaller than the card
+    // width fights `snap-mandatory` and snaps back — which made both Project arrows dead.
     const stride = () => {
-      const first = track.firstElementChild;
+      const first = track.querySelector(':scope > *');
       return first ? Math.round(first.getBoundingClientRect().width) + 24 : step;
     };
-
-    let scrollTimeout;
-    const scrollDir = (dir) => {
-      const amount = dir === 'left' ? -stride() : stride();
-      
-      // FIX: Safari and Chrome's native CSS scroll-snap violently intercepts programmatic
-      // "smooth" scrolling, which makes the arrows appear completely broken (snaps back). 
-      // We temporarily bypass CSS snapping to allow the smooth scroll to finish.
-      const isSnap = track.classList.contains('snap-x');
-      if (isSnap) {
-        track.style.scrollSnapType = 'none';
-      }
-      
-      track.scrollBy({left: amount, behavior: 'smooth'});
-      
-      if (isSnap) {
-        // Re-enable snapping after the browser's scroll animation has had time to complete.
-        clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(() => {
-          track.style.scrollSnapType = ''; 
-        }, 500); 
-      }
-    };
-
-    L.addEventListener('click', () => scrollDir('left'));
-    R.addEventListener('click', () => scrollDir('right'));
+    L.addEventListener('click', () => track.scrollBy({left:-stride(), behavior:'smooth'}));
+    R.addEventListener('click', () => track.scrollBy({left:stride(), behavior:'smooth'}));
   });
 }
 
