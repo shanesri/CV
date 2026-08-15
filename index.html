@@ -207,11 +207,11 @@ const SKILL_CATEGORY_ORDER = ['finance','quant','business','language'];
    A category with no theme falls back to `_default`, so nothing breaks if you add a
    category and style it later. `chip` = tag pill classes, `dot` = the heading marker. ---- */
 const SKILL_THEME = {
-  finance:  { chip: 'bg-blue-100 text-blue-800 border border-blue-200',       dot: 'bg-blue-500'   },
-  quant:    { chip: 'bg-teal-100 text-teal-800 border border-teal-200',       dot: 'bg-teal-500'   },
-  business: { chip: 'bg-amber-100 text-amber-800 border border-amber-200',    dot: 'bg-amber-500'  },
+  finance:  { chip: 'bg-blue-100 text-blue-800 border border-blue-200',        dot: 'bg-blue-500'    },
+  quant:    { chip: 'bg-teal-100 text-teal-800 border border-teal-200',        dot: 'bg-teal-500'    },
+  business: { chip: 'bg-amber-100 text-amber-800 border border-amber-200',     dot: 'bg-amber-500'  },
   language: { chip: 'bg-purple-100 text-purple-800 border border-purple-200', dot: 'bg-purple-500' },
-  _default: { chip: 'bg-gray-100 text-gray-700 border border-gray-300',       dot: 'bg-gray-400'   },
+  _default: { chip: 'bg-gray-100 text-gray-700 border border-gray-300',        dot: 'bg-gray-400'    },
 };
 const themeFor = key => SKILL_THEME[key] || SKILL_THEME._default;
 
@@ -608,14 +608,38 @@ function initScrollers(){
     track.addEventListener('scroll', check);
     window.addEventListener('resize', check);
     setTimeout(check, 100);
-    // Scroll by the real width of one card (+gap). A fixed step smaller than the card
-    // width fights `snap-mandatory` and snaps back — which made both Project arrows dead.
+    
+    // Calculate width of one card + the gap (e.g. 24px from space-x-6).
     const stride = () => {
-      const first = track.querySelector(':scope > *');
+      const first = track.firstElementChild;
       return first ? Math.round(first.getBoundingClientRect().width) + 24 : step;
     };
-    L.addEventListener('click', () => track.scrollBy({left:-stride(), behavior:'smooth'}));
-    R.addEventListener('click', () => track.scrollBy({left:stride(), behavior:'smooth'}));
+
+    let scrollTimeout;
+    const scrollDir = (dir) => {
+      const amount = dir === 'left' ? -stride() : stride();
+      
+      // FIX: Safari and Chrome's native CSS scroll-snap violently intercepts programmatic
+      // "smooth" scrolling, which makes the arrows appear completely broken (snaps back). 
+      // We temporarily bypass CSS snapping to allow the smooth scroll to finish.
+      const isSnap = track.classList.contains('snap-x');
+      if (isSnap) {
+        track.style.scrollSnapType = 'none';
+      }
+      
+      track.scrollBy({left: amount, behavior: 'smooth'});
+      
+      if (isSnap) {
+        // Re-enable snapping after the browser's scroll animation has had time to complete.
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+          track.style.scrollSnapType = ''; 
+        }, 500); 
+      }
+    };
+
+    L.addEventListener('click', () => scrollDir('left'));
+    R.addEventListener('click', () => scrollDir('right'));
   });
 }
 
