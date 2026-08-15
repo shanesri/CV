@@ -261,28 +261,13 @@ const CTA_VARIANTS = {
    ========================================================================= */
 const CARDS = [
   /* ---------- PROJECTS ---------- */
-  { id:'proj-cycle', type:'project',
-    headline:'Global Economic Cycle Dashboard',
-    background:`${IMG}/project/CYCLE.png`, thumbnail:`${IMG}/project/CYCLE.png`,
-    description:'A macro tool that maps major global economies across the four stages of the business cycle. By synthesizing GDP growth trends and inflationary pressures, the dashboard provides a forward-looking visual roadmap of the global macro landscape through 2027. It’s designed to help identify regime shifts, aiding in tactical asset allocation and top-down investment strategy.',
-    skillTags:['Global Macro Finance','Economic Analysis','Tableau','Data Visualization'],
-    cta1:{label:'View Dashboard', href:'https://public.tableau.com/app/profile/rattapon.sriphathoorat/viz/Econ_Cycle/Global_Econ_Cycle2027', variant:'red', icon:'launch'} },
-
-  { id:'proj-ef', type:'project',
-    headline:'Weight Optimizer using Efficient Frontier',
+  { id:'proj-macroterminal', type:'project',
+    headline:'Macro Terminal — Portfolio Analytics Suite',
     background:`${IMG}/project/EF2.jpg`, thumbnail:`${IMG}/project/EF1.jpg`,
-    description:'A quantitative tool built to identify the "Optimal Portfolio" by applying Modern Portfolio Theory (MPT). Using Python’s optimization libraries, the engine calculates the Efficient Frontier, allowing users to find the specific asset weights that maximize the Sharpe Ratio (Tangency Portfolio) or minimize variance for a target return.',
+    description:'A growing suite of portfolio-analytics tools I built in Python + Streamlit, pulling live market data from Yahoo Finance. Two tools are live today: a Monte Carlo Simulator that projects the range of outcomes for a buy-and-hold portfolio, and an Efficient Frontier optimizer that finds the weight mix delivering the best return for a given level of risk (Modern Portfolio Theory). It’s an ongoing build that turns CFA-curriculum theory into working tools — with a public roadmap toward stress-testing against Black-Swan events, risk parity, fat-tailed return models, and rebalancing simulation.',
     skillTags:['Portfolio Management','Python','Data Visualization','GitHub','Streamlit'],
-    cta1:{label:'🚀 Launch App', href:'https://portoptimizebyshane.streamlit.app/', variant:'red', icon:'launch'},
-    cta2:{label:'View Code', href:'https://github.com/shanesri/portoptimize', variant:'gray', icon:'github'} },
-
-  { id:'proj-mcs', type:'project',
-    headline:'Monte Carlo Portfolio Simulator',
-    background:`${IMG}/project/MCS2.jpg`, thumbnail:`${IMG}/project/MCS1.jpg`,
-    description:'Sandbox for turning CFA textbook theory into "Finance Made Easy" tools. It utilizes Python for its efficiency in automating complex financial math and running Monte Carlo simulations to visualize portfolio risk. Managed via GitHub and deployed through Streamlit, the terminal transforms scripts into an interactive interface where data results become clear and meaningful.',
-    skillTags:['Portfolio Management','Python','Data Visualization','GitHub','Streamlit'],
-    cta1:{label:'🚀 Launch App', href:'https://mcsbyshane.streamlit.app/', variant:'red', icon:'launch'},
-    cta2:{label:'View Code', href:'https://github.com/shanesri/portmng', variant:'gray', icon:'github'} },
+    cta1:{label:'🚀 Launch App', href:'https://mcrtmn.streamlit.app/', variant:'red', icon:'launch'},
+    cta2:{label:'View Code', href:'https://github.com/shanesri/macro-terminal', variant:'gray', icon:'github'} },
 
   { id:'proj-aot', type:'project',
     headline:'Airports of Thailand (AOT) – Strategic Valuation & Financial Model Forecast',
@@ -298,7 +283,7 @@ const CARDS = [
     subheadline:'CGS International Securities (Thailand) | Bangkok, Thailand',
     date:'May 2026 – Present',
     description:'I work with the Cross-Border Trading team to facilitate direct international transactions for CGSI Thailand, connecting domestic clients with global financial markets. I provide organization-wide support for international trading platforms and investment products, and I train and advise Investment Consultants and Marketing teams on direct offshore asset classes — from global equities to more complex instruments such as futures, bonds, and options. I also help develop strategic initiatives that expand client exposure to international investments and diversify their portfolios.',
-    skillTags:['Cross-Border Trading','Global Macro Finance','Strategic Communication','Strategic Planning'] },
+    skillTags:['Cross-Border Trading','Global Macro Finance','Economic Analysis','Strategic Communication','Strategic Planning'] },
 
   { id:'job-brandbuddy', type:'job',
     headline:'Co-Owner, Head of Media & Operations',
@@ -363,7 +348,7 @@ const CARDS = [
     description:'Passing Level I confirms a strong understanding of the foundational knowledge for investment management. This includes mastery of investment tools, quantitative methods, economics, financial statement analysis, and corporate finance, all bound by the CFA Institute’s strict ethical standards.' },
 
   { id:'pf-gda', type:'portfolio', headline:'Google Data Analytics Professional Certificate', subheadline:'Professional Certificate', date:'Jan 2024',
-    thumbnail:`${IMG}/port/P2-1.jpg`, skillTags:['Data Analysis','SQL','Tableau','R'],
+    thumbnail:`${IMG}/port/P2-1.jpg`, skillTags:['Data Analysis','SQL','Tableau','R','Data Visualization'],
     description:'A comprehensive certification focused on the entire data analysis lifecycle. This program provided hands-on experience with in-demand tools and skills, including data collection (SQL), data transformation (Spreadsheets, R), data visualization (Tableau), and analysis (R). The course culminated in a capstone project demonstrating the ability to ask the right questions and solve business problems using data.' },
 
   { id:'pf-adworld22', type:'portfolio', headline:'Ad World Conference 2022', subheadline:'Industry Event & Training', date:'May 2022',
@@ -611,12 +596,14 @@ function initScrollers(){
     const R = sc.querySelector('.scroller-right');
     if(!track || !L || !R) return;
     const step = parseInt(sc.dataset.step || '350', 10);
+    // Control visibility with inline style — it overrides the base `hidden md:flex`
+    // classes (which otherwise fight each other and keep the left arrow stuck visible).
+    const setVis = (btn, show) => { btn.style.display = show ? 'flex' : 'none'; };
     const check = () => {
-      if(track.scrollWidth > track.clientWidth){
-        L.classList.toggle('hidden', track.scrollLeft < 5);
-        R.classList.toggle('hidden', track.scrollLeft + track.clientWidth >= track.scrollWidth - 5);
-        if(window.innerWidth >= 768){ L.classList.add('md:flex'); R.classList.add('md:flex'); }
-      } else { L.classList.add('hidden'); R.classList.add('hidden'); }
+      const scrollable = track.scrollWidth > track.clientWidth + 1;
+      const desktop = window.innerWidth >= 768;
+      setVis(L, desktop && scrollable && track.scrollLeft > 5);
+      setVis(R, desktop && scrollable && (track.scrollLeft + track.clientWidth < track.scrollWidth - 5));
     };
     track.addEventListener('scroll', check);
     window.addEventListener('resize', check);
