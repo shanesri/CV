@@ -266,7 +266,7 @@ const CARDS = [
     background:`${IMG}/project/EF2.jpg`, thumbnail:`${IMG}/project/EF1.jpg`,
     description:'A growing suite of portfolio-analytics tools I built in Python + Streamlit, pulling live market data from Yahoo Finance. Two tools are live today: a Monte Carlo Simulator that projects the range of outcomes for a buy-and-hold portfolio, and an Efficient Frontier optimizer that finds the weight mix delivering the best return for a given level of risk (Modern Portfolio Theory). It’s an ongoing build that turns CFA-curriculum theory into working tools — with a public roadmap toward stress-testing against Black-Swan events, risk parity, fat-tailed return models, and rebalancing simulation.',
     skillTags:['Portfolio Management','Python','Data Visualization','GitHub','Streamlit'],
-    cta1:{label:'🚀 Launch App', href:'https://mcrtmn.streamlit.app/', variant:'red', icon:'launch'},
+    cta1:{label:'🚀 Launch App — click & wait ~30s to wake', href:'https://mcrtmn.streamlit.app/', variant:'red', icon:'launch'},
     cta2:{label:'View Code', href:'https://github.com/shanesri/macro-terminal', variant:'gray', icon:'github'} },
 
   { id:'proj-aot', type:'project',
@@ -513,7 +513,7 @@ function renderProjects(){
         </div>
       </div>`;
   }).join('');
-  document.getElementById('projects-container').innerHTML = scroller(cards, 'space-x-6 overflow-x-auto pb-8 hide-scrollbar snap-x snap-mandatory', {step:800});
+  document.getElementById('projects-container').innerHTML = scroller(cards, 'space-x-6 overflow-x-auto pb-8 hide-scrollbar snap-x snap-mandatory md:px-12', {step:800});
 }
 
 function renderTimelineItem(c, isLast){
@@ -608,8 +608,14 @@ function initScrollers(){
     track.addEventListener('scroll', check);
     window.addEventListener('resize', check);
     setTimeout(check, 100);
-    L.addEventListener('click', () => track.scrollBy({left:-step, behavior:'smooth'}));
-    R.addEventListener('click', () => track.scrollBy({left:step, behavior:'smooth'}));
+    // Scroll by the real width of one card (+gap). A fixed step smaller than the card
+    // width fights `snap-mandatory` and snaps back — which made both Project arrows dead.
+    const stride = () => {
+      const first = track.querySelector(':scope > *');
+      return first ? Math.round(first.getBoundingClientRect().width) + 24 : step;
+    };
+    L.addEventListener('click', () => track.scrollBy({left:-stride(), behavior:'smooth'}));
+    R.addEventListener('click', () => track.scrollBy({left:stride(), behavior:'smooth'}));
   });
 }
 
