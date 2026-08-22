@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PRE-Confirm for PF</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<style>
+  :root{
+    --ink:#0E131C;--panel:#151C28;--panel-2:#1A2331;--line:#26313F;--line-soft:#1F2836;
+    --txt:#E7EDF4;--muted:#7C8A9E;--muted-2:#5A6678;
+    --accent:#5B9DFF;--accent-dim:#2C446A;
+    --buy:#3FB68B;--buy-dim:#183A30;--sell:#E5687A;--sell-dim:#3A1D25;--warn:#E0A24E;
+    --radius:10px;
+    --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+    --sans:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{background:radial-gradient(900px 500px at 50% -10%, #17202E 0%, transparent 60%),var(--ink);color:var(--txt);font-family:var(--sans);min-height:100vh;-webkit-font-smoothing:antialiased;padding:28px 18px 70px}
+  a{color:var(--accent)}
+  .wrap{max-width:1180px;margin:0 auto}
+  .form-col{max-width:600px;margin:0 auto}
+  .topbar{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:0 auto 22px;max-width:600px}
+  .brand{display:flex;flex-direction:column;gap:6px;min-width:0}
+  .brand h1{font-size:19px;font-weight:700;letter-spacing:-.02em;margin:0;line-height:1.1}
+  .brand h1 .pf{color:var(--accent)}
+  .tag{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:10.5px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .dot{width:6px;height:6px;border-radius:50%;background:var(--warn);box-shadow:0 0 0 3px rgba(224,162,78,.14);animation:pulse 2.4s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+  .btn-clear{font-family:var(--mono);font-size:12px;font-weight:500;letter-spacing:.03em;color:var(--muted);background:transparent;border:1px solid var(--line);border-radius:8px;padding:9px 14px;cursor:pointer;white-space:nowrap;transition:.16s ease}
+  .btn-clear:hover{color:var(--txt);border-color:var(--muted-2);background:var(--panel)}
+  .btn-clear:active{transform:translateY(1px)}
+  .card{background:linear-gradient(180deg,var(--panel) 0%, #121824 100%);border:1px solid var(--line-soft);border-radius:var(--radius);box-shadow:0 1px 0 rgba(255,255,255,.03) inset, 0 20px 50px -30px rgba(0,0,0,.9);overflow:hidden}
+  .card-bd{padding:22px 20px 8px}
+  .field{margin-bottom:20px}
+  .lbl{display:block;font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-bottom:9px}
+  .lbl .star{color:var(--warn)}
+  .lbl a{color:var(--accent);text-decoration:none;border-bottom:1px dotted var(--accent)}
+  .lbl a:hover{color:#8FBEFF}
+  .seg{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+  .seg button{font-family:var(--mono);font-size:14px;font-weight:600;letter-spacing:.04em;color:var(--muted);background:var(--panel-2);border:1px solid var(--line);border-radius:8px;padding:12px 8px;cursor:pointer;transition:.15s ease}
+  .seg button:hover{color:var(--txt);border-color:var(--muted-2)}
+  .seg button[aria-pressed="true"]{color:#fff;border-color:var(--accent);background:linear-gradient(180deg,var(--accent-dim),#1B2740);box-shadow:0 0 0 1px var(--accent) inset,0 4px 16px -8px var(--accent)}
+  .seg.side button.buy[aria-pressed="true"]{border-color:var(--buy);background:linear-gradient(180deg,var(--buy-dim),#12261F);box-shadow:0 0 0 1px var(--buy) inset;color:#EAFBF3}
+  .seg.side button.sell[aria-pressed="true"]{border-color:var(--sell);background:linear-gradient(180deg,var(--sell-dim),#26141A);box-shadow:0 0 0 1px var(--sell) inset;color:#FDECEF}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .inp{width:100%;font-family:var(--mono);font-size:15px;font-weight:500;color:var(--txt);background:var(--panel-2);border:1px solid var(--line);border-radius:8px;padding:12px 13px;outline:none;transition:.15s ease;letter-spacing:.03em}
+  .inp::placeholder{color:var(--muted-2);letter-spacing:.04em}
+  .inp:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(91,157,255,.14)}
+  .inp.bad{border-color:var(--sell);box-shadow:0 0 0 3px rgba(229,104,122,.14)}
+  .hint{font-family:var(--mono);font-size:10.5px;color:var(--muted-2);margin-top:7px;letter-spacing:.02em}
+  .hint.err{color:var(--sell)}
+  .fx-wrap{position:relative}
+  .fx-wrap .unit{position:absolute;right:13px;top:50%;transform:translateY(-50%);font-family:var(--mono);font-size:11px;color:var(--muted-2);letter-spacing:.08em;pointer-events:none}
+  .up-zone{margin-top:4px;padding:20px;border-top:1px solid var(--line-soft);background:rgba(10,14,20,.35)}
+  .btn-up{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;font-family:var(--sans);font-size:14.5px;font-weight:600;letter-spacing:.01em;color:#fff;background:linear-gradient(180deg,#5B9DFF,#3D7BE0);border:none;border-radius:9px;padding:14px;cursor:pointer;transition:.15s ease;box-shadow:0 8px 24px -12px rgba(91,157,255,.8)}
+  .btn-up:hover:not(:disabled){filter:brightness(1.07);transform:translateY(-1px)}
+  .btn-up:active:not(:disabled){transform:translateY(0)}
+  .btn-up:disabled{background:var(--panel-2);color:var(--muted-2);cursor:not-allowed;box-shadow:none;border:1px solid var(--line)}
+  .btn-up svg{width:17px;height:17px}
+  .up-note{font-family:var(--mono);font-size:10.5px;color:var(--muted-2);text-align:center;margin-top:11px;letter-spacing:.03em}
+  .filename{color:var(--buy)}
+  .readout{margin-top:16px;border:1px solid var(--line-soft);border-radius:8px;background:var(--panel);overflow:hidden}
+  .readout-hd{font-family:var(--mono);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted-2);padding:9px 14px 0}
+  .readout-body{display:flex;flex-wrap:wrap;gap:6px 18px;font-family:var(--mono);font-size:12.5px;padding:8px 14px 13px}
+  .ro{display:flex;gap:7px;align-items:baseline}
+  .ro .k{color:var(--muted-2);font-size:10px;letter-spacing:.08em;text-transform:uppercase}
+  .ro .v{color:var(--txt);font-weight:500}.ro .v.empty{color:var(--muted-2)}
+  .ro .v.buy{color:var(--buy)}.ro .v.sell{color:var(--sell)}
+  .results{margin-top:30px}.results.hidden{display:none}
+  .res-bar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+  .res-title{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+  .res-meta{display:flex;gap:14px;flex-wrap:wrap;font-family:var(--mono);font-size:11.5px;color:var(--muted-2)}
+  .res-meta b{color:var(--txt);font-weight:500}.res-meta .pos{color:var(--buy)}
+  .tbl-shell{border:1px solid var(--line-soft);border-radius:10px;overflow:hidden;background:var(--panel)}
+  .tbl-scroll{overflow-x:auto}
+  table{border-collapse:collapse;width:100%;font-family:var(--mono);font-size:12px}
+  table.main{min-width:1080px}
+  thead th{position:sticky;top:0;background:#111721;color:var(--muted);text-align:left;font-weight:500;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;padding:10px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+  thead th.num{text-align:right}
+  tbody td{padding:0;border-bottom:1px solid var(--line-soft);border-right:1px solid var(--line-soft)}
+  tbody tr:hover{background:rgba(91,157,255,.04)}
+  td input.cin{width:100%;border:none;background:transparent;color:var(--txt);font-family:var(--mono);font-size:12px;padding:9px 10px;outline:none}
+  td input.cin:focus{background:rgba(91,157,255,.12);box-shadow:0 0 0 1px var(--accent) inset}
+  td.num input.cin{text-align:right}
+  td.comp input.cin{background:rgba(255,255,255,.016);color:var(--muted)}
+  td.comp input.cin:focus{background:rgba(91,157,255,.12);color:var(--txt)}
+  td.comp.ovr input.cin{color:var(--warn);box-shadow:inset 2px 0 0 var(--warn)}
+  td.side-b input.cin{color:var(--buy);font-weight:600}td.side-s input.cin{color:var(--sell);font-weight:600}
+  tfoot td{padding:11px 10px;border-top:1px solid var(--line);font-weight:600;color:var(--txt);text-align:right;white-space:nowrap;background:#10161F}
+  tfoot td.lbl-tot{text-align:left;color:var(--accent);letter-spacing:.1em;font-size:10px;text-transform:uppercase}
+  .res-empty{padding:34px 20px;text-align:center;font-family:var(--mono);font-size:12.5px;color:var(--muted)}
+  .res-empty .big{color:var(--warn);font-size:13px;margin-bottom:6px;letter-spacing:.04em}
+  .res-note{font-family:var(--mono);font-size:10.5px;color:var(--muted-2);margin-top:12px;letter-spacing:.02em;line-height:1.75}
+  .res-note b{color:var(--warn)}.res-note .g{color:var(--muted)}
+
+  /* allocation */
+  .alloc-wrap{margin-top:26px;border:1px solid var(--line-soft);border-radius:10px;background:linear-gradient(180deg,var(--panel),#121824);overflow:hidden}
+  .alloc-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 18px;border-bottom:1px solid transparent;transition:.2s}
+  .alloc-head.on{border-bottom-color:var(--line-soft)}
+  .alloc-title{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--txt);display:flex;align-items:center;gap:9px}
+  .alloc-title .sub{color:var(--muted-2);font-size:10px;letter-spacing:.06em}
+  .switch{position:relative;display:inline-block;width:46px;height:26px;flex:none}
+  .switch input{opacity:0;width:0;height:0}
+  .slider{position:absolute;cursor:pointer;inset:0;background:var(--panel-2);border:1px solid var(--line);border-radius:26px;transition:.2s}
+  .slider:before{content:"";position:absolute;height:18px;width:18px;left:3px;top:3px;background:var(--muted);border-radius:50%;transition:.2s}
+  .switch input:checked+.slider{background:linear-gradient(180deg,var(--buy),#2FB483);border-color:var(--buy)}
+  .switch input:checked+.slider:before{transform:translateX(20px);background:#06231A}
+  .alloc-body{padding:16px 18px 18px}.alloc-body.hidden{display:none}
+  table.alloc{min-width:720px}
+  table.alloc thead th{text-align:center}
+  table.alloc thead th.tk{text-align:left}
+  .portchk{display:flex;flex-direction:column;align-items:center;gap:4px}
+  .portchk label{display:inline-flex;align-items:center;gap:5px;cursor:pointer;font-size:9.5px;color:var(--muted-2);text-transform:none;letter-spacing:0}
+  .portchk input{accent-color:var(--buy);cursor:pointer}
+  td.tkcell{color:var(--accent);font-weight:600;padding:9px 12px;white-space:nowrap}
+  td.pin input{width:100%;border:none;background:transparent;color:var(--txt);font-family:var(--mono);font-size:12px;padding:9px 8px;outline:none;text-align:right}
+  td.pin input:focus{background:rgba(91,157,255,.12);box-shadow:0 0 0 1px var(--accent) inset}
+  td.pin.off{background:rgba(255,255,255,.02)}
+  td.pin.off input{color:var(--muted-2);opacity:.4;cursor:not-allowed}
+  td.total{text-align:right;padding:9px 12px;color:var(--txt);font-weight:500;white-space:nowrap}
+  td.stat{text-align:center;padding:9px 12px;font-weight:700;white-space:nowrap}
+  td.stat.ok{color:var(--buy)}td.stat.no{color:var(--sell)}
+  td.total.mismatch{color:var(--sell)}
+  .alloc-note{font-family:var(--mono);font-size:10.5px;color:var(--muted-2);margin-top:12px;letter-spacing:.02em;line-height:1.7}
+  .alloc-note b{color:var(--warn)}
+
+  .export-panel{margin-top:20px;border:1px solid var(--line-soft);border-radius:10px;background:linear-gradient(180deg,var(--panel),#121824);padding:18px}
+  .export-panel .eph{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted-2);margin-bottom:12px}
+  .btn-export{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;font-family:var(--sans);font-size:14.5px;font-weight:600;color:#06231A;background:linear-gradient(180deg,#4FD6A6,#2FB483);border:none;border-radius:9px;padding:14px;cursor:pointer;transition:.15s ease;box-shadow:0 8px 24px -12px rgba(63,182,139,.9)}
+  .btn-export:hover:not(:disabled){filter:brightness(1.06);transform:translateY(-1px)}
+  .btn-export:active:not(:disabled){transform:translateY(0)}
+  .btn-export:disabled{background:var(--panel-2);color:var(--muted-2);cursor:not-allowed;box-shadow:none;border:1px solid var(--line)}
+  .btn-export svg{width:17px;height:17px}
+  .export-note{font-family:var(--mono);font-size:10.5px;color:var(--muted-2);text-align:center;margin-top:11px;letter-spacing:.02em;line-height:1.7}
+  .export-note.ok{color:var(--buy)}.export-note.err{color:var(--sell)}.export-note code{color:var(--txt)}
+  .footline{font-family:var(--mono);font-size:10px;color:var(--muted-2);text-align:center;margin-top:26px;letter-spacing:.06em}
+  @media (max-width:460px){.brand h1{font-size:16px}.row2{grid-template-columns:1fr}}
+
+  /* ---- lock screen ---- */
+  body.locked{overflow:hidden}
+  #lock{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;
+    background:radial-gradient(700px 420px at 50% 30%, rgba(23,32,46,.55), rgba(10,16,24,.75));
+    backdrop-filter:blur(16px) saturate(115%);-webkit-backdrop-filter:blur(16px) saturate(115%);
+    transition:opacity .5s ease, visibility .5s ease}
+  #lock.hidden{opacity:0;visibility:hidden;pointer-events:none}
+  .lockcard{width:min(92vw,380px);border:1px solid rgba(91,157,255,.18);border-radius:16px;
+    background:linear-gradient(180deg, rgba(21,28,40,.92), rgba(16,22,32,.92));
+    box-shadow:0 30px 80px -30px rgba(0,0,0,.9), 0 1px 0 rgba(255,255,255,.05) inset;
+    padding:34px 30px 28px;text-align:center}
+  .lockcard .lk-ic{width:46px;height:46px;margin:0 auto 16px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(180deg,var(--accent-dim),#16233a);border:1px solid rgba(91,157,255,.35);box-shadow:0 0 22px -6px var(--accent)}
+  .lockcard .lk-ic svg{width:22px;height:22px;stroke:#B9D2FF}
+  .lockcard h2{margin:0 0 5px;font-size:17px;font-weight:700;letter-spacing:-.01em}
+  .lockcard h2 .pf{color:var(--accent)}
+  .lockcard .lk-sub{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted-2);margin-bottom:22px}
+  .lk-row{display:flex;gap:8px}
+  #lockPass{flex:1;font-family:var(--mono);font-size:15px;color:var(--txt);background:var(--panel-2);
+    border:1px solid var(--line);border-radius:9px;padding:12px 14px;outline:none;letter-spacing:.15em;transition:.15s}
+  #lockPass::placeholder{letter-spacing:.05em;color:var(--muted-2)}
+  #lockPass:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(91,157,255,.14)}
+  #lock.bad #lockPass{border-color:var(--sell);box-shadow:0 0 0 3px rgba(229,104,122,.16);animation:shake .35s}
+  @keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+  .lk-go{flex:none;font-family:var(--sans);font-weight:600;font-size:14px;color:#fff;border:none;border-radius:9px;
+    padding:0 18px;cursor:pointer;background:linear-gradient(180deg,#5B9DFF,#3D7BE0);box-shadow:0 8px 22px -12px var(--accent);transition:.15s}
+  .lk-go:hover{filter:brightness(1.08)}.lk-go:active{transform:translateY(1px)}
+  .lk-err{height:16px;margin-top:12px;font-family:var(--mono);font-size:10.5px;letter-spacing:.03em;color:var(--sell);opacity:0;transition:.15s}
+  #lock.bad .lk-err{opacity:1}
+  .lk-foot{margin-top:18px;font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted-2)}</style>
+</head>
+<body class="locked">
+<div id="lock">
+  <div class="lockcard">
+    <div class="lk-ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+    <h2>PRE-Confirm <span class="pf">for PF</span></h2>
+    <div class="lk-sub">Restricted · Team access only</div>
+    <div class="lk-row">
+      <input id="lockPass" type="password" placeholder="password" autocomplete="off" autofocus>
+      <button class="lk-go" id="lockGo">เข้าใช้งาน</button>
+    </div>
+    <div class="lk-err" id="lockErr">รหัสไม่ถูกต้อง</div>
+    <div class="lk-foot">Internal use only</div>
+  </div>
+</div>
+<div class="wrap">
+  <div class="topbar">
+    <div class="brand">
+      <h1>PRE-Confirm <span class="pf">for PF</span></h1>
+      <span class="tag"><span class="dot"></span>Internal use only</span>
+    </div>
+    <button class="btn-clear" id="clearBtn">↺ ล้างข้อมูล</button>
+  </div>
+
+  <div class="form-col">
+    <div class="card">
+      <div class="card-bd">
+        <div class="field"><label class="lbl">Account</label>
+          <div class="seg" id="account">
+            <button type="button" data-val="HKD" aria-pressed="false">HKD</button>
+            <button type="button" data-val="CHN" aria-pressed="false">CHN</button>
+          </div></div>
+        <div class="field"><label class="lbl">Side</label>
+          <div class="seg side" id="side">
+            <button type="button" class="buy"  data-val="BUY"  aria-pressed="false">BUY</button>
+            <button type="button" class="sell" data-val="SELL" aria-pressed="false">SELL</button>
+          </div></div>
+        <div class="row2">
+          <div class="field"><label class="lbl">Trade date</label>
+            <input class="inp date-inp" id="tradeDate" inputmode="numeric" placeholder="dd-mm-yy" maxlength="8" autocomplete="off">
+            <div class="hint" data-for="tradeDate">รูปแบบ dd-mm-yy · เช่น 17-08-26</div></div>
+          <div class="field"><label class="lbl">Settle date</label>
+            <input class="inp date-inp" id="settleDate" inputmode="numeric" placeholder="dd-mm-yy" maxlength="8" autocomplete="off">
+            <div class="hint" data-for="settleDate">รูปแบบ dd-mm-yy · เช่น 19-08-26</div></div>
+        </div>
+        <div class="field"><label class="lbl">FX rate by <a href="https://www.bot.or.th/en/statistics/exchange-rate.html" target="_blank" rel="noopener">BOT</a> <span class="star">*</span></label>
+          <div class="fx-wrap"><input class="inp" id="fxRate" inputmode="decimal" placeholder="0.0000" autocomplete="off"><span class="unit">THB</span></div>
+          <div class="hint">* กดที่ <a href="https://www.bot.or.th/en/statistics/exchange-rate.html" target="_blank" rel="noopener">BOT</a> เพื่อเปิดดูเรตกลาง ธปท. แล้วกรอกเอง · ใส่ทศนิยมได้</div></div>
+      </div>
+      <div class="up-zone">
+        <input type="file" id="fileInput" accept=".xlsx,.xls" hidden>
+        <button class="btn-up" id="uploadBtn" disabled>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          อัพโหลดไฟล์ Positions (.xlsx)
+        </button>
+        <div class="up-note" id="upNote">กรอกข้อมูลด้านบนให้ครบก่อน แล้วปุ่มจะเปิดให้อัพโหลด</div>
+      </div>
+    </div>
+    <div class="readout">
+      <div class="readout-hd">// current selection</div>
+      <div class="readout-body">
+        <div class="ro"><span class="k">acct</span><span class="v empty" id="ro-acct">—</span></div>
+        <div class="ro"><span class="k">side</span><span class="v empty" id="ro-side">—</span></div>
+        <div class="ro"><span class="k">TD</span><span class="v empty" id="ro-td">—</span></div>
+        <div class="ro"><span class="k">SD</span><span class="v empty" id="ro-sd">—</span></div>
+        <div class="ro"><span class="k">FX</span><span class="v empty" id="ro-fx">—</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="results hidden" id="results">
+    <div class="res-bar">
+      <div class="res-title">// result table &nbsp;·&nbsp; HKD ruleset</div>
+      <div class="res-meta" id="resMeta"></div>
+    </div>
+    <div class="tbl-shell" id="tblShell"></div>
+    <div class="res-note">ช่องผลลัพธ์คำนวณอัตโนมัติ · พิมพ์ทับได้ (ช่อง force = <b>สีเหลือง</b>) · ล้างให้ว่างแล้วออกจากช่อง = กลับไปคำนวณเอง · เรียงตาม TICKER น้อย→มาก</div>
+
+    <!-- Allocation -->
+    <div class="alloc-wrap" id="allocWrap">
+      <div class="alloc-head" id="allocHead">
+        <div class="alloc-title">Allocation Feature <span class="sub">— แบ่งหุ้นเข้าพอร์ต</span></div>
+        <label class="switch"><input type="checkbox" id="allocToggle"><span class="slider"></span></label>
+      </div>
+      <div class="alloc-body hidden" id="allocBody">
+        <div class="tbl-shell"><div class="tbl-scroll"><table class="alloc" id="allocTable"></table></div></div>
+        <div class="alloc-note">ติ๊กหัวคอลัมน์เพื่อ <b>เปิด/ปิด port</b> (default เปิด A/B/C) · port ที่ปิด = ข้ามตอน export · ยอดรวมแต่ละ ticker ต้องเท่ากับ QUANTITY (ขึ้น <b style="color:var(--buy)">OK</b>) ถึงจะกด export ได้</div>
+      </div>
+    </div>
+
+    <div class="export-panel" id="exportPanel">
+      <div class="eph">// export → เติมค่าลง master แล้วดาวน์โหลด .xlsx</div>
+      <input type="file" id="masterInput" accept=".xlsx" hidden>
+      <button class="btn-export" id="exportBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        เลือก Master (.xlsx เปล่า) แล้ว Export
+      </button>
+      <div class="export-note" id="exportNote">เลือกไฟล์ master ฟอร์มเปล่า — เติม L10/L11/I32 + ตาราง A14:L29 ให้ โดยไม่แตะโลโก้/เส้น/สูตร</div>
+    </div>
+  </div>
+
+  <div class="footline">PRE-CONFIRM · PF DESK · v0.6 · HKD ruleset · fill-master + allocation</div>
+</div>
+
+<script>
+/* ---- lock screen (client-side gate: keeps casual users out; formulas are non-secret) ---- */
+(function(){const PASS="shane";
+  const lock=document.getElementById("lock"),inp=document.getElementById("lockPass"),go=document.getElementById("lockGo");
+  function tryUnlock(){if(inp.value===PASS){lock.classList.add("hidden");document.body.classList.remove("locked");setTimeout(()=>{if(lock)lock.remove();},600);}
+    else{lock.classList.add("bad");inp.select();}}
+  go.addEventListener("click",tryUnlock);
+  inp.addEventListener("keydown",e=>{if(e.key==="Enter")tryUnlock();});
+  inp.addEventListener("input",()=>lock.classList.remove("bad"));
+  window.addEventListener("load",()=>inp.focus());
+})();
+
+const state={acct:null,side:null,tradeDate:"",settleDate:"",fx:""};
+let MODEL=[];
+let allocOn=false;
+const PORTS=['A','B','C','D','E'];
+const portOpen={A:true,B:true,C:true,D:false,E:false};
+const RAW=[{k:"ticker",label:"TICKER"},{k:"desc",label:"DESCRIPTION"},{k:"isin",label:"ISIN"},{k:"side",label:"SIDE",side:true},{k:"qty",label:"QUANTITY",num:true},{k:"price",label:"PRICE",num:true}];
+const COMP=[{k:"gross",label:"GROSS"},{k:"comm",label:"COMM"},{k:"other",label:"OTHER FEES"},{k:"vat",label:"VAT"},{k:"net",label:"NET AMOUNT"}];
+
+function wireSeg(id,key){const g=document.getElementById(id);
+  g.querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>{const on=b.getAttribute("aria-pressed")==="true";g.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed","false"));state[key]=on?null:b.dataset.val;if(!on)b.setAttribute("aria-pressed","true");refresh();}));}
+wireSeg("account","acct");wireSeg("side","side");
+
+function maskDate(v){const d=v.replace(/\D/g,"").slice(0,6);const p=[];if(d.length>=1)p.push(d.slice(0,2));if(d.length>=3)p.push(d.slice(2,4));if(d.length>=5)p.push(d.slice(4,6));return p.join("-");}
+function validDate(s){const m=String(s).match(/^(\d{2})-(\d{2})-(\d{2})$/);if(!m)return false;const dd=+m[1],mm=+m[2],yy=+m[3];if(mm<1||mm>12||dd<1)return false;return dd<=new Date(2000+yy,mm,0).getDate();}
+document.querySelectorAll(".date-inp").forEach(inp=>{
+  inp.addEventListener("input",()=>{inp.value=maskDate(inp.value);state[inp.id]=inp.value;inp.classList.remove("bad");setHint(inp.id,"");refresh();});
+  inp.addEventListener("blur",()=>{if(inp.value==="")return;if(!validDate(inp.value)){inp.classList.add("bad");setHint(inp.id,"วันที่ไม่ถูกต้อง — ต้องเป็น dd-mm-yy");}else{inp.classList.remove("bad");setHint(inp.id,"");}refresh();});});
+function setHint(id,msg){const h=document.querySelector('.hint[data-for="'+id+'"]');if(!h)return;if(msg){h.textContent=msg;h.classList.add("err");}else{h.classList.remove("err");h.textContent=id==="tradeDate"?"รูปแบบ dd-mm-yy · เช่น 17-08-26":"รูปแบบ dd-mm-yy · เช่น 19-08-26";}}
+const fx=document.getElementById("fxRate");
+fx.addEventListener("input",()=>{fx.value=fx.value.replace(/[^\d.]/g,"").replace(/(\..*)\./g,"$1");state.fx=fx.value;refresh();});
+
+function refresh(){set("ro-acct",state.acct,state.acct);const s=document.getElementById("ro-side");s.textContent=state.side||"—";s.className="v"+(state.side?(" "+state.side.toLowerCase()):" empty");
+  set("ro-td",validDate(state.tradeDate)?state.tradeDate:null);set("ro-sd",validDate(state.settleDate)?state.settleDate:null);set("ro-fx",state.fx?(state.fx+" THB"):null,state.fx);
+  const ready=state.acct&&state.side&&validDate(state.tradeDate)&&validDate(state.settleDate)&&state.fx!==""&&!isNaN(parseFloat(state.fx));
+  document.getElementById("uploadBtn").disabled=!ready;
+  document.getElementById("upNote").innerHTML=ready?'พร้อมอัพโหลด · รับเฉพาะ <span style="color:var(--txt)">.xlsx</span>':'กรอกข้อมูลด้านบนให้ครบก่อน แล้วปุ่มจะเปิดให้อัพโหลด';}
+function set(id,val,truthy){const el=document.getElementById(id);el.textContent=val||"—";el.classList.toggle("empty",!(truthy??val));}
+
+function toTicker(sym,acct){if(sym==null)return"";const base=String(sym).split(":")[0].trim().replace(/[^0-9]/g,"");
+  if(acct==="CHN")return base.length>=6?base:base.padStart(6,"0");
+  let s=base.replace(/^0+/,"")||"0";if(s.length<4)s=s.padStart(4,"0");return s;}
+const MON={jan:1,feb:2,mar:3,apr:4,may:5,jun:6,jul:7,aug:8,sep:9,oct:10,nov:11,dec:12};
+function rowDate(v){if(v==null||v==="")return null;if(v instanceof Date)return{d:v.getDate(),m:v.getMonth()+1,y:v.getFullYear()};const m=String(v).trim().match(/^(\d{1,2})-([A-Za-z]{3})-(\d{4})/);if(!m)return null;const mm=MON[m[2].toLowerCase()];if(!mm)return null;return{d:+m[1],m:mm,y:+m[3]};}
+function dObj(s){const m=String(s).match(/^(\d{2})-(\d{2})-(\d{2})$/);if(!m)return null;return{d:+m[1],m:+m[2],y:2000+ +m[3]};}
+function tradeDateObj(){return dObj(state.tradeDate);}function settleDateObj(){return dObj(state.settleDate);}
+function sameDate(a,b){return a&&b&&a.d===b.d&&a.m===b.m&&a.y===b.y;}
+function pnum(v){const n=parseFloat(String(v).replace(/,/g,""));return isNaN(n)?0:n;}
+function round2(x){return Math.round((x+Number.EPSILON)*100)/100;}
+function fmt2(n){return (isFinite(n)?n:0).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2});}
+function fmt4(n){return (isFinite(n)?n:0).toLocaleString("en-US",{minimumFractionDigits:4,maximumFractionDigits:4});}
+function fmtInt(n){return (isFinite(n)?n:0).toLocaleString("en-US");}
+
+function calc(r){const q=pnum(r.qty),p=pnum(r.price),cp=pnum(r.cost);const gross=q*p;
+  const comm=round2(r.acct==="CHN"?Math.max(70,gross*0.001):gross*0.0008);
+  const other=Math.abs(q*cp-gross)-comm;const vat=round2((comm+other)*0.07);
+  const isB=String(r.side).trim().toUpperCase()==="B";const net=round2(isB?(gross+comm+other+vat):(gross-(comm+other+vat)));return {gross,comm,other,vat,net};}
+function compVal(r,key){const c=calc(r);return (r.ovr&&r.ovr[key]!=null)?pnum(r.ovr[key]):c[key];}
+
+/* ---------- positions upload ---------- */
+const fileInput=document.getElementById("fileInput");
+document.getElementById("uploadBtn").addEventListener("click",()=>fileInput.click());
+fileInput.addEventListener("change",()=>{const f=fileInput.files[0];if(!f)return;
+  document.getElementById("upNote").innerHTML='โหลดไฟล์แล้ว: <span class="filename">'+f.name+'</span>';
+  const rd=new FileReader();
+  rd.onload=e=>{try{const wb=XLSX.read(new Uint8Array(e.target.result),{type:"array"});const ws=wb.Sheets[wb.SheetNames[0]];const aoa=XLSX.utils.sheet_to_json(ws,{header:1,raw:true,defval:null});processHKD(aoa);}catch(err){renderEmpty("อ่านไฟล์ไม่ได้","ตรวจสอบว่าเป็นไฟล์ .xlsx จาก Positions export · "+err.message);}};
+  rd.readAsArrayBuffer(f);});
+
+function processHKD(aoa){
+  const head=(aoa[0]||[]).map(h=>String(h||"").trim().toLowerCase());const ix=n=>head.indexOf(n.toLowerCase());
+  const iInstr=ix("Instrument"),iSym=ix("Symbol"),iLS=ix("L/S"),iOT=ix("Open Time"),iQty=ix("Quantity"),iPx=ix("Open price"),iCost=ix("Cost price"),iISIN=ix("ISIN");
+  if([iSym,iLS,iOT,iQty,iPx,iCost].some(i=>i<0)){renderEmpty("ไม่พบคอลัมน์ที่ต้องการ","ต้องมี Symbol / L/S / Open Time / Quantity / Open price / Cost price");return;}
+  const td=tradeDateObj();const wantLS=state.side==="BUY"?"long":"short";const sideLetter=state.side==="BUY"?"B":"S";
+  MODEL=[];
+  for(let r=1;r<aoa.length;r++){const row=aoa[r];if(!row)continue;const otd=rowDate(row[iOT]);if(!otd)continue;if(!sameDate(otd,td))continue;if(String(row[iLS]||"").trim().toLowerCase()!==wantLS)continue;
+    MODEL.push({acct:state.acct,ticker:toTicker(row[iSym],state.acct),desc:String(row[iInstr]==null?"":row[iInstr]).trim(),isin:String(row[iISIN]==null?"":row[iISIN]).trim(),side:sideLetter,qty:Math.abs(pnum(row[iQty])),price:Math.abs(pnum(row[iPx])),cost:pnum(row[iCost]),ovr:{},alloc:{}});}
+  MODEL.sort((a,b)=>{const na=parseInt(a.ticker,10),nb=parseInt(b.ticker,10);if(!isNaN(na)&&!isNaN(nb)&&na!==nb)return na-nb;return String(a.ticker).localeCompare(String(b.ticker));});
+  renderTable();
+}
+
+/* ---------- main render ---------- */
+function showResults(){document.getElementById("results").classList.remove("hidden");}
+function metaLine(n){document.getElementById("resMeta").innerHTML='<span class="pos">'+n+' rows</span><span>acct <b>'+state.acct+'</b></span><span>side <b>'+state.side+'</b></span><span>TD <b>'+state.tradeDate+'</b></span>';}
+function renderEmpty(big,sub){showResults();metaLine(0);document.getElementById("tblShell").innerHTML='<div class="res-empty"><div class="big">'+big+'</div>'+(sub||"")+'</div>';document.getElementById("allocWrap").style.display="none";document.getElementById("exportPanel").style.display="none";document.getElementById("results").scrollIntoView({behavior:"smooth",block:"start"});}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+
+function renderTable(){
+  showResults();metaLine(MODEL.length);
+  document.querySelector('.res-title').textContent='// result table · '+(state.acct||'')+' ruleset';
+  const has=MODEL.length>0;
+  document.getElementById("allocWrap").style.display=has?"block":"none";
+  document.getElementById("exportPanel").style.display=has?"block":"none";
+  const shell=document.getElementById("tblShell");
+  if(!has){shell.innerHTML='<div class="res-empty"><div class="big">ไม่พบรายการที่ตรงกับเงื่อนไข</div>ไม่มีแถวที่ Open Time = '+state.tradeDate+' และ '+(state.side==="BUY"?"Long":"Short")+'</div>';document.getElementById("results").scrollIntoView({behavior:"smooth",block:"start"});return;}
+  let h='<div class="tbl-scroll"><table class="main"><thead><tr>';
+  RAW.forEach(c=>h+='<th class="'+(c.num?"num":"")+'">'+c.label+'</th>');
+  COMP.forEach(c=>h+='<th class="num">'+c.label+'</th>');
+  h+='</tr></thead><tbody>';
+  MODEL.forEach((r,i)=>{const sc=String(r.side).trim().toUpperCase()==="B"?"side-b":"side-s";h+='<tr data-row="'+i+'">';
+    RAW.forEach(c=>{const val=c.k==="price"?fmt4(r.price):r[c.k];const cls=(c.num?"num ":"")+(c.side?sc:"");h+='<td class="'+cls.trim()+'"><input class="cin" data-f="'+c.k+'" value="'+esc(val)+'"></td>';});
+    COMP.forEach(c=>{const ovr=r.ovr&&r.ovr[c.k]!=null;const val=ovr?r.ovr[c.k]:fmt2(calc(r)[c.k]);h+='<td class="num comp'+(ovr?" ovr":"")+'"><input class="cin" data-c="'+c.k+'" value="'+esc(val)+'"></td>';});
+    h+='</tr>';});
+  h+='</tbody><tfoot><tr><td class="lbl-tot" colspan="6">Total net proceeds</td><td data-t="gross"></td><td data-t="comm"></td><td data-t="other"></td><td data-t="vat"></td><td data-t="net"></td></tr></tfoot></table></div>';
+  shell.innerHTML=h;
+  shell.querySelectorAll("input[data-f]").forEach(inp=>inp.addEventListener("input",()=>{const tr=inp.closest("tr");const i=+tr.dataset.row;const f=inp.dataset.f;MODEL[i][f]=inp.value;if(f==="side"){const sc2=String(inp.value).trim().toUpperCase()==="B"?"side-b":"side-s";inp.closest("td").className=sc2;}repaintComputed(tr,i);recalcTotals();if(allocOn&&(f==="qty"||f==="ticker"||f==="side"))renderAlloc();}));
+  shell.querySelectorAll("input[data-c]").forEach(inp=>{
+    inp.addEventListener("input",()=>{const tr=inp.closest("tr");const i=+tr.dataset.row;const key=inp.dataset.c;const td=inp.closest("td");const v=inp.value.trim();if(v===""){delete MODEL[i].ovr[key];td.classList.remove("ovr");}else{MODEL[i].ovr[key]=inp.value;td.classList.add("ovr");}recalcTotals();});
+    inp.addEventListener("blur",()=>{const tr=inp.closest("tr");const i=+tr.dataset.row;const key=inp.dataset.c;if(MODEL[i].ovr[key]==null){inp.value=fmt2(calc(MODEL[i])[key]);}else{MODEL[i].ovr[key]=fmt2(pnum(MODEL[i].ovr[key]));inp.value=MODEL[i].ovr[key];}});});
+  recalcTotals();
+  if(allocOn)renderAlloc(); else updateExportGate();
+  document.getElementById("results").scrollIntoView({behavior:"smooth",block:"start"});
+}
+function repaintComputed(tr,i){const c=calc(MODEL[i]);tr.querySelectorAll("input[data-c]").forEach(inp=>{const key=inp.dataset.c;if(MODEL[i].ovr[key]==null&&document.activeElement!==inp)inp.value=fmt2(c[key]);});}
+function recalcTotals(){const t={gross:0,comm:0,other:0,vat:0,net:0};MODEL.forEach(r=>{t.gross+=compVal(r,"gross");t.comm+=compVal(r,"comm");t.other+=compVal(r,"other");t.vat+=compVal(r,"vat");t.net+=compVal(r,"net");});document.querySelectorAll("[data-t]").forEach(td=>td.textContent=fmt2(t[td.dataset.t]));}
+
+/* ---------- allocation ---------- */
+const allocToggle=document.getElementById("allocToggle");
+allocToggle.addEventListener("change",()=>{allocOn=allocToggle.checked;
+  document.getElementById("allocBody").classList.toggle("hidden",!allocOn);
+  document.getElementById("allocHead").classList.toggle("on",allocOn);
+  if(allocOn)renderAlloc(); else updateExportGate();});
+function allocTotal(r){return PORTS.reduce((s,p)=>s+(portOpen[p]?pnum(r.alloc[p]||0):0),0);}
+function allocOK(r){return Math.abs(allocTotal(r)-pnum(r.qty))<1e-6;}
+function allocAllOK(){return MODEL.every(allocOK);}
+
+function renderAlloc(){
+  const tbl=document.getElementById("allocTable");
+  let h='<thead><tr><th class="tk">TICKER</th>';
+  PORTS.forEach(p=>{h+='<th><div class="portchk"><span>Port '+p+'</span><label><input type="checkbox" data-port="'+p+'"'+(portOpen[p]?" checked":"")+'> ใช้</label></div></th>';});
+  h+='<th class="num">TOTAL SHARE</th><th>STATUS</th></tr></thead><tbody>';
+  MODEL.forEach((r,i)=>{
+    h+='<tr data-row="'+i+'"><td class="tkcell">'+esc(r.ticker)+'</td>';
+    PORTS.forEach(p=>{const off=!portOpen[p];h+='<td class="pin'+(off?" off":"")+'"><input inputmode="numeric" data-port="'+p+'" value="'+esc(r.alloc[p]==null?"":r.alloc[p])+'"'+(off?" disabled":"")+'></td>';});
+    const tot=allocTotal(r),ok=allocOK(r);
+    h+='<td class="total'+(ok?"":" mismatch")+'" data-tot>'+fmtInt(tot)+' / '+fmtInt(pnum(r.qty))+'</td>';
+    h+='<td class="stat '+(ok?"ok":"no")+'" data-stat>'+(ok?"OK":"ไม่ OK")+'</td></tr>';
+  });
+  h+='</tbody>';
+  tbl.innerHTML=h;
+  // port checkboxes
+  tbl.querySelectorAll('thead input[data-port]').forEach(cb=>cb.addEventListener("change",()=>{portOpen[cb.dataset.port]=cb.checked;renderAlloc();}));
+  // qty inputs
+  tbl.querySelectorAll('tbody input[data-port]').forEach(inp=>inp.addEventListener("input",()=>{
+    const tr=inp.closest("tr");const i=+tr.dataset.row;inp.value=inp.value.replace(/[^\d]/g,"");MODEL[i].alloc[inp.dataset.port]=inp.value;refreshAllocRow(tr,i);updateExportGate();}));
+  updateExportGate();
+}
+function refreshAllocRow(tr,i){const r=MODEL[i];const tot=allocTotal(r),ok=allocOK(r);
+  const tt=tr.querySelector("[data-tot]");tt.textContent=fmtInt(tot)+' / '+fmtInt(pnum(r.qty));tt.classList.toggle("mismatch",!ok);
+  const st=tr.querySelector("[data-stat]");st.textContent=ok?"OK":"ไม่ OK";st.className="stat "+(ok?"ok":"no");}
+
+/* ---------- export gate ---------- */
+function updateExportGate(){
+  const btn=document.getElementById("exportBtn");
+  if(MODEL.length===0){btn.disabled=true;eNote("ยังไม่มีข้อมูลในตาราง","err");return;}
+  if(MODEL.length>16){btn.disabled=true;eNote("เกิน 16 แถว — master รองรับได้แค่ 16 รายการ","err");return;}
+  if(allocOn && !allocAllOK()){
+    const bad=MODEL.filter(r=>!allocOK(r)).map(r=>r.ticker);
+    btn.disabled=true;eNote('ยอดแบ่งพอร์ตไม่ตรง quantity: <b>'+bad.join(", ")+'</b> — แก้ให้ครบก่อนถึง export ได้',"err");return;}
+  btn.disabled=false;
+  eNote(allocOn?'พร้อม export · จะเติมตารางหลัก + แบ่งพอร์ต (S/T) ให้':'พร้อม export · เติมเฉพาะตารางหลัก (ไม่แบ่งพอร์ต)');
+}
+
+/* ---------- EXPORT ---------- */
+const MONS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+function serial(dd,mm,y){return Math.round((Date.UTC(y,mm-1,dd)-Date.UTC(1899,11,30))/86400000);}
+function setCell(xml,coord,kind,value,forceStyle){const re=new RegExp('<c r="'+coord+'"( s="(\\d+)")?[^>]*?(/>|>[\\s\\S]*?</c>)');const m=xml.match(re);if(!m)return xml;const sv=(forceStyle!=null?String(forceStyle):m[2]);const s=sv?(' s="'+sv+'"'):'';const cell=kind==='num'?'<c r="'+coord+'"'+s+'><v>'+value+'</v></c>':'<c r="'+coord+'"'+s+' t="inlineStr"><is><t xml:space="preserve">'+esc(value)+'</t></is></c>';return xml.slice(0,m.index)+cell+xml.slice(m.index+m[0].length);}
+function resolveSheet(wbXml,relsXml){const attr=(t,a)=>{const m=t.match(new RegExp(a+'="([^"]+)"'));return m?m[1]:null;};const tags=wbXml.match(/<sheet\b[^>]*?\/?>/g)||[];let rid=null;for(const t of tags){if(attr(t,'name')==='PreConfirm'){rid=attr(t,'r:id');break;}}if(!rid&&tags.length)rid=attr(tags[0],'r:id');let target=null;const rels=relsXml.match(/<Relationship\b[^>]*?\/?>/g)||[];for(const t of rels){if(attr(t,'Id')===rid){target=attr(t,'Target');break;}}if(!target)target='worksheets/sheet1.xml';target=target.replace(/^\/?xl\//,'').replace(/^\//,'');return 'xl/'+target;}
+function buildFilename(masterName){const td=tradeDateObj();const tok=String(td.d).padStart(2,'0')+MONS[td.m-1]+td.y;
+  let name=masterName.replace(/(?:\d{1,2}|xx)(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\d{4}/i,tok);
+  if(name===masterName)name=masterName.replace(/\.xlsx$/i,'_'+tok+'.xlsx');
+  if(!allocOn)name=name.replace(/[_\s-]+Allocation(?=\.xlsx$)/i,'');
+  if(!/\.xlsx$/i.test(name))name+='.xlsx';return name;}
+function download(blob,name){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},1500);}
+function eNote(msg,cls){const n=document.getElementById("exportNote");n.className="export-note"+(cls?(" "+cls):"");n.innerHTML=msg;}
+
+function validateMasterName(name){
+  const n=String(name).toLowerCase();const errs=[];
+  const acctTok=state.acct==="CHN"?"cnh":"hkd";
+  if(!n.includes(acctTok))errs.push('ชื่อไฟล์ไม่มี "'+acctTok.toUpperCase()+'" (เลือก Account '+state.acct+' ไว้)');
+  if(!n.includes("xx"))errs.push('ชื่อไฟล์ไม่มี "xx" — อาจเป็นไฟล์ที่เติมข้อมูลแล้ว ต้องใช้ master เปล่า');
+  const want=state.side==="BUY"?"buy":"sell",opp=state.side==="BUY"?"sell":"buy";
+  if(!n.includes(want))errs.push('ชื่อไฟล์ไม่มี "'+(state.side==="BUY"?"Buy":"Sell")+'" (เลือก '+state.side+' ไว้)');
+  else if(n.includes(opp))errs.push('ชื่อไฟล์เจอทั้ง Buy และ Sell — เช็คให้ตรงกับ side ที่เลือก');
+  return errs;
+}
+
+const masterInput=document.getElementById("masterInput");
+document.getElementById("exportBtn").addEventListener("click",()=>{if(document.getElementById("exportBtn").disabled)return;masterInput.click();});
+masterInput.addEventListener("change",async()=>{
+  const f=masterInput.files[0];if(!f)return;
+  const nameErrs=validateMasterName(f.name);
+  if(nameErrs.length){eNote('ไฟล์ master ไม่ตรงกับที่เลือก:<br>• '+nameErrs.join('<br>• '),"err");masterInput.value="";return;}
+  eNote("กำลังเติมค่าลง master…");
+  try{
+    const buf=await f.arrayBuffer();const zip=await JSZip.loadAsync(buf);
+    const wbXml=await zip.file('xl/workbook.xml').async('string');
+    const relsXml=await zip.file('xl/_rels/workbook.xml.rels').async('string');
+    const sheetPath=resolveSheet(wbXml,relsXml);const sfile=zip.file(sheetPath);if(!sfile)throw new Error('ไม่พบ sheet PreConfirm');
+    let sx=await sfile.async('string');
+    // dates written as TEXT in dd-mm-yy so they show identically on every machine's locale
+    sx=setCell(sx,'L10','txt',state.tradeDate);
+    sx=setCell(sx,'L11','txt',state.settleDate);
+    sx=setCell(sx,'I32','num',pnum(state.fx));
+    const MAP=[['ticker','A','txt'],['desc','B','txt'],['isin','D','txt'],['side','E','txt'],['qty','F','raw'],['price','G','raw'],['gross','H','money'],['comm','I','money'],['other','J','money'],['vat','K','money'],['net','L','money']];
+    const e14m=sx.match(/<c r="E14"[^>]*?\bs="(\d+)"/);const eStyle=e14m?e14m[1]:null;  // force whole SIDE column to E14's colour (buy=green / sell=red)
+    MODEL.forEach((r,i)=>{const rn=14+i;MAP.forEach(([key,col,typ])=>{const coord=col+rn;const fs=(col==="E")?eStyle:undefined;
+      if(typ==='txt')sx=setCell(sx,coord,'txt',String(r[key]).trim(),fs);
+      else if(typ==='raw')sx=setCell(sx,coord,'num',pnum(r[key]),fs);
+      else sx=setCell(sx,coord,'num',round2(compVal(r,key)),fs);});});
+    // allocation: write S(side)+T(qty) into blocks, open ports only
+    if(allocOn){MODEL.forEach((r,i)=>{const base=43+i*10;PORTS.forEach((p,pi)=>{if(portOpen[p]){const q=pnum(r.alloc[p]);if(q>0){const rr=base+pi;sx=setCell(sx,'S'+rr,'txt',String(r.side).trim().toUpperCase());sx=setCell(sx,'T'+rr,'num',q);}}});});}
+    zip.file(sheetPath,sx);
+    let nwb=wbXml;if(nwb.indexOf('fullCalcOnLoad')<0)nwb=nwb.replace('<calcPr','<calcPr fullCalcOnLoad="1"');zip.file('xl/workbook.xml',nwb);
+    // drop stale calcChain to avoid Excel repair popup
+    if(zip.file('xl/calcChain.xml')){zip.remove('xl/calcChain.xml');
+      const ctf=zip.file('[Content_Types].xml');if(ctf){let ct=await ctf.async('string');ct=ct.replace(/<Override[^>]*calcChain\.xml[^>]*\/>/,'');zip.file('[Content_Types].xml',ct);}
+      const wrf=zip.file('xl/_rels/workbook.xml.rels');if(wrf){let wr=await wrf.async('string');wr=wr.replace(/<Relationship[^>]*calcChain\.xml[^>]*\/>/,'');zip.file('xl/_rels/workbook.xml.rels',wr);}}
+    const blob=await zip.generateAsync({type:'blob',compression:'DEFLATE'});
+    const outName=buildFilename(f.name);download(blob,outName);
+    eNote('เสร็จแล้ว → <code>'+esc(outName)+'</code> · เปิดใน Excel แล้วยอดรวม/พอร์ตจะคำนวณเอง',"ok");
+  }catch(err){eNote("Export ไม่ได้: "+esc(err.message),"err");}
+  masterInput.value="";
+});
+
+/* ---------- clear ---------- */
+document.getElementById("clearBtn").addEventListener("click",()=>{
+  Object.assign(state,{acct:null,side:null,tradeDate:"",settleDate:"",fx:""});
+  document.querySelectorAll(".seg button").forEach(b=>b.setAttribute("aria-pressed","false"));
+  document.querySelectorAll(".date-inp").forEach(i=>{i.value="";i.classList.remove("bad");});
+  setHint("tradeDate","");setHint("settleDate","");fx.value="";fileInput.value="";masterInput.value="";MODEL=[];
+  allocOn=false;allocToggle.checked=false;document.getElementById("allocBody").classList.add("hidden");document.getElementById("allocHead").classList.remove("on");
+  Object.assign(portOpen,{A:true,B:true,C:true,D:false,E:false});
+  document.getElementById("results").classList.add("hidden");document.getElementById("tblShell").innerHTML="";document.getElementById("allocTable").innerHTML="";
+  eNote("เลือกไฟล์ master ฟอร์มเปล่า — เติม L10/L11/I32 + ตาราง A14:L29 ให้ โดยไม่แตะโลโก้/เส้น/สูตร");refresh();});
+
+refresh();
+</script>
+</body>
+</html>
