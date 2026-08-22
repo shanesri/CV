@@ -112,6 +112,15 @@
   .switch input:checked+.slider{background:linear-gradient(180deg,var(--buy),#2FB483);border-color:var(--buy)}
   .switch input:checked+.slider:before{transform:translateX(20px);background:#06231A}
   .alloc-body{padding:16px 18px 18px}.alloc-body.hidden{display:none}
+  .force-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 14px;margin-bottom:14px;
+    border:1px solid var(--line-soft);border-radius:9px;background:rgba(224,162,78,.05)}
+  .force-txt{font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--txt)}
+  .force-txt .force-sub{color:var(--muted-2);font-size:10px;letter-spacing:.02em}
+  .switch.sm{width:40px;height:23px}.switch.sm .slider:before{height:15px;width:15px}
+  .switch.sm input:checked+.slider:before{transform:translateX(17px)}
+  .switch.sm input:checked+.slider{background:linear-gradient(180deg,var(--warn),#C7862F);border-color:var(--warn)}
+  .alloc-disclaim{font-family:var(--mono);font-size:10px;line-height:1.6;color:var(--warn);background:rgba(224,162,78,.07);border:1px solid rgba(224,162,78,.25);border-radius:8px;padding:9px 12px;margin-bottom:14px;letter-spacing:.02em}
+  .alloc-disclaim b{color:#F1C27A}
   table.alloc{min-width:720px}
   table.alloc thead th{text-align:center}
   table.alloc thead th.tk{text-align:left}
@@ -257,8 +266,17 @@
         <label class="switch"><input type="checkbox" id="allocToggle"><span class="slider"></span></label>
       </div>
       <div class="alloc-body hidden" id="allocBody">
+        <div class="force-row" id="forceRow">
+          <div class="force-txt">Force Rounding <span class="force-sub">— แก้เศษปัด 2 ตำแหน่ง ให้พอร์ตย่อยรวมกลับ = พอร์ตหลักเป๊ะ</span></div>
+          <label class="switch sm"><input type="checkbox" id="forceToggle"><span class="slider"></span></label>
+        </div>
+        <div class="force-row" id="delRow">
+          <div class="force-txt">Force Delete 0 Quantity <span class="force-sub">— ลบแถวพอร์ตที่ได้ 0 หุ้นออกจากใบย่อย แล้วเลื่อนแถวขึ้น</span></div>
+          <label class="switch sm"><input type="checkbox" id="delToggle"><span class="slider"></span></label>
+        </div>
+        <div class="alloc-disclaim" id="allocDisclaim">⚠ 2 ฟีเจอร์นี้ (Force Rounding / Delete 0) จะ<b>ยัดค่าเป็นตัวเลขทับสูตร Excel</b> ในส่วนที่เกี่ยวข้อง — สูตรเดิมจะหายไป กลายเป็นเลขนิ่ง แก้ใน Excel ต่อแล้วจะไม่คำนวณอัตโนมัติ</div>
         <div class="tbl-shell"><div class="tbl-scroll"><table class="alloc" id="allocTable"></table></div></div>
-        <div class="alloc-note">ติ๊กหัวคอลัมน์เพื่อ <b>เปิด/ปิด port</b> (default เปิด A/B/C) · port ที่ปิด = ข้ามตอน export · ยอดรวมแต่ละ ticker ต้องเท่ากับ QUANTITY (ขึ้น <b style="color:var(--buy)">OK</b>) ถึงจะกด export ได้</div>
+        <div class="alloc-note">ติ๊กหัวคอลัมน์เพื่อ <b>เปิด/ปิด port</b> (default เปิด A/B/C) · port ที่ปิด = ข้ามตอน export · ยอดรวมแต่ละ ticker ต้องเท่ากับ QUANTITY (ขึ้น <b style="color:var(--buy)">OK</b>) ถึงจะกด export ได้<br><b>Force Rounding</b> เปิดไว้ = ตอน export จะยัดค่า GROSS/COMM/OTHER/VAT/NET ของแต่ละพอร์ตให้ตรง (ดูดเศษเข้าพอร์ตสุดท้ายที่เปิด) · ปิด = ปล่อยสูตร master คิดเอง</div>
       </div>
     </div>
 
@@ -291,6 +309,8 @@
 const state={acct:null,side:null,tradeDate:"",settleDate:"",fx:""};
 let MODEL=[];
 let allocOn=false;
+let forceRound=false;
+let deleteZero=false;
 const PORTS=['A','B','C','D','E'];
 const portOpen={A:true,B:true,C:true,D:false,E:false};
 const RAW=[{k:"ticker",label:"TICKER"},{k:"desc",label:"DESCRIPTION"},{k:"isin",label:"ISIN"},{k:"side",label:"SIDE",side:true},{k:"qty",label:"QUANTITY",num:true},{k:"price",label:"PRICE",num:true}];
@@ -398,6 +418,10 @@ allocToggle.addEventListener("change",()=>{allocOn=allocToggle.checked;
   document.getElementById("allocBody").classList.toggle("hidden",!allocOn);
   document.getElementById("allocHead").classList.toggle("on",allocOn);
   if(allocOn)renderAlloc(); else updateExportGate();});
+const forceToggle=document.getElementById("forceToggle");
+forceToggle.addEventListener("change",()=>{forceRound=forceToggle.checked;updateExportGate();});
+const delToggle=document.getElementById("delToggle");
+delToggle.addEventListener("change",()=>{deleteZero=delToggle.checked;updateExportGate();});
 function allocTotal(r){return PORTS.reduce((s,p)=>s+(portOpen[p]?pnum(r.alloc[p]||0):0),0);}
 function allocOK(r){return Math.abs(allocTotal(r)-pnum(r.qty))<1e-6;}
 function allocAllOK(){return MODEL.every(allocOK);}
@@ -436,13 +460,25 @@ function updateExportGate(){
     const bad=MODEL.filter(r=>!allocOK(r)).map(r=>r.ticker);
     btn.disabled=true;eNote('ยอดแบ่งพอร์ตไม่ตรง quantity: <b>'+bad.join(", ")+'</b> — แก้ให้ครบก่อนถึง export ได้',"err");return;}
   btn.disabled=false;
-  eNote(allocOn?'พร้อม export · จะเติมตารางหลัก + แบ่งพอร์ต (S/T) ให้':'พร้อม export · เติมเฉพาะตารางหลัก (ไม่แบ่งพอร์ต)');
+  eNote(allocOn?('พร้อม export · เติมตารางหลัก + แบ่งพอร์ต (S/T)'+(forceRound?' + <b style="color:var(--warn)">Force Rounding</b>':'')):'พร้อม export · เติมเฉพาะตารางหลัก (ไม่แบ่งพอร์ต)');
 }
 
 /* ---------- EXPORT ---------- */
 const MONS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 function serial(dd,mm,y){return Math.round((Date.UTC(y,mm-1,dd)-Date.UTC(1899,11,30))/86400000);}
-function setCell(xml,coord,kind,value,forceStyle){const re=new RegExp('<c r="'+coord+'"( s="(\\d+)")?[^>]*?(/>|>[\\s\\S]*?</c>)');const m=xml.match(re);if(!m)return xml;const sv=(forceStyle!=null?String(forceStyle):m[2]);const s=sv?(' s="'+sv+'"'):'';const cell=kind==='num'?'<c r="'+coord+'"'+s+'><v>'+value+'</v></c>':'<c r="'+coord+'"'+s+' t="inlineStr"><is><t xml:space="preserve">'+esc(value)+'</t></is></c>';return xml.slice(0,m.index)+cell+xml.slice(m.index+m[0].length);}
+function setCell(xml,coord,kind,value,forceStyle){const re=new RegExp('<c r="'+coord+'"( s="(\\d+)")?[^>]*?(/>|>[\\s\\S]*?</c>)');const m=xml.match(re);if(!m)return xml;const sv=(forceStyle!=null?String(forceStyle):m[2]);const s=sv?(' s="'+sv+'"'):'';const cell=kind==='blank'?'<c r="'+coord+'"'+s+'/>':(kind==='num'?'<c r="'+coord+'"'+s+'><v>'+value+'</v></c>':'<c r="'+coord+'"'+s+' t="inlineStr"><is><t xml:space="preserve">'+esc(value)+'</t></is></c>');return xml.slice(0,m.index)+cell+xml.slice(m.index+m[0].length);}
+/* per-ticker open-port breakdown; useForce = last open port absorbs rounding residual */
+function portMatrix(useForce){return MODEL.map(r=>{
+  const openP=PORTS.map((p,pi)=>({p,pi})).filter(o=>portOpen[o.p]&&pnum(r.alloc[o.p])>0);
+  const price=pnum(r.price),mq=pnum(r.qty),isB=String(r.side).trim().toUpperCase()==="B";
+  const mG=round2(compVal(r,"gross")),mC=round2(compVal(r,"comm")),mO=round2(compVal(r,"other")),mV=round2(compVal(r,"vat")),mN=round2(compVal(r,"net"));
+  const qs=openP.map(o=>pnum(r.alloc[o.p]));
+  const g=qs.map(q=>round2(q*price)),c=qs.map(q=>round2((mC/mq)*q)),o=qs.map(q=>round2((mO/mq)*q)),v=qs.map(q=>round2((mV/mq)*q));
+  if(useForce&&qs.length){const li=qs.length-1,s=a=>a.slice(0,li).reduce((x,y)=>x+y,0);g[li]=round2(mG-s(g));c[li]=round2(mC-s(c));o[li]=round2(mO-s(o));v[li]=round2(mV-s(v));}
+  const n=qs.map((q,k)=>round2(isB?g[k]+c[k]+o[k]+v[k]:g[k]-(c[k]+o[k]+v[k])));
+  if(useForce&&qs.length){const li=qs.length-1;n[li]=round2(mN-n.slice(0,li).reduce((x,y)=>x+y,0));}
+  return openP.map((oo,k)=>({p:oo.p,pi:oo.pi,qty:qs[k],gross:g[k],comm:c[k],other:o[k],vat:v[k],net:n[k]}));
+});}
 function resolveSheet(wbXml,relsXml){const attr=(t,a)=>{const m=t.match(new RegExp(a+'="([^"]+)"'));return m?m[1]:null;};const tags=wbXml.match(/<sheet\b[^>]*?\/?>/g)||[];let rid=null;for(const t of tags){if(attr(t,'name')==='PreConfirm'){rid=attr(t,'r:id');break;}}if(!rid&&tags.length)rid=attr(tags[0],'r:id');let target=null;const rels=relsXml.match(/<Relationship\b[^>]*?\/?>/g)||[];for(const t of rels){if(attr(t,'Id')===rid){target=attr(t,'Target');break;}}if(!target)target='worksheets/sheet1.xml';target=target.replace(/^\/?xl\//,'').replace(/^\//,'');return 'xl/'+target;}
 function buildFilename(masterName){const td=tradeDateObj();const tok=String(td.d).padStart(2,'0')+MONS[td.m-1]+td.y;
   let name=masterName.replace(/(?:\d{1,2}|xx)(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\d{4}/i,tok);
@@ -486,8 +522,34 @@ masterInput.addEventListener("change",async()=>{
       if(typ==='txt')sx=setCell(sx,coord,'txt',String(r[key]).trim(),fs);
       else if(typ==='raw')sx=setCell(sx,coord,'num',pnum(r[key]),fs);
       else sx=setCell(sx,coord,'num',round2(compVal(r,key)),fs);});});
-    // allocation: write S(side)+T(qty) into blocks, open ports only
-    if(allocOn){MODEL.forEach((r,i)=>{const base=43+i*10;PORTS.forEach((p,pi)=>{if(portOpen[p]){const q=pnum(r.alloc[p]);if(q>0){const rr=base+pi;sx=setCell(sx,'S'+rr,'txt',String(r.side).trim().toUpperCase());sx=setCell(sx,'T'+rr,'num',q);}}});});}
+    // allocation: S(side)+T(qty) into right blocks; force-rounding writes V-Z; delete-0 packs left port tables
+    if(allocOn){
+      const PM=portMatrix(forceRound);
+      MODEL.forEach((r,i)=>{const base=43+i*10;
+        PM[i].forEach(o=>{const rr=base+o.pi;
+          sx=setCell(sx,'S'+rr,'txt',String(r.side).trim().toUpperCase());
+          sx=setCell(sx,'T'+rr,'num',o.qty);
+          if(forceRound){sx=setCell(sx,'V'+rr,'num',o.gross);sx=setCell(sx,'W'+rr,'num',o.comm);sx=setCell(sx,'X'+rr,'num',o.other);sx=setCell(sx,'Y'+rr,'num',o.vat);sx=setCell(sx,'Z'+rr,'num',o.net);}
+        });
+      });
+      if(deleteZero){
+        PORTS.forEach((p,pi)=>{if(!portOpen[p])return;
+          const firstRow=41+pi*26;
+          const packed=[];
+          MODEL.forEach((r,k)=>{const o=PM[k].find(x=>x.pi===pi);if(o)packed.push({r,o});});
+          packed.forEach((pk,j)=>{const rn=firstRow+j;const r=pk.r,o=pk.o;
+            sx=setCell(sx,'A'+rn,'txt',String(r.ticker).trim());
+            sx=setCell(sx,'B'+rn,'txt',String(r.desc).trim());
+            sx=setCell(sx,'D'+rn,'txt',String(r.isin).trim());
+            sx=setCell(sx,'E'+rn,'txt',String(r.side).trim().toUpperCase(),eStyle);
+            sx=setCell(sx,'F'+rn,'num',o.qty);
+            sx=setCell(sx,'G'+rn,'num',pnum(r.price));
+            sx=setCell(sx,'H'+rn,'num',o.gross);sx=setCell(sx,'I'+rn,'num',o.comm);sx=setCell(sx,'J'+rn,'num',o.other);sx=setCell(sx,'K'+rn,'num',o.vat);sx=setCell(sx,'L'+rn,'num',o.net);
+          });
+          for(let j=packed.length;j<16;j++){const rn=firstRow+j;['A','B','D','E','F','G','H','I','J','K','L'].forEach(col=>{sx=setCell(sx,col+rn,'blank');});}
+        });
+      }
+    }
     zip.file(sheetPath,sx);
     let nwb=wbXml;if(nwb.indexOf('fullCalcOnLoad')<0)nwb=nwb.replace('<calcPr','<calcPr fullCalcOnLoad="1"');zip.file('xl/workbook.xml',nwb);
     // drop stale calcChain to avoid Excel repair popup
@@ -507,7 +569,7 @@ document.getElementById("clearBtn").addEventListener("click",()=>{
   document.querySelectorAll(".seg button").forEach(b=>b.setAttribute("aria-pressed","false"));
   document.querySelectorAll(".date-inp").forEach(i=>{i.value="";i.classList.remove("bad");});
   setHint("tradeDate","");setHint("settleDate","");fx.value="";fileInput.value="";masterInput.value="";MODEL=[];
-  allocOn=false;allocToggle.checked=false;document.getElementById("allocBody").classList.add("hidden");document.getElementById("allocHead").classList.remove("on");
+  allocOn=false;allocToggle.checked=false;forceRound=false;forceToggle.checked=false;deleteZero=false;delToggle.checked=false;document.getElementById("allocBody").classList.add("hidden");document.getElementById("allocHead").classList.remove("on");
   Object.assign(portOpen,{A:true,B:true,C:true,D:false,E:false});
   document.getElementById("results").classList.add("hidden");document.getElementById("tblShell").innerHTML="";document.getElementById("allocTable").innerHTML="";
   eNote("เลือกไฟล์ master ฟอร์มเปล่า — เติม L10/L11/I32 + ตาราง A14:L29 ให้ โดยไม่แตะโลโก้/เส้น/สูตร");refresh();});
