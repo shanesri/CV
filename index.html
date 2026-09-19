@@ -50,7 +50,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .nav-link-mobile{display:block;padding:11px 8px;color:var(--ink);font-weight:500;border-radius:8px;}
   .nav-link-mobile:hover{background:rgba(255,255,255,.06);}
 
-  .hero{position:relative;overflow:hidden;min-height:calc(100vh - 39px);min-height:calc(100dvh - 39px);display:flex;align-items:center;padding:40px 0;}
+  .hero{position:relative;overflow:hidden;min-height:calc(100vh - 39px);min-height:calc(100svh - 39px);display:flex;align-items:center;padding:40px 0;}
   .hero-top{display:flex;flex-wrap:wrap;align-items:center;gap:10px;font-size:13px;font-weight:500;color:var(--muted);margin-bottom:26px;}
   .avail{display:inline-flex;align-items:center;gap:8px;}
   .avail i{width:8px;height:8px;border-radius:50%;background:#16A34A;box-shadow:0 0 0 3px rgba(22,163,74,.15);font-style:normal;}
@@ -196,7 +196,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .blog-card:hover .bc-media img{transform:scale(1.05);}
   .bc-media:before{content:"+";position:absolute;top:11px;right:11px;z-index:2;width:24px;height:24px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:color-mix(in srgb,var(--bg2) 78%,transparent);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);border:1px solid var(--hair);font-family:'Sora','Inter',sans-serif;font-size:15px;color:var(--accent);transition:transform .3s;}
   .blog-card.open .bc-media:before{transform:rotate(45deg);}
-  .bc-overlay{position:absolute;inset:0;z-index:1;display:flex;align-items:flex-end;padding:16px;overflow:auto;background:linear-gradient(180deg,rgba(13,15,20,.15),rgba(13,15,20,.93));opacity:0;transition:opacity .35s ease;}
+  .bc-overlay{position:absolute;inset:0;z-index:1;display:block;padding:16px;overflow-y:auto;-webkit-overflow-scrolling:touch;background:linear-gradient(180deg,rgba(13,15,20,.35),rgba(13,15,20,.95));opacity:0;transition:opacity .35s ease;}
   .blog-card.open .bc-overlay{opacity:1;}
   .bc-overlay p{color:var(--ink);font-size:12.5px;line-height:1.55;margin:0;}
   .bc-overlay p strong{color:var(--accent);font-weight:600;}
@@ -298,7 +298,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   @media(prefers-reduced-motion:reduce){.tl-node{animation:none;}}
   /* ---- Selected Work carousel ---- */
   .pcarousel{position:relative;max-width:1440px;margin:0 auto;padding:0 64px;}
-  .pc-viewport{overflow:hidden;border-radius:20px;touch-action:pan-y;}
+  .pc-viewport{overflow:hidden;border-radius:20px;touch-action:pan-y;transition:height .4s ease;}
   .pc-track.dragging{cursor:grabbing;}
   .pc-track{display:flex;will-change:transform;transition:transform .5s cubic-bezier(.4,0,.2,1);}
   .pc-track.dragging{transition:none;}
@@ -325,11 +325,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   @keyframes navPulseR{0%,100%{transform:translateY(-50%) translateX(0);box-shadow:0 0 0 0 color-mix(in srgb,var(--accent) 45%,transparent);}50%{transform:translateY(-50%) translateX(5px);box-shadow:0 0 0 7px color-mix(in srgb,var(--accent) 0%,transparent);}}
   .pc-nav[disabled]{opacity:0;pointer-events:none;}
   @media(prefers-reduced-motion:reduce){.pc-nav{animation:none!important;}}
-  @media(max-width:760px){.pcarousel{padding:0 8px;}.pc-nav{width:40px;height:40px;font-size:19px;}.pc-nav.prev{left:2px;}.pc-nav.next{right:2px;}}
+  @media(max-width:760px){.pcarousel{padding:0 8px;}.pc-nav{width:40px;height:40px;font-size:19px;top:42vw;}.pc-nav.prev{left:2px;}.pc-nav.next{right:2px;}}
   @media(max-width:760px){
-    .pc-slide-inner{grid-template-columns:1fr;gap:16px;}
+    .pc-slide-inner{grid-template-columns:1fr;gap:16px;align-items:start;}
+    .pc-track{align-items:flex-start;}
     .pc-figure{max-width:440px;width:100%;margin:0 auto;}
     .pc-info .desc{max-height:none;}
+    .pc-info .ctas{margin-top:16px;padding-top:0;}
   }
 </style>
 <script src="config.js"></script>
@@ -668,7 +670,8 @@ const CARDS = [
     description:"This was my first experience as a small business owner. Three friends and I co-founded BaanBaiCha, developing a proprietary premium Thai Tea blend from 5 different types of tea. We launched as a tea stall near a major office building, becoming an immediate local hit with peak sales of ~350 glasses per day. I later sold my shares to an investor, but continued to contribute to the brand's marketing for another 5 years, supporting its expansion into modern trade across major department stores." },
 
   { id:'pf-aigs', type:'certificate', headline:'AIGS (Asian Institute of Gemological Sciences)', subheadline:'Gemological Studies & Jewelry Design', date:'2013 - 2014',
-    descriptionImages:[`${IMG}/port/P5-1.jpg`], skillTags:['Product Development'],
+    descriptionImages:[`${IMG}/cert/AIGS1.png`,`${IMG}/cert/AIGS3.jpg`], skillTags:['Product Development'],
+    certLink:{href:`${IMG}/cert/AIGS2.jpg`, title:'Download Credential', label:'Download Credential'},
     description:'I enrolled at the Asian Institute of Gemological Sciences (AIGS) to combine engineering methodology with the jewelry industry. I focused on technical courses: Gem Identification, Diamond Identification, and Jewelry Design. This technical foundation gave me the confidence to launch my first business, Personal Craft Co., Ltd., which utilized CAD-based design.' },
 
   { id:'cert-zh', type:'certificate',
@@ -681,7 +684,7 @@ const CARDS = [
   { id:'cert-en', type:'certificate',
     headline:'English Language — TOEIC 915',
     subheadline:'Professional Working Proficiency',
-    certLink:{href:`${IMG}/cert/Toeic2.png`, title:'View TOEIC score report'},
+    certLink:{href:`${IMG}/cert/Toeic2.png`, title:'View TOEIC score report', label:'View score report'},
     descriptionImages:[`${IMG}/cert/Toeic1.png`],
     skillTags:['English (Fluent · TOEIC 915)'],
     description:'Scored 915 on the TOEIC, reflecting professional-level English proficiency for business and financial communication.' },
@@ -867,7 +870,7 @@ function renderCertifications(){
   document.getElementById('certifications-container').innerHTML = items.map((c,idx) => {
     const img = (c.descriptionImages && c.descriptionImages[0]) || '';
     const meta = c.subheadline ? `${esc(c.subheadline)}${c.date?` &middot; ${esc(c.date)}`:''}` : (c.date?esc(c.date):'');
-    const overlay = `<div class="cc-overlay">${meta?`<span class="cc-issuer">${meta}</span>`:''}${c.description?`<p class="cc-desc">${c.description}</p>`:''}${c.certLink?`<a class="cc-verify" href="${c.certLink.href}" target="_blank" rel="noopener noreferrer">Verify credential &rarr;</a>`:''}</div>`;
+    const overlay = `<div class="cc-overlay">${meta?`<span class="cc-issuer">${meta}</span>`:''}${c.description?`<p class="cc-desc">${c.description}</p>`:''}${c.certLink?`<a class="cc-verify" href="${c.certLink.href}" target="_blank" rel="noopener noreferrer">${c.certLink.label||'Verify credential'} &rarr;</a>`:''}</div>`;
     const media = img
       ? `<div class="cc-media"><img src="${img}" alt="${esc(c.headline)}" onerror="this.style.display='none';this.parentNode.classList.add('cc-fallback');this.insertAdjacentHTML('beforebegin','<span class=\'cc-fbtext\'>'+this.alt+'</span>');">${overlay}</div>`
       : `<div class="cc-media cc-fallback"><span class="cc-fbtext">${esc(c.headline)}</span>${overlay}</div>`;
@@ -1119,9 +1122,9 @@ document.addEventListener('DOMContentLoaded', function(){
   var slides=[].slice.call(track.children), n=slides.length;
   var prev=root.querySelector('.pc-nav.prev'), next=root.querySelector('.pc-nav.next');
   var i=0, imgIdx=slides.map(function(){return 0;});
-  function fit(){ var h=0; slides.forEach(function(s){ var el=s.querySelector('.pc-slide-inner'); if(el) el.style.minHeight=''; }); slides.forEach(function(s){ var el=s.querySelector('.pc-slide-inner'); if(el) h=Math.max(h, el.offsetHeight); }); slides.forEach(function(s){ var el=s.querySelector('.pc-slide-inner'); if(el) el.style.minHeight=h+'px'; }); if(h) vp.style.height=h+'px'; }
+  function fit(){ slides.forEach(function(s){ var el=s.querySelector('.pc-slide-inner'); if(el) el.style.minHeight=''; }); if(matchMedia('(max-width:760px)').matches){ var cur=slides[i].querySelector('.pc-slide-inner'); vp.style.height = cur ? cur.offsetHeight+'px' : ''; } else { var h=0; slides.forEach(function(s){ var el=s.querySelector('.pc-slide-inner'); if(el) h=Math.max(h, el.offsetHeight); }); slides.forEach(function(s){ var el=s.querySelector('.pc-slide-inner'); if(el) el.style.minHeight=h+'px'; }); if(h) vp.style.height=h+'px'; } }
   function render(){ track.style.transform='translateX('+(-i*vp.clientWidth)+'px)'; }
-  function go(k){ i=(k+n)%n; render(); }
+  function go(k){ i=(k+n)%n; render(); fit(); }
   function setImg(si,k){
     var imgs=slides[si].querySelectorAll('.pc-figure img'); if(imgs.length<2) return;
     k=(k+imgs.length)%imgs.length; imgIdx[si]=k;
