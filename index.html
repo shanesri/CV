@@ -15,92 +15,377 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script>
-  tailwind.config = { theme: { extend: { fontFamily: { 'inter': ['Inter', 'sans-serif'] } } } }
+  tailwind.config = { theme: { extend: { fontFamily: { 'inter': ['Inter','sans-serif'], 'display': ['Sora','Inter','sans-serif'] } } } }
 </script>
 <style>
-  body { font-family: 'Inter', sans-serif; background-color: #f9fafb; color: #111827; }
-  .nav-link.active { font-weight: 600; color: #111827; border-bottom-color: #111827; }
-  .nav-link { border-bottom: 2px solid transparent; transition: all 0.3s ease; }
-  details > summary { list-style: none; cursor: pointer; display: flex; align-items: center; }
-  details > summary::before {
-    content: ""; height: 1rem; width: 1rem; margin-right: 0.5rem; transition: transform 0.2s ease;
-    background-repeat: no-repeat; background-position: center;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' class='h-4 w-4' fill='none' viewBox='0 0 24 24' stroke='%234b5563'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M9 5l7 7-7 7' /%3E%3C/svg%3E");
+  :root{
+    --bg:#15181E;--bg2:#1C2028;--ink:#F4F6FA;--muted:#9AA6B8;--faint:#6E7A8C;--hair:rgba(255,255,255,.10);
+    --accent:#5ED3F3;--accent2:#CBD5E1;--card:#1C2028;--radius:14px;--maxw:1440px;
   }
-  details[open] > summary::before { transform: rotate(90deg); }
-  .hide-scrollbar::-webkit-scrollbar { display: none; }
-  .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-  .modal-overlay { position: fixed; inset: 0; background-color: rgba(0,0,0,0.6); backdrop-filter: blur(4px); display: none; justify-content: center; align-items: center; z-index: 100; padding: 1rem; }
-  .modal-content { background-color: white; border-radius: 0.5rem; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1),0 4px 6px -2px rgba(0,0,0,0.05); max-width: 42rem; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; padding: 1.5rem; }
-  .modal-close-btn { position: absolute; top: .75rem; right: .75rem; color: #4b5563; background-color: #f3f4f6; border: none; cursor: pointer; padding: .5rem; line-height: 1; border-radius: 9999px; width: 2rem; height: 2rem; display: flex; align-items: center; justify-content: center; }
-  .modal-close-btn:hover { color: #111827; background-color: #e5e7eb; }
-  #modal-description { white-space: pre-line; word-wrap: break-word; }
-  body.modal-open { overflow: hidden; }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;font-size:15px;background:radial-gradient(120% 90% at 50% -10%,var(--bg2) 0%,var(--bg) 55%) fixed;-webkit-font-smoothing:antialiased;margin:0;}
+  .font-display{font-family:'Sora','Inter',sans-serif;}
+  a{color:inherit;text-decoration:none;}
+  img{display:block;max-width:100%;}
+  .container{max-width:var(--maxw);margin:0 auto;padding:0 22px;}
+  @media(max-width:640px){.container{padding:0 20px;}}
+
+  .site-nav{position:sticky;top:0;z-index:50;background:rgba(21,24,30,.72);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--hair);}
+  .nav-inner{display:flex;align-items:center;justify-content:space-between;height:68px;gap:16px;}
+  .brand{font-family:'Inter';font-weight:700;font-size:19px;letter-spacing:-.02em;color:var(--ink);}
+  .brand span{color:var(--muted);font-weight:500;}
+  .nav-links{display:flex;gap:26px;list-style:none;margin:0;padding:0;}
+  .nav-link{font-size:14px;font-weight:500;color:var(--muted);transition:color .18s;border:0;padding:0;}
+  .nav-link:hover,.nav-link.active{color:var(--ink);}
+  .nav-cta{font-family:'Inter';font-weight:600;font-size:14px;padding:9px 18px;border:1px solid var(--ink);border-radius:999px;color:var(--ink);transition:all .18s;}
+  .nav-cta:hover{background:var(--accent);color:#0e1014;border-color:var(--accent);}
+  .nav-burger{background:none;border:0;cursor:pointer;padding:8px;color:var(--ink);}
+  @media(max-width:767px){.nav-links,.nav-cta{display:none;}}
+  @media(min-width:768px){#mobile-menu{display:none!important;}}
+  #mobile-menu{background:var(--bg2);border-bottom:1px solid var(--hair);}
+  .mobile-menu-inner{display:flex;flex-direction:column;gap:2px;padding:12px 20px;}
+  .nav-link-mobile{display:block;padding:11px 8px;color:var(--ink);font-weight:500;border-radius:8px;}
+  .nav-link-mobile:hover{background:rgba(255,255,255,.06);}
+
+  .hero{position:relative;overflow:hidden;min-height:calc(100vh - 39px);min-height:calc(100dvh - 39px);display:flex;align-items:center;padding:40px 0;}
+  .hero-top{display:flex;flex-wrap:wrap;align-items:center;gap:10px;font-size:13px;font-weight:500;color:var(--muted);margin-bottom:26px;}
+  .avail{display:inline-flex;align-items:center;gap:8px;}
+  .avail i{width:8px;height:8px;border-radius:50%;background:#16A34A;box-shadow:0 0 0 3px rgba(22,163,74,.15);font-style:normal;}
+  .hero-inner{width:100%;}
+  .hero-name{display:block;font-family:'Sora','Inter';font-weight:700;font-size:clamp(40px,9.5vw,132px);line-height:.92;letter-spacing:-.03em;color:var(--ink);}
+  .hero-name span{color:var(--accent);}
+  .hero-welcome{font-family:'Sora','Inter';font-weight:600;font-size:clamp(22px,3.2vw,38px);letter-spacing:-.02em;margin:32px 0 0;color:var(--ink);}
+  .hero .lead{margin-top:12px;font-size:15px;color:var(--muted);max-width:64ch;}
+  .hero-cta{margin-top:32px;display:flex;gap:12px;flex-wrap:wrap;}
+  .btn{font-family:'Inter';font-weight:600;font-size:15px;padding:12px 24px;border-radius:12px;cursor:pointer;transition:transform .18s,border-color .18s,background .18s;display:inline-flex;align-items:center;gap:8px;}
+  .btn-primary{background:var(--accent);color:#0e1014;border:1px solid var(--accent);}
+  .btn-primary:hover{transform:translateY(-2px);}
+  .btn-ghost{background:transparent;color:var(--ink);border:1px solid var(--hair);}
+  .btn-ghost:hover{border-color:var(--accent);}
+  .meta-row{display:flex;flex-wrap:wrap;gap:26px 44px;margin-top:42px;padding-top:28px;border-top:1px solid var(--hair);}
+  .meta b{display:block;font-family:'Inter';font-size:15px;font-weight:600;}
+  .meta span{font-size:13px;color:var(--muted);}
+
+  .section{padding:70px 0;border-top:1px solid var(--hair);}
+  .section-head{margin-bottom:34px;}
+  .section-head{text-align:center;}
+  .section-head h2{font-family:'Sora','Inter';font-weight:400;font-size:clamp(38px,7.6vw,94px);letter-spacing:-.01em;margin:0;text-transform:uppercase;line-height:.96;}
+  .lead-c{color:var(--muted);max-width:62ch;margin:14px auto 30px;text-align:center;}
+
+  .about-grid{display:grid;grid-template-columns:300px 1fr;gap:48px;align-items:start;}
+  @media(max-width:820px){.about-grid{grid-template-columns:1fr;gap:28px;}}
+  .about-media{position:relative;width:100%;aspect-ratio:480/854;border-radius:var(--radius);overflow:hidden;border:1px solid var(--hair);cursor:default;}
+  @media(max-width:820px){.about-media{max-width:300px;margin:0 auto;}}
+  .about-photo{width:100%;height:100%;object-fit:cover;object-position:center;display:block;}
+  .about-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;opacity:0;transition:opacity .5s ease;}
+  .about-media.playing .about-video{opacity:1;}
+  @media(prefers-reduced-motion:reduce){.about-video{display:none;}}
+  .about-grid p{color:var(--muted);font-size:16px;margin:0 0 8px;}
+  .skills-head{font-family:'Sora','Inter',sans-serif;font-weight:600;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin:26px 0 4px;}
+  .skill-group{margin-top:20px;}
+  .skill-group h3{font-family:'Sora','Inter',sans-serif;font-weight:600;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 12px;display:flex;align-items:center;gap:9px;}
+  .sdot{width:8px;height:8px;border-radius:50%;display:inline-block;background:var(--c,#9AA6B8);box-shadow:0 0 7px var(--c,transparent);}
+  .sdot.finance,.chip.finance{--c:#5ED3F3;}
+  .sdot.quant,.chip.quant{--c:#5EEAD4;}
+  .sdot.business,.chip.business{--c:#F5C77E;}
+  .sdot.language,.chip.language{--c:#C6A6F5;}
+  .sdot._default,.chip._default{--c:#9AA6B8;}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;}
+  .chip{display:inline-flex;align-items:center;gap:7px;font-family:'Inter',sans-serif;font-size:12.5px;font-weight:500;line-height:1;padding:7px 12px 7px 11px;border-radius:999px;color:var(--ink);background:color-mix(in srgb,var(--c) 9%,transparent);border:1px solid color-mix(in srgb,var(--c) 30%,transparent);transition:background .2s,border-color .2s,transform .2s;}
+  .chip:before{content:"";width:6px;height:6px;border-radius:50%;background:var(--c);box-shadow:0 0 6px color-mix(in srgb,var(--c) 70%,transparent);flex:none;}
+  .chip:hover{background:color-mix(in srgb,var(--c) 17%,transparent);border-color:color-mix(in srgb,var(--c) 52%,transparent);transform:translateY(-1px);}
+
+  .pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  @media(max-width:900px){.pgrid{grid-template-columns:repeat(2,1fr);}}@media(max-width:560px){.pgrid{grid-template-columns:1fr;}}
+  .pcard{border:1px solid var(--hair);border-radius:var(--radius);overflow:hidden;background:var(--card);transition:border-color .2s;display:flex;flex-direction:column;}
+  .pcard:hover{border-color:var(--accent);transform:translateY(-3px);}
+  .pcard-media{display:block;aspect-ratio:16/10;overflow:hidden;background:#0f1218;}
+  .pcard-media img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.7,.2,1);}
+  .pcard:hover .pcard-media img{transform:scale(1.04);}
+  .pcard-body{padding:16px 18px 20px;display:flex;flex-direction:column;flex:1;}
+  .pcard-body h3{font-family:'Inter';font-weight:600;font-size:16px;letter-spacing:-.01em;margin:0 0 8px;}
+  .pcard-body .desc{color:var(--muted);font-size:14px;margin:0;line-height:1.6;}
+  .pcard-body .chips{margin-top:16px;}
+  .pcard-body .ctas{margin-top:20px;display:flex;flex-wrap:wrap;gap:10px;}
+
+  .tl-subhead{font-family:'Inter';font-weight:600;font-size:15px;color:var(--faint);text-transform:none;letter-spacing:.01em;margin:0 0 22px;}
+  .tl-item{position:relative;padding-left:28px;padding-bottom:32px;}
+  .tl-item:before{content:"";position:absolute;left:5px;top:8px;bottom:-2px;width:1px;background:var(--hair);}
+  .tl-item:last-child:before{display:none;}
+  .tl-item .node{position:absolute;left:0;top:6px;width:11px;height:11px;border-radius:50%;background:var(--accent);border:2px solid var(--bg);box-shadow:0 0 0 1px var(--hair);}
+  .tl-item h4{font-size:18px;font-weight:600;margin:0;display:inline-flex;align-items:center;}
+  .tl-item .sub{color:var(--muted);font-size:14px;margin-top:3px;}
+  .tl-item .date{color:var(--faint);font-size:13px;margin-top:2px;}
+  .tl-item details{margin-top:12px;}
+  .tl-item summary{font-family:'Inter';font-weight:600;font-size:13.5px;color:var(--accent);}
+  .tl-item details p{color:var(--muted);font-size:15px;margin:12px 0 0;}
+  .cert-icon{margin-left:8px;color:var(--faint);display:inline-flex;}
+  .cert-icon:hover{color:var(--ink);}
+  .tl-shots{display:flex;gap:12px;overflow-x:auto;margin-top:14px;padding-bottom:6px;cursor:grab;scroll-behavior:smooth;}
+  .tl-shots.grabbing{cursor:grabbing;scroll-behavior:auto;}
+  .tl-shots img{pointer-events:none;-webkit-user-drag:none;user-select:none;}
+  .tl-shot{width:190px;aspect-ratio:1;object-fit:cover;border-radius:10px;flex:none;border:1px solid var(--hair);}
+
+  .icard{width:250px;flex-shrink:0;border:1px solid var(--hair);border-radius:var(--radius);overflow:hidden;background:#fff;}
+  .icard img{width:100%;aspect-ratio:1;object-fit:cover;transition:transform .5s cubic-bezier(.2,.7,.2,1);}
+  .icard:hover img{transform:scale(1.05);}
+  .icard .ibody{padding:16px 18px 18px;}
+  .icard h3{font-family:'Inter';font-weight:600;font-size:17px;margin:0 0 6px;}
+  .icard p{color:var(--muted);font-size:13.5px;margin:0;}
+
+  .li-wrap{position:relative;max-width:680px;margin:0 auto;max-height:600px;overflow:hidden;border:1px solid var(--hair);border-radius:var(--radius);background:var(--card);}
+  .li-wrap:after{content:"";position:absolute;left:0;right:0;bottom:0;height:80px;background:linear-gradient(180deg,transparent,var(--card));pointer-events:none;}
+  .contact-links{display:flex;flex-wrap:wrap;justify-content:center;gap:16px 34px;}
+  .contact-links a{display:inline-flex;align-items:center;gap:10px;color:var(--muted);font-size:16px;transition:color .18s;}
+  .contact-links a:hover{color:var(--ink);}
+  .contact-links svg{width:22px;height:22px;flex:none;}
+
+  details>summary{list-style:none;cursor:pointer;}
+  details>summary::-webkit-details-marker{display:none;}
+  .hide-scrollbar::-webkit-scrollbar{display:none;}
+  .hide-scrollbar{-ms-overflow-style:none;scrollbar-width:none;}
+  .modal-overlay{position:fixed;inset:0;background:rgba(10,11,13,.55);backdrop-filter:blur(4px);display:none;justify-content:center;align-items:center;z-index:100;padding:1rem;}
+  .modal-content{background:var(--card);border:1px solid var(--hair);border-radius:var(--radius);box-shadow:0 20px 60px -20px rgba(0,0,0,.6);max-width:42rem;width:100%;max-height:90vh;overflow-y:auto;position:relative;padding:1.5rem;}
+  .modal-close-btn{position:absolute;top:.75rem;right:.75rem;color:var(--muted);background:var(--bg2);border:1px solid var(--hair);cursor:pointer;padding:.5rem;border-radius:9999px;width:2rem;height:2rem;display:flex;align-items:center;justify-content:center;transition:color .18s,border-color .18s;}
+  .modal-close-btn:hover{color:var(--ink);border-color:var(--accent);}
+  #modal-description{white-space:pre-line;word-wrap:break-word;}
+  body.modal-open{overflow:hidden;}
+
+  /* market ticker */
+  .ticker{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.05);backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);overflow:hidden;white-space:nowrap;}
+  .ticker-track{display:inline-flex;padding:9px 0;animation:tick 30s linear infinite;}
+  .tk{font-family:'Inter';font-size:12.5px;font-weight:500;letter-spacing:.03em;padding:0 20px;display:inline-flex;gap:8px;align-items:center;color:var(--ink);text-transform:uppercase;font-variant-numeric:tabular-nums;border-right:1px solid var(--hair);}
+  .tk b{font-weight:600;color:var(--ink);}
+  .tk .up{color:#34D399;}.tk .down{color:#F87171;}
+  @keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  @media(prefers-reduced-motion:reduce){.ticker-track{animation:none;}}
+  /* hero name + sub */
+  .brand-top{display:inline-block;font-family:'Inter';font-weight:700;font-size:18px;letter-spacing:-.01em;color:var(--ink);margin-bottom:34px;}
+  .brand-top span{color:var(--muted);font-weight:500;}
+  .hero-sub{font-family:'Inter';font-size:15px;color:var(--muted);margin:12px 0 0;}
+  /* Academy-style certification cards */
+  .cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:20px;}
+  @media(max-width:560px){.cgrid{grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:14px;}}
+  .cgrid:not(.show-all) .cc-more{display:none;}
+  .cc{cursor:pointer;}
+  .cc-media{position:relative;aspect-ratio:1;border-radius:16px;overflow:hidden;background:#0f1218;border:1px solid var(--hair);transition:border-color .3s,box-shadow .3s,transform .3s;}
+  .cc:hover .cc-media{border-color:color-mix(in srgb,var(--accent) 45%,var(--hair));box-shadow:0 0 0 1px color-mix(in srgb,var(--accent) 18%,transparent),0 16px 40px -28px var(--accent);transform:translateY(-3px);}
+  .cc-media img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.7,.2,1);}
+  .cc:hover .cc-media img{transform:scale(1.05);}
+  .cc-media.cc-fallback{display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#0f1116,#2b303c);}
+  .cc-fbtext{padding:16px;font-family:'Sora','Inter',sans-serif;font-weight:600;font-size:13px;color:var(--ink);text-align:center;line-height:1.35;}
+  .cc-media:before{content:"+";position:absolute;top:11px;right:11px;z-index:3;width:24px;height:24px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:color-mix(in srgb,var(--bg2) 80%,transparent);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);border:1px solid var(--hair);font-family:'Sora','Inter',sans-serif;font-size:15px;color:var(--accent);transition:transform .3s;z-index:4;}
+  .cc.open .cc-media:before{transform:rotate(45deg);}
+  .cc-overlay{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;justify-content:flex-start;gap:7px;padding:16px 15px;overflow:auto;background:rgba(13,15,20,.93);opacity:0;transition:opacity .35s ease;}
+  .cc.open .cc-overlay{opacity:1;}
+  .cc-issuer{font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);}
+  .cc-desc{font-size:12px;color:var(--ink);line-height:1.55;margin:0;}
+  .cc-verify{margin-top:4px;align-self:flex-start;font-family:'Sora','Inter',sans-serif;font-weight:600;font-size:11px;letter-spacing:.03em;color:#0b0e12;background:var(--accent);padding:6px 12px;border-radius:999px;transition:filter .2s;}
+  .cc-verify:hover{filter:brightness(1.1);}
+  .cc-title{font-family:'Sora','Inter',sans-serif;font-weight:600;font-size:14px;margin:11px 0 0;letter-spacing:-.01em;color:var(--ink);line-height:1.3;}
+  .cc-chips{margin-top:10px;}
+  /* Blog-style interest cards */
+  /* ---- Interests: big image, title below, description overlay on click (Awwwards-style) ---- */
+  .blog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:20px;}
+  @media(max-width:520px){.blog-grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;}}
+  .blog-card{cursor:pointer;}
+  .bc-media{position:relative;aspect-ratio:1;border-radius:16px;overflow:hidden;background:#0f1218;border:1px solid var(--hair);}
+  .bc-media img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.7,.2,1);}
+  .blog-card:hover .bc-media img{transform:scale(1.05);}
+  .bc-media:before{content:"+";position:absolute;top:11px;right:11px;z-index:2;width:24px;height:24px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:color-mix(in srgb,var(--bg2) 78%,transparent);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);border:1px solid var(--hair);font-family:'Sora','Inter',sans-serif;font-size:15px;color:var(--accent);transition:transform .3s;}
+  .blog-card.open .bc-media:before{transform:rotate(45deg);}
+  .bc-overlay{position:absolute;inset:0;z-index:1;display:flex;align-items:flex-end;padding:16px;overflow:auto;background:linear-gradient(180deg,rgba(13,15,20,.15),rgba(13,15,20,.93));opacity:0;transition:opacity .35s ease;}
+  .blog-card.open .bc-overlay{opacity:1;}
+  .bc-overlay p{color:var(--ink);font-size:12.5px;line-height:1.55;margin:0;}
+  .bc-overlay p strong{color:var(--accent);font-weight:600;}
+  .bc-overlay p em{color:var(--accent2);}
+  .bc-title{font-family:'Sora','Inter',sans-serif;font-weight:600;font-size:14px;margin:11px 0 0;letter-spacing:-.01em;color:var(--ink);}
+  /* ---- Selected work: show more / less ---- */
+  .more-wrap{text-align:center;margin-top:30px;}
+  .show-more{font-family:'Sora','Inter',sans-serif;font-size:13px;font-weight:600;letter-spacing:.02em;color:var(--ink);background:color-mix(in srgb,var(--card) 60%,transparent);border:1px solid var(--hair);border-radius:999px;padding:11px 22px;cursor:pointer;display:inline-flex;align-items:center;gap:9px;transition:border-color .25s,background .25s,transform .2s;}
+  .show-more:hover{border-color:color-mix(in srgb,var(--accent) 55%,var(--hair));background:var(--card);transform:translateY(-1px);}
+  .show-more .arw{color:var(--accent);font-size:12px;transition:transform .3s;}
+  .show-more.open .arw{transform:rotate(180deg);}
+  .pgrid:not(.expanded) .is-extra{display:none;}
+  .tenure{font-family:'Inter';font-size:14px;color:var(--accent);margin-top:8px;font-variant-numeric:tabular-nums;}
+  .tenure span{color:var(--ink);font-weight:600;}
+  .hero-mesh{position:absolute;inset:0;overflow:hidden;z-index:0;pointer-events:none;}
+  .hero-mesh span{position:absolute;border-radius:50%;filter:blur(90px);mix-blend-mode:screen;opacity:.5;}
+  .hero-mesh .h1b{width:44vw;height:44vw;left:-6vw;top:-10vw;background:radial-gradient(circle,var(--accent),transparent 68%);animation:hm1 9s ease-in-out infinite;}
+  .hero-mesh .h2b{width:36vw;height:36vw;right:-4vw;bottom:-8vw;background:radial-gradient(circle,var(--accent2),transparent 70%);opacity:.4;animation:hm2 11s ease-in-out infinite;}
+  @keyframes hm1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(22vw,14vh) scale(1.35)}}
+  @keyframes hm2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-20vw,-12vh) scale(1.3)}}
+  .hero-inner{position:relative;z-index:1;text-align:center;}
+  .hero-name{margin-left:auto;margin-right:auto;}
+  .hero .lead{margin-left:auto;margin-right:auto;}
+  .tenure{margin-left:auto;margin-right:auto;}
+  .hero-role{font-family:'Inter';font-size:clamp(14px,1.3vw,16px);color:var(--muted);margin:14px 0 0;}
+  .hero-title2{font-family:'Inter';font-weight:600;font-size:clamp(16px,1.9vw,22px);color:var(--ink);margin:16px 0 0;}
+  .tenure-lbl{font-family:'Inter';font-weight:500;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);}
+  .tenure{display:inline-flex;align-items:center;gap:8px;margin:14px 0 0;padding:9px 16px;border:1px solid var(--accent);border-radius:999px;background:color-mix(in srgb,var(--accent) 12%,transparent);box-shadow:0 0 24px -6px color-mix(in srgb,var(--accent) 55%,transparent);}
+  .tenure:before{content:'';width:8px;height:8px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);}
+  .tenure b{font-family:'Inter';font-weight:600;font-size:clamp(15px,1.5vw,18px);color:var(--ink);font-variant-numeric:tabular-nums;letter-spacing:.02em;}
+  /* Hero identity card — role + company + live tenure read as ONE unit */
+  .hero-id{display:inline-flex;flex-direction:column;margin:26px auto 0;border:1px solid var(--hair);border-radius:16px;background:color-mix(in srgb,var(--bg2) 72%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);overflow:hidden;text-align:center;box-shadow:0 12px 40px -24px rgba(0,0,0,.7);}
+  .hero-id-main{padding:15px 30px 13px;}
+  .hero-id-role{display:block;font-family:'Sora','Inter',sans-serif;font-weight:600;font-size:clamp(17px,2.1vw,23px);letter-spacing:-.01em;color:var(--ink);}
+  .hero-id-co{display:block;font-size:13px;color:var(--muted);margin-top:4px;letter-spacing:.02em;}
+  .hero-id-tenure{display:flex;align-items:center;justify-content:center;gap:8px;padding:9px 30px;border-top:1px solid var(--hair);background:color-mix(in srgb,var(--accent) 9%,transparent);font-family:'Inter',sans-serif;font-size:12.5px;color:var(--muted);letter-spacing:.02em;font-variant-numeric:tabular-nums;}
+  .hero-id-tenure b{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:.03em;}
+  .hero-id-tenure .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);flex:none;}
+  /* ---- Scroll snap: "page flip" feel. proximity (not mandatory) so tall
+         sections stay readable instead of trapping the scroll ---- */
+  html{scroll-snap-type:y proximity;scroll-padding-top:44px;}
+  main > section{scroll-snap-align:start;scroll-snap-stop:normal;}
+  @media(prefers-reduced-motion:reduce){html{scroll-snap-type:none;}}
+
+  /* ---- Mouse candlestick trail (desktop only) ---- */
+  #fx-candles{position:fixed;inset:0;z-index:45;pointer-events:none;}
+  @media(max-width:900px){#fx-candles{display:none;}}
+  @media(prefers-reduced-motion:reduce){#fx-candles{display:none;}}
+
+  /* ---- Vinyl music player (v3: pinned in hero, bob-to-invite, hover info) ---- */
+  .player{position:absolute;right:32px;bottom:30px;z-index:3;display:flex;flex-direction:column;align-items:center;gap:9px;font-family:'Inter',sans-serif;}
+  .player-disc{position:relative;width:88px;height:88px;border-radius:50%;border:0;background:transparent;cursor:pointer;padding:0;animation:playerBob 1.9s ease-in-out infinite;}
+  .player.playing .player-disc{animation:none;}
+  @keyframes playerBob{0%,100%{transform:translateY(0);}50%{transform:translateY(-7px);}}
+  .player-disc:before{content:"";position:absolute;inset:-4px;border-radius:50%;box-shadow:0 0 0 1px color-mix(in srgb,var(--accent) 40%,transparent),0 0 24px -2px color-mix(in srgb,var(--accent) 55%,transparent);opacity:.6;}
+  .player-vinyl{position:absolute;inset:3px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 50%,#12151b 0 30%,#1a1e26 31% 44%,#0d0f14 45% 52%,#1a1e26 53% 66%,#0d0f14 67%);box-shadow:0 10px 26px -8px rgba(0,0,0,.85),inset 0 0 0 1px rgba(255,255,255,.05);}
+  .player.playing .player-vinyl{animation:spin 3.6s linear infinite;}
+  .player-vinyl:before{content:"";position:absolute;top:7px;left:50%;width:6px;height:6px;margin-left:-3px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);}
+  .player-label{position:absolute;width:50%;height:50%;border-radius:50%;background:linear-gradient(135deg,var(--accent),#2b8fb0);display:flex;align-items:center;justify-content:center;font-family:'Sora','Inter';font-weight:700;font-size:10px;letter-spacing:.04em;color:#0b0e12;box-shadow:inset 0 0 0 1px rgba(0,0,0,.25);}
+  .player-label:after{content:"";position:absolute;width:5px;height:5px;border-radius:50%;background:#0b0e12;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .player-badge{position:absolute;right:1px;bottom:1px;width:26px;height:26px;border-radius:50%;background:var(--bg2);border:1px solid var(--hair);display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:11px;line-height:1;}
+  .player-hint{font-family:'Sora','Inter';font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);transition:color .2s;}
+  .player.playing .player-hint{color:var(--accent);}
+  .player-pop{position:absolute;bottom:calc(100% + 12px);right:0;width:252px;text-align:left;border:1px solid var(--hair);border-radius:14px;background:color-mix(in srgb,var(--bg2) 93%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:13px 15px;opacity:0;transform:translateY(6px);pointer-events:none;transition:opacity .25s,transform .25s;box-shadow:0 22px 54px -26px rgba(0,0,0,.85);}
+  .player:hover .player-pop{opacity:1;transform:translateY(0);}
+  .player-pop b{display:block;font-family:'Sora','Inter';font-weight:700;font-size:16px;letter-spacing:.04em;color:var(--ink);}
+  .player-pop .by{display:block;font-size:12px;color:var(--muted);margin-top:3px;}
+  .player-pop .insp{display:block;font-size:11.5px;color:var(--faint);margin-top:6px;line-height:1.5;}
+  @media(max-width:720px){.player{right:16px;bottom:16px;}.player-disc{width:68px;height:68px;}.player-hint{display:none;}.player-pop{right:auto;left:0;}}
+  @media(prefers-reduced-motion:reduce){.player-disc{animation:none!important;}.player.playing .player-vinyl{animation:none!important;}}
+  /* ---- Single center timeline (neon spine, alternating cards, year markers) ---- */
+  .timeline{position:relative;max-width:1320px;margin:0 auto;padding:6px 0;}
+  .timeline:before{content:"";position:absolute;left:50%;top:0;bottom:0;width:2px;transform:translateX(-50%);background:linear-gradient(180deg,transparent 0,var(--accent) 12%,var(--accent) 88%,transparent 100%);opacity:.55;box-shadow:0 0 14px var(--accent);}
+  .tl-row{position:relative;width:50%;box-sizing:border-box;padding:0 26px 40px;}
+  .tl-row.left{left:0;}
+  .tl-row.right{left:50%;}
+  .tl-row.work{--tc:#5ED3F3;}
+  .tl-row.edu{--tc:#C6A6F5;}
+  .tl-card{position:relative;background:color-mix(in srgb,var(--tc,transparent) 7%,var(--card));border:1px solid var(--hair);border-radius:16px;padding:17px 20px;text-align:left;transition:border-color .3s,transform .3s,box-shadow .3s;}
+  .tl-card:hover{border-color:color-mix(in srgb,var(--tc,var(--accent)) 55%,var(--hair));box-shadow:0 0 0 1px color-mix(in srgb,var(--tc,var(--accent)) 24%,transparent),0 20px 54px -30px var(--tc,var(--accent));transform:translateY(-2px);}
+  .tl-node{position:absolute;top:8px;width:16px;height:16px;border-radius:50%;background:var(--bg);border:2px solid var(--tc,var(--accent));animation:tlGlow 2.8s ease-in-out infinite;}
+  .tl-row.left .tl-node{right:-8px;}
+  .tl-row.right .tl-node{left:-8px;}
+  @keyframes tlGlow{0%,100%{box-shadow:0 0 0 4px color-mix(in srgb,var(--tc,var(--accent)) 10%,transparent),0 0 7px var(--tc,var(--accent));}50%{box-shadow:0 0 0 6px color-mix(in srgb,var(--tc,var(--accent)) 18%,transparent),0 0 18px var(--tc,var(--accent));}}
+  .tl-year{position:absolute;top:50%;transform:translateY(-50%);font-family:'Sora','Inter',sans-serif;font-weight:700;font-size:13px;letter-spacing:.02em;color:var(--tc,var(--accent));white-space:nowrap;}
+  .tl-row.left .tl-year{left:26px;}
+  .tl-row.right .tl-year{right:26px;}
+  .tl-kind{display:inline-block;font-family:'Sora','Inter',sans-serif;font-size:10px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--tc,var(--muted));background:color-mix(in srgb,var(--tc,var(--muted)) 13%,transparent);border:1px solid color-mix(in srgb,var(--tc,var(--muted)) 35%,transparent);padding:3px 9px;border-radius:999px;margin-bottom:9px;}
+  .tl-card h4{font-family:'Sora','Inter',sans-serif;font-size:17px;font-weight:600;margin:0;display:inline-flex;align-items:center;line-height:1.25;}
+  .tl-card .sub{color:var(--muted);font-size:13.5px;margin-top:4px;}
+  .tl-card .date{color:var(--faint);font-size:12.5px;margin-top:3px;font-variant-numeric:tabular-nums;}
+  .tl-card details{margin-top:12px;}
+  .tl-card summary{font-family:'Inter',sans-serif;font-weight:600;font-size:13px;color:var(--accent);cursor:pointer;}
+  .tl-card details p{color:var(--muted);font-size:14.5px;margin:11px 0 0;line-height:1.6;}
+  @media(max-width:720px){
+    .timeline:before{left:15px;}
+    .tl-row{width:100%;left:0!important;padding:0 0 30px 42px;}
+    .tl-row.left .tl-node,.tl-row.right .tl-node{left:7px;right:auto;}
+    .tl-year{display:none;}
+  }
+  @media(prefers-reduced-motion:reduce){.tl-node{animation:none;}}
+  /* ---- Selected Work carousel ---- */
+  .pcarousel{position:relative;max-width:1440px;margin:0 auto;padding:0 64px;}
+  .pc-viewport{overflow:hidden;border-radius:20px;touch-action:pan-y;}
+  .pc-track.dragging{cursor:grabbing;}
+  .pc-track{display:flex;will-change:transform;transition:transform .5s cubic-bezier(.4,0,.2,1);}
+  .pc-track.dragging{transition:none;}
+  .pc-slide{flex:0 0 100%;min-width:100%;}
+  .pc-slide-inner{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,1fr);gap:24px;align-items:stretch;padding:6px;}
+  .pc-figure{position:relative;aspect-ratio:1;align-self:start;max-width:640px;width:100%;border-radius:16px;overflow:hidden;background:#0f1218;border:1px solid var(--hair);cursor:pointer;user-select:none;}
+  .pc-figure img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .45s ease;-webkit-user-drag:none;}
+  .pc-figure img.active{opacity:1;}
+  .pc-imgcount{position:absolute;top:10px;left:10px;z-index:2;font-family:'Sora','Inter',sans-serif;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);background:color-mix(in srgb,var(--bg2) 74%,transparent);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);border:1px solid var(--hair);padding:4px 9px;border-radius:999px;pointer-events:none;}
+  .pc-imgnav{position:absolute;bottom:11px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:2;}
+  .pc-imgnav i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.4);cursor:pointer;transition:background .2s,width .2s;}
+  .pc-imgnav i.on{background:var(--accent);width:18px;border-radius:4px;}
+  .pc-kind{font-family:'Sora','Inter',sans-serif;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);}
+  .pc-info{display:flex;flex-direction:column;min-width:0;}
+  .pc-info h3{font-family:'Sora','Inter',sans-serif;font-weight:600;font-size:clamp(20px,2.3vw,27px);letter-spacing:-.01em;margin:9px 0 12px;line-height:1.15;}
+  .pc-info .desc{color:var(--muted);font-size:14.5px;line-height:1.65;margin:0;}
+  .pc-info .chips{margin-top:16px;}
+  .pc-info .ctas{margin-top:auto;padding-top:22px;display:flex;flex-wrap:wrap;gap:10px;}
+  .pc-nav{position:absolute;top:50%;z-index:6;width:48px;height:48px;border-radius:50%;background:color-mix(in srgb,var(--bg2) 86%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid color-mix(in srgb,var(--accent) 30%,var(--hair));color:var(--accent);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:22px;line-height:1;box-shadow:0 0 0 0 color-mix(in srgb,var(--accent) 40%,transparent);transition:border-color .2s,color .2s,transform .2s,opacity .2s,background .2s;}
+  .pc-nav:hover{border-color:var(--accent);color:#0b0e12;background:var(--accent);animation:none;transform:translateY(-50%) scale(1.1);}
+  .pc-nav.prev{left:2px;animation:navPulseL 2.2s ease-in-out infinite;}
+  .pc-nav.next{right:2px;animation:navPulseR 2.2s ease-in-out infinite;}
+  @keyframes navPulseL{0%,100%{transform:translateY(-50%) translateX(0);box-shadow:0 0 0 0 color-mix(in srgb,var(--accent) 45%,transparent);}50%{transform:translateY(-50%) translateX(-5px);box-shadow:0 0 0 7px color-mix(in srgb,var(--accent) 0%,transparent);}}
+  @keyframes navPulseR{0%,100%{transform:translateY(-50%) translateX(0);box-shadow:0 0 0 0 color-mix(in srgb,var(--accent) 45%,transparent);}50%{transform:translateY(-50%) translateX(5px);box-shadow:0 0 0 7px color-mix(in srgb,var(--accent) 0%,transparent);}}
+  .pc-nav[disabled]{opacity:0;pointer-events:none;}
+  @media(prefers-reduced-motion:reduce){.pc-nav{animation:none!important;}}
+  @media(max-width:760px){.pcarousel{padding:0 8px;}.pc-nav{width:40px;height:40px;font-size:19px;}.pc-nav.prev{left:2px;}.pc-nav.next{right:2px;}}
+  @media(max-width:760px){
+    .pc-slide-inner{grid-template-columns:1fr;gap:16px;}
+    .pc-figure{max-width:440px;width:100%;margin:0 auto;}
+    .pc-info .desc{max-height:none;}
+  }
 </style>
+<script src="config.js"></script>
 </head>
 <body class="antialiased">
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P9LWHHMC"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
+<!-- Market ticker -->
+<div class="ticker"><div class="ticker-track" id="ticker-track"><span class="tk"><b>S&amp;P 500</b> 5,930.85 <em class="up">+0.42%</em></span><span class="tk"><b>NASDAQ</b> 19,480.9 <em class="up">+0.61%</em></span><span class="tk"><b>DOW</b> 43,870 <em class="down">-0.11%</em></span><span class="tk"><b>GOLD</b> 2,652.3 <em class="up">+0.34%</em></span><span class="tk"><b>WTI</b> 71.20 <em class="down">-0.82%</em></span><span class="tk"><b>BTC</b> 96,410 <em class="up">+1.24%</em></span><span class="tk"><b>ETH</b> 3,382 <em class="up">+2.11%</em></span><span class="tk"><b>USD/THB</b> 34.15 <em class="up">+0.09%</em></span><span class="tk"><b>US10Y</b> 4.28% <em class="down">-0.02%</em></span><span class="tk"><b>SET</b> 1,420.6 <em class="down">-0.28%</em></span><span class="tk"><b>NIKKEI</b> 38,905 <em class="up">+0.53%</em></span><span class="tk"><b>HSI</b> 19,712 <em class="up">+0.91%</em></span><span class="tk"><b>S&amp;P 500</b> 5,930.85 <em class="up">+0.42%</em></span><span class="tk"><b>NASDAQ</b> 19,480.9 <em class="up">+0.61%</em></span><span class="tk"><b>DOW</b> 43,870 <em class="down">-0.11%</em></span><span class="tk"><b>GOLD</b> 2,652.3 <em class="up">+0.34%</em></span><span class="tk"><b>WTI</b> 71.20 <em class="down">-0.82%</em></span><span class="tk"><b>BTC</b> 96,410 <em class="up">+1.24%</em></span><span class="tk"><b>ETH</b> 3,382 <em class="up">+2.11%</em></span><span class="tk"><b>USD/THB</b> 34.15 <em class="up">+0.09%</em></span><span class="tk"><b>US10Y</b> 4.28% <em class="down">-0.02%</em></span><span class="tk"><b>SET</b> 1,420.6 <em class="down">-0.28%</em></span><span class="tk"><b>NIKKEI</b> 38,905 <em class="up">+0.53%</em></span><span class="tk"><b>HSI</b> 19,712 <em class="up">+0.91%</em></span></div></div>
 
-<!-- Header & Navigation (static) -->
-<header class="bg-white/95 backdrop-blur-sm shadow-sm sticky top-0 z-50">
-<nav class="container mx-auto px-4 md:px-8 py-4 flex justify-between items-center">
-<a href="#home" class="text-2xl font-bold text-gray-900">Rattapon <span class="text-gray-600">Sriphathoorat (SHANE)</span></a>
-<button id="mobile-menu-btn" class="md:hidden p-2 rounded-md text-gray-700 hover:bg-gray-100">
-<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
-</button>
-<ul class="hidden md:flex space-x-6">
-<li><a href="#home" class="nav-link text-gray-600 hover:text-gray-900 py-1">Greeting!</a></li>
-<li><a href="#about" class="nav-link text-gray-600 hover:text-gray-900 py-1">About</a></li>
-<li><a href="#projects" class="nav-link text-gray-600 hover:text-gray-900 py-1">Projects</a></li>
-<li><a href="#experience" class="nav-link text-gray-600 hover:text-gray-900 py-1">Experience</a></li>
-<li><a href="#portfolio" class="nav-link text-gray-600 hover:text-gray-900 py-1">Portfolio</a></li>
-<li><a href="#interests" class="nav-link text-gray-600 hover:text-gray-900 py-1">Interests</a></li>
-<li><a href="#contact" class="nav-link text-gray-600 hover:text-gray-900 py-1">Contact</a></li>
-</ul>
-</nav>
-<div id="mobile-menu" class="hidden md:hidden bg-white shadow-lg">
-<ul class="flex flex-col space-y-1 px-4 pt-2 pb-4">
-<li><a href="#home" class="nav-link-mobile block w-full px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">Greeting!</a></li>
-<li><a href="#about" class="nav-link-mobile block w-full px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">About</a></li>
-<li><a href="#projects" class="nav-link-mobile block w-full px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">Projects</a></li>
-<li><a href="#experience" class="nav-link-mobile block w-full px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">Experience</a></li>
-<li><a href="#portfolio" class="nav-link-mobile block w-full px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">Portfolio</a></li>
-<li><a href="#interests" class="nav-link-mobile block w-full px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">Interests</a></li>
-<li><a href="#contact" class="nav-link-mobile block w-full px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-gray-100">Contact</a></li>
-</ul>
-</div>
-</header>
+
+
 
 <main>
 
 <!-- Hero (static) -->
-<section id="home" class="bg-white py-24 md:py-32">
-<div class="container mx-auto px-4 md:px-8 text-center">
-<h1 class="text-4xl md:text-6xl font-bold text-gray-900 leading-tight">Hello, welcome to my Curriculum Vitae (CV)</h1>
-<p class="mt-4 text-xl md:text-2xl text-gray-600">Cross-Border Trading @ CGSI · CFA Program (all 3 levels) · Global Macro</p>
-<p class="mt-6 max-w-2xl mx-auto text-lg text-gray-700">This Online CV is a comprehensive look at my work, projects, and portfolio all in one place. You can reach me via the "Contact" section at the bottom of the page.</p>
-<div class="mt-10 flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-<a href="#contact" class="px-8 py-3 bg-white text-gray-900 font-medium rounded-lg border border-gray-300 shadow-sm hover:bg-gray-100 transition-colors duration-300">Contact Me</a>
+<section id="home" class="hero">
+<div class="hero-mesh"><span class="h1b"></span><span class="h2b"></span></div>
+<div class="container hero-inner">
+<span class="hero-name">Rattapon Sriphathoorat <span>SHANE</span></span>
+<div class="hero-copy">
+<h2 class="hero-welcome">Hello, welcome to my Curriculum Vitae (CV)</h2>
+<div class="hero-id">
+<div class="hero-id-main"><span class="hero-id-role">Executive &middot; Cross-Border Trading</span><span class="hero-id-co">CGS International (Thailand)</span></div>
+<div class="hero-id-tenure"><span class="dot"></span>With the desk for&nbsp;<b id="tenure-val">calculating&hellip;</b></div>
 </div>
+<p class="hero-role">Passed CFA Program (all 3 levels) &middot; Global Macro focus</p>
+<p class="lead">This Online CV is a comprehensive look at my work, projects, and portfolio all in one place. You can reach me via the &ldquo;Contact&rdquo; section at the bottom of the page.</p>
+</div>
+</div>
+<div id="player" class="player">
+<button id="player-disc" class="player-disc" aria-label="Play music: CHAOS by Shane"><span class="player-vinyl"><span class="player-label">CHAOS</span></span><span class="player-badge" id="player-badge">&#9654;</span></button>
+<span class="player-hint">my track &middot; tap to play</span>
+<div class="player-pop"><b>CHAOS</b><span class="by">Original track by SHANE &middot; made in Ableton</span><span class="insp">Inspired by the chaos of the markets &amp; the games I love.</span></div>
+<audio id="player-audio" src="https://raw.githubusercontent.com/shanesri/CV/50662be9bf704c7cc053483a90384b6acbd1ab0e/CHAOSV2.mp3" loop preload="none"></audio>
 </div>
 </section>
 
 <!-- About (photo + text static; skills rendered from cards) -->
-<section id="about" class="py-20 md:py-24">
-<div class="container mx-auto px-4 md:px-8">
-<div class="grid grid-cols-1 md:grid-cols-5 gap-12 items-center">
-<div class="md:col-span-2">
-<img src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/about/profile_about.jpg" alt="A professional headshot of Shane" class="rounded-lg shadow-xl w-full h-auto object-cover aspect-square" onerror="this.src='https://placehold.co/500x500/cccccc/444444?text=Image+Load+Error'">
+<section id="about" class="section" style="border-top:0">
+<div class="container">
+<div class="section-head"><h2>About</h2></div>
+<div class="about-grid">
+<div class="about-media" id="about-media">
+<img class="about-photo" src="https://raw.githubusercontent.com/shanesri/CV/main/image/home/about/profile_about.jpg" alt="A professional headshot of Shane" onerror="this.src='https://placehold.co/500x500/15181E/5ED3F3?text=Shane'">
+<video class="about-video" muted loop playsinline preload="none" poster="https://raw.githubusercontent.com/shanesri/CV/main/image/home/about/profile_about.jpg"><source src="https://raw.githubusercontent.com/shanesri/CV/f5eb21a0afa9a0af93e48f924c665e07eca8b20a/image/home/about/AboutVDO.mp4" type="video/mp4"></video>
 </div>
-<div class="md:col-span-3">
-<h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">About Me</h2>
-<p class="text-lg text-gray-700 mb-6">I work in Cross-Border Trading at CGS International Securities (CGSI), helping Thai investors access and navigate global financial markets. I've passed all three levels of the CFA Program and bring a quantitative Aerospace Engineering background together with hands-on entrepreneurial experience — including full P&amp;L ownership and financial operations — to a focused career in international investments.</p>
-<!-- Skills auto-built from every card's skillTags, grouped by category -->
+<div>
+<p>I'm an Executive in Cross-Border Trading at CGS International Securities (CGSI), where my focus is growing adoption of ProsperUS &mdash; CGSI's global securities trading platform. My work spans synthesizing house research into insights for the team, supporting front- and back-office execution across equities, bonds, futures, options, and other cross-border and exotic products, driving internal enablement, and partnering on product strategy and marketing. I've passed all three levels of the CFA Program, and bring a quantitative Aerospace Engineering background together with hands-on entrepreneurial experience, including full P&amp;L ownership, to a growing career in global macro and multi-asset investing.</p>
+<h4 class="skills-head">Skills</h4>
 <div id="skills-container"></div>
 </div>
 </div>
@@ -108,56 +393,62 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </section>
 
 <!-- Projects -->
-<section id="projects" class="bg-white py-20 md:py-24 border-t border-gray-100">
-<div class="container mx-auto px-4 md:px-8">
-<h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-12 text-center">Projects</h2>
-<div class="max-w-6xl mx-auto" id="projects-container"></div>
+<section id="projects" class="section">
+<div class="container">
+<div class="section-head"><h2>Projects</h2></div>
+<p class="lead-c">A mix of things I've built end to end &mdash; quantitative finance tools and valuation models, alongside earlier ventures in business and engineering.</p>
+<div class="pcarousel" id="projects-container"></div>
 </div>
 </section>
 
 <!-- Experience & Education -->
-<section id="experience" class="bg-white py-20 md:py-24">
-<div class="container mx-auto px-4 md:px-8">
-<h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-12 text-center">Experience & Education</h2>
-<div class="max-w-3xl mx-auto">
-<h3 class="text-2xl font-semibold text-gray-900 mb-6">Work Experience</h3>
-<div class="space-y-10" id="work-container"></div>
-<h3 class="text-2xl font-semibold text-gray-900 mb-6 mt-16">Education</h3>
-<div class="space-y-10" id="education-container"></div>
-</div>
+<section id="experience" class="section">
+<div class="container">
+<div class="section-head"><h2>Experience &amp; education</h2></div>
+<div class="timeline" id="experience-container"></div>
 </div>
 </section>
 
-<!-- Portfolio -->
-<section id="portfolio" class="py-20 md:py-24">
-<div class="container mx-auto px-4 md:px-8">
-<h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-8 text-center">Portfolio</h2>
-<p class="text-lg text-gray-700 mb-12 text-center max-w-3xl mx-auto">Here's a collection of my projects, awards, and training. Scroll horizontally or use the arrows to see more.</p>
-<div id="portfolio-container"></div>
+<!-- Certifications -->
+<section id="certifications" class="section">
+<div class="container">
+<div class="section-head"><h2>Certifications</h2></div>
+<p class="lead-c">Professional certifications and licenses across finance, data, and marketing.</p>
+<div class="cgrid" id="certifications-container"></div>
+<div class="more-wrap"><button id="certs-more" class="show-more" type="button"><span class="lbl">Show all 11</span> <span class="arw">&#8595;</span></button></div>
 </div>
 </section>
 
 <!-- Interests -->
-<section id="interests" class="bg-white py-20 md:py-24">
-<div class="container mx-auto px-4 md:px-8">
-<h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-8 text-center">Interests & Personal Passions</h2>
-<p class="text-center text-gray-600 mb-12">Scroll horizontally or use the arrows to see what drives me outside of finance.</p>
-<div id="interests-container"></div>
+<section id="interests" class="section">
+<div class="container">
+<div class="section-head"><h2>Interests</h2></div>
+<p class="lead-c">A few things that drive me outside of finance. If we ever cross paths and you're looking to break the ice, this is a pretty good place to start. 🙂</p>
+<div class="blog-grid" id="interests-container"></div>
+</div>
+</section>
+
+<!-- Latest on LinkedIn -->
+<section id="linkedin" class="section">
+<div class="container">
+<div class="section-head"><h2>Latest on LinkedIn</h2></div>
+<p class="lead-c">Recent posts and updates &mdash; follow along on <a href="https://www.linkedin.com/in/shanesri/" target="_blank" rel="noopener noreferrer" style="color:var(--accent);font-weight:600">LinkedIn</a>.</p>
+<div class="li-wrap">
+<div class="sk-ww-linkedin-profile-post" data-embed-id="25711347"></div>
+<script src="https://widgets.sociablekit.com/linkedin-profile-posts/widget.js" defer></script>
+</div>
 </div>
 </section>
 
 <!-- Contact (static) -->
-<section id="contact" class="bg-white py-20 md:py-24">
-<div class="container mx-auto px-4 md:px-8 text-center">
-<h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Get In Touch</h2>
-<p class="text-lg text-gray-700 mb-10 max-w-2xl mx-auto">I'm always happy to connect and talk global markets, macro, or cross-border investing. Feel free to send me an email, or connect with me on social media.</p>
-<div class="flex flex-col md:flex-row flex-wrap justify-center items-center gap-x-12 gap-y-6">
-<a href="mailto:R.Sriphathoorat@gmail.com" class="flex items-center text-lg text-gray-700 hover:text-gray-900 hover:underline transition-colors">
-<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>R.Sriphathoorat@gmail.com</a>
-<a href="https://www.linkedin.com/in/shanesri" target="_blank" rel="noopener noreferrer" class="flex items-center text-lg text-gray-700 hover:text-gray-900 hover:underline transition-colors">
-<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" /></svg>Connect on LinkedIn</a>
-<a href="https://www.instagram.com/shanesri" target="_blank" rel="noopener noreferrer" class="flex items-center text-lg text-gray-700 hover:text-gray-900 hover:underline transition-colors">
-<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.849.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>Follow on Instagram</a>
+<section id="contact" class="section">
+<div class="container">
+<div class="section-head"><h2>Get in touch</h2></div>
+<p class="lead-c">I'm always happy to connect and talk global markets, macro, or cross-border investing.</p>
+<div class="contact-links">
+<a href="mailto:R.Sriphathoorat@gmail.com"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>R.Sriphathoorat@gmail.com</a>
+<a href="https://www.linkedin.com/in/shanesri" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>Connect on LinkedIn</a>
+<a href="https://www.instagram.com/shanesri" target="_blank" rel="noopener noreferrer"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.849.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>Follow on Instagram</a>
 </div>
 </div>
 </section>
@@ -171,17 +462,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
 </button>
 <img id="modal-image" src="" alt="Project Image" class="w-full aspect-square object-cover rounded-lg mb-4">
-<h3 id="modal-title" class="text-2xl font-bold text-gray-900 mb-2"></h3>
+<h3 id="modal-title" class="text-2xl font-bold mb-2" style="color:var(--ink)"></h3>
 <div id="modal-tags" class="flex flex-wrap gap-2 mb-4"></div>
-<p id="modal-description" class="text-gray-700"></p>
+<p id="modal-description" style="color:var(--muted)"></p>
 </div>
 </div>
 
-<footer class="bg-gray-900 text-gray-400 py-10">
-<div class="container mx-auto px-4 md:px-8 text-center">
-<p>&copy; 2026 Rattapon Sriphathoorat. All rights reserved.</p>
+<footer style="border-top:1px solid var(--hair);padding:36px 0;">
+<div class="container" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;color:var(--muted);font-size:14px;">
+<span>Rattapon (Shane) Sriphathoorat</span><span>&copy; 2026 &middot; Bangkok</span>
 </div>
 </footer>
+
+<!-- Mouse candlestick trail (desktop) -->
+<canvas id="fx-candles" aria-hidden="true"></canvas>
+
 
 <script>
 /* =========================================================================
@@ -224,6 +519,7 @@ const SKILL_REGISTRY = {
   'Financial Modelling':'finance','Corporate Investment Analyst':'finance','Global Macro Finance':'finance',
   'Economic Analysis':'finance','Cross-Border Trading':'finance','Asset Valuation':'finance',
   'Financial Analysis':'finance','Investment Tools':'finance','Ethical Standards':'finance',
+  'Investment Planning':'finance','Financial Advisory':'finance','Global Equities':'finance','Offshore Investment':'finance',
   // Quantitative & Technical Tools
   'Python':'quant','SQL':'quant','R':'quant','Data Analysis':'quant','Data Visualization':'quant',
   'Quantitative Analysis':'quant','Quantitative Problem-Solving':'quant','Quantitative Methods':'quant',
@@ -294,14 +590,6 @@ const CARDS = [
     descriptionImages:[`${IMG}/work/BB1.jpg`,`${IMG}/work/BB2.png`,`${IMG}/work/BB3.jpg`,`${IMG}/work/BB5.png`,`${IMG}/work/BB4.jpg`],
     skillTags:['Digital Marketing','Media Buying','Operations Management','Cross-functional Leadership','Client Relations'] },
 
-  { id:'job-nft', type:'job',
-    headline:'Community & Strategic Marketing Lead',
-    subheadline:'PFP NFT Collection Project',
-    date:'Jun 2021 – Aug 2022 (1 yr 3 mos)',
-    description:"Community-led marketing strategy for an NFT project of ~3000 unique characters. I was responsible for establishing and scaling the project's core community on Discord and Twitter, creating the content roadmap, and executing engagement campaigns to build presale hype. By fostering a loyal and active community from the ground up, I built the foundational momentum that resulted in a complete project sell-out within 4 minutes of the public launch.",
-    descriptionImages:[`${IMG}/port/P4-1.jpg`],
-    skillTags:['Community Building','Marketing Strategy'] },
-
   { id:'job-personalcraft', type:'job',
     headline:'Owner & Operator',
     subheadline:'Personal Craft Co., Ltd. | Thailand',
@@ -322,9 +610,24 @@ const CARDS = [
     headline:'Passed All 3 Levels of CFA Program',
     certLink:{href:'https://raw.githubusercontent.com/shanesri/CV/34787cc6425e4ffcd41586b2d8d6ab70b6cd760d/download-doc/RattaponSriphathoorat_CFAProgramVerificationLetter.pdf', title:'Download Verification Letter'},
     subheadline:'CFA Institute', date:'2023 - 2025',
-    description:'The Chartered Financial Analyst (CFA) charter is a globally respected designation in investment management, measuring and certifying the competence and integrity of financial analysts.<br><br>Completed Practical Skills Modules including: Financial Modeling, Portfolio Development and Construction, Python, Data Science & AI, and Python Programming Fundamentals.',
+    description:'The Chartered Financial Analyst (CFA) charter is a globally respected designation in investment management, measuring and certifying the competence and integrity of financial analysts.<br><br>Completed Practical Skills Modules including: Financial Modeling, Portfolio Development and Construction, Python, Data Science & AI, and Python Programming Fundamentals.<br><br>Exam history: Level I passed July 2024; Level II passed January 2025.',
     descriptionImages:[`${IMG}/port/CFA1.jpg`,`${IMG}/port/CFA2.jpg`,`${IMG}/port/P15.jpg`,`${IMG}/port/P3.jpg`],
     skillTags:['Financial Modelling','Portfolio Management','Python'] },
+
+  { id:'cert-ip', type:'certificate',
+    headline:'Investment Planner (IP License)',
+    subheadline:'SEC Thailand (Securities and Exchange Commission)', date:'May 2026',
+    certLink:{href:'https://market.sec.or.th/LicenseCheck/PersonDetail/0000192431', title:'Verify License (Credential 140811)'},
+    descriptionImages:[`${IMG}/cert/IP.jpg`],
+    skillTags:['Investment Planning','Financial Advisory'],
+    description:'The top-tier Thai SEC license for securities advisory, authorizing investment planning and advice across the full range of capital-market products — equities, derivatives, and beyond. Credential No. 140811.' },
+
+  { id:'cert-fpi', type:'certificate',
+    headline:'Foreign Portfolio Investment (FPI)',
+    subheadline:'Association of Thai Securities Companies (ASCO)', date:'May 2026',
+    descriptionImages:[`${IMG}/cert/FPI.jpg`],
+    skillTags:['Global Equities','Offshore Investment'],
+    description:'A specialist qualification (การลงทุนในหลักทรัพย์ต่างประเทศ) covering the rules and mechanics of investing in foreign securities — directly tied to my cross-border trading work.' },
 
   { id:'edu-ku', type:'education',
     headline:"Bachelor's Degree, Aerospace Engineering",
@@ -337,91 +640,74 @@ const CARDS = [
     headline:'High School, Science - Math',
     subheadline:'Assumption College, Thailand', date:'2005 - 2008',
     description:'High School and Exchange Studies: Completed high school at Assumption College (Bangkok) and had an enriching experience as an exchange student in America for one year in 2005. This experience provided valuable exposure to new cultures and educational systems.',
-    descriptionImages:[`${IMG}/edu/AC.jpg`] },
+    descriptionImages:[`${IMG}/edu/AC.jpg`,`${IMG}/port/P11.JPG`] },
 
   /* ---------- PORTFOLIO (modal cards) ---------- */
-  { id:'pf-cfa2', type:'portfolio', headline:'CFA Program Level II Passed', subheadline:'Professional Certification', date:'JAN 2025',
-    thumbnail:`${IMG}/port/P15.jpg`, skillTags:['Asset Valuation','Portfolio Management','Financial Analysis'],
-    description:'Passing Level II demonstrates a mastery of complex asset valuation methods, including in-depth analysis of equities, fixed income, derivatives, and alternative investments. This stage heavily emphasizes the practical application of investment tools and concepts in real-world valuation scenarios.' },
-
-  { id:'pf-cfa1', type:'portfolio', headline:'CFA Program Level I Passed', subheadline:'Professional Certification', date:'Jul 2024',
-    thumbnail:`${IMG}/port/P3.jpg`, skillTags:['Investment Tools','Ethical Standards','Quantitative Methods'],
-    description:'Passing Level I confirms a strong understanding of the foundational knowledge for investment management. This includes mastery of investment tools, quantitative methods, economics, financial statement analysis, and corporate finance, all bound by the CFA Institute’s strict ethical standards.' },
-
-  { id:'pf-gda', type:'portfolio', headline:'Google Data Analytics Professional Certificate', subheadline:'Professional Certificate', date:'Jan 2024',
-    thumbnail:`${IMG}/port/P2-1.jpg`, skillTags:['Data Analysis','SQL','Tableau','R','Data Visualization'],
+  { id:'pf-gda', type:'certificate', headline:'Google Data Analytics Professional Certificate', subheadline:'Professional Certificate', date:'Jan 2024',
+    descriptionImages:[`${IMG}/port/P2-1.jpg`], skillTags:['Data Analysis','SQL','Tableau','R','Data Visualization'],
     description:'A comprehensive certification focused on the entire data analysis lifecycle. This program provided hands-on experience with in-demand tools and skills, including data collection (SQL), data transformation (Spreadsheets, R), data visualization (Tableau), and analysis (R). The course culminated in a capstone project demonstrating the ability to ask the right questions and solve business problems using data.' },
 
-  { id:'pf-adworld22', type:'portfolio', headline:'Ad World Conference 2022', subheadline:'Industry Event & Training', date:'May 2022',
-    thumbnail:`${IMG}/port/P9-1.jpg`, skillTags:['Marketing Strategy'],
-    description:'Attended the 2022 Ad World Conference, a premier global event for the marketing industry. This multi-day conference featured insights from top-tier brand leaders and marketing pioneers on the latest trends in media buying, content marketing, and agency operations. My attendance was focused on absorbing cutting-edge strategies to ensure our agency (Brand Buddy) remained competitive and provided clients with the most modern marketing solutions.' },
-
-  { id:'pf-nft', type:'portfolio', headline:'NFT (PFPs) Project', subheadline:'Community & Strategic Marketing Lead', date:'Jun 2021 - Aug 2022',
+  { id:'pf-nft', type:'project', headline:'NFT (PFPs) Project', subheadline:'Community & Strategic Marketing Lead', date:'Jun 2021 - Aug 2022',
     thumbnail:`${IMG}/port/P4-1.jpg`, skillTags:['NFT','Community Building'],
-    description:`The Setup: Identifying the Opportunity
-"In 2021, my partners and I were closely watching the crypto boom in SEA. We saw a high-risk, high-return opportunity in the emerging NFT market. We made a key strategic decision: rather than being passive investors in someone else's project, we would be the operators and create one ourselves. We targeted the PFP (Profile Picture) market, as our analysis showed the most successful projects weren't just selling art; they were building dedicated communities—essentially, a loyal investor base."
+    description:'Co-founded and led community strategy for a ~3,000-piece PFP NFT collection on Ethereum. As one of five core members, I built the community from zero across Discord and Twitter and ran the go-to-market plan. Despite launching straight into the Terra/Luna crash and a full bear market, the collection sold out in 4 minutes.' },
 
-My Role: The Architect
-"As one of the five core team members, my official role was Community & Strategic Marketing Lead. In practice, I was the architect for our go-to-market strategy. I was responsible for building our 'investor base' from zero, designing the entire communications and marketing plan, and overseeing its execution."
-
-The Crisis: The Terra Crash
-"We were targeting a 2022 launch. Then, an unexpected macro event hit: the Terra/Luna crash. The entire DeFi market seized up, and sentiment turned from euphoria to extreme fear. Our original bull-market launch plan was now completely obsolete. This became a real-time test of crisis management. We had to stay flexible and adjust our plan day by day. My job shifted to managing community panic, reassessing risk, and rebuilding confidence in our project while the rest of the market was in freefall."
-
-The Result: Executing Under Pressure
-"Despite launching into a full-blown bear market—the hardest possible time to launch—our new, adapted strategy worked. We successfully launched the collection of ~3,000 PFPs on Ethereum, and it completely sold out in 4 minutes. This project was a high-speed lesson in market dynamics, risk management, and the importance of adaptability. It proved we could execute a high-stakes strategy, even when the entire market was moving against us."` },
-
-  { id:'pf-adworld21', type:'portfolio', headline:'Ad World Conference 2021', subheadline:'Industry Event & Training', date:'Nov 2021',
-    thumbnail:`${IMG}/port/P10-1.jpg`, skillTags:['Marketing Strategy'],
-    description:'Attended the 2021 Ad World Conference to capture the rapid shifts in digital marketing following the pandemic. Key topics included the explosion of e-commerce, the rise of the creator economy, and new content strategies for engaging a remote audience. This event provided critical, timely insights that helped my team pivot our client strategies to align with the "new normal" of consumer behavior.' },
-
-  { id:'pf-gvideo', type:'portfolio', headline:'Google Ads Video Certificate', subheadline:'Professional Certificate', date:'May 2021',
-    thumbnail:`${IMG}/port/P8-1.jpg`, skillTags:['Digital Marketing','Brand Awareness'],
+  { id:'pf-gvideo', type:'certificate', headline:'Google Ads Video Certificate', subheadline:'Professional Certificate', date:'May 2021',
+    descriptionImages:[`${IMG}/port/P8-1.jpg`], skillTags:['Digital Marketing','Brand Awareness'],
     description:'This certification validates expertise in creating and optimizing Google Video ad campaigns, primarily on YouTube. It covers strategies for reaching audiences with different video ad formats (e.g., skippable in-stream, bumper ads), driving brand awareness, and measuring campaign effectiveness to maximize client ROI on video spend.' },
 
-  { id:'pf-gdisplay', type:'portfolio', headline:'Google Ads Display Certificate', subheadline:'Professional Certificate', date:'Jan 2021',
-    thumbnail:`${IMG}/port/P6-1.jpg`, skillTags:['Digital Marketing','Marketing Strategy'],
+  { id:'pf-gdisplay', type:'certificate', headline:'Google Ads Display Certificate', subheadline:'Professional Certificate', date:'Jan 2021',
+    descriptionImages:[`${IMG}/port/P6-1.jpg`], skillTags:['Digital Marketing','Marketing Strategy'],
     description:'This certification demonstrates proficiency in using the Google Display Network to deliver results. It covers developing effective display advertising strategies, including audience targeting (e.g., remarketing, in-market audiences), creative best practices, and bidding strategies to achieve brand awareness and conversion goals.' },
 
-  { id:'pf-gsearch', type:'portfolio', headline:'Google Ads Search Certificate', subheadline:'Professional Certificate', date:'Jan 2021',
-    thumbnail:`${IMG}/port/P7-1.jpg`, skillTags:['Digital Marketing','Media Buying'],
+  { id:'pf-gsearch', type:'certificate', headline:'Google Ads Search Certificate', subheadline:'Professional Certificate', date:'Jan 2021',
+    descriptionImages:[`${IMG}/port/P7-1.jpg`], skillTags:['Digital Marketing','Media Buying'],
     description:'This certification shows a mastery of building and optimizing Google Search campaigns. It covers the full scope of SEM (Search Engine Marketing), from keyword research and strategy to ad copy creation, bid management, and performance optimization (e.g., Quality Score, conversion tracking). This was a core skill for managing client budgets at Brand Buddy.' },
 
-  { id:'pf-meta', type:'portfolio', headline:'Meta Certified Media Buying Professional', subheadline:'Professional Certificate', date:'August 2019',
-    thumbnail:`${IMG}/port/P1-1.jpg`, skillTags:['Digital Marketing','Media Buying','Facebook Ads'],
+  { id:'pf-meta', type:'certificate', headline:'Meta Certified Media Buying Professional', subheadline:'Professional Certificate', date:'August 2019',
+    descriptionImages:[`${IMG}/port/P1-1.jpg`], skillTags:['Digital Marketing','Media Buying','Facebook Ads'],
     description:"This professional certification from Meta validates the advanced skills required to manage media buying campaigns on the Facebook and Instagram platforms. The exam covers all aspects of the campaign lifecycle, from planning and setup (e.g., audience targeting, budget strategy, ad placements) to optimization (e.g., A/B testing, scaling) and reporting. It demonstrates a high-level competency in using Meta's tools to achieve specific business goals." },
 
-  { id:'pf-baanbaicha', type:'portfolio', headline:'BaanBaiCha (Thai Tea formula)', subheadline:'Business Co-founder', date:'2014 - 2015',
+  { id:'pf-baanbaicha', type:'project', headline:'BaanBaiCha (Thai Tea formula)', subheadline:'Business Co-founder', date:'2014 - 2015',
     thumbnail:`${IMG}/port/P12.JPG`, skillTags:['Entrepreneurship','Product Development'],
     description:'This was my first experience as a small business owner. Three friends and I co-founded BaanBaiCha to create a unique, premium Thai Tea formula from scratch. Our key differentiator was our blend: we spent months developing a proprietary recipe combining 5 different types of tea. We launched as a pivot tea stall near a major office building, and it was an immediate local hit, selling ~350 glasses per day at its peak.' },
 
-  { id:'pf-aigs', type:'portfolio', headline:'AIGS (Asian Institute of Gemological Sciences)', subheadline:'Gemological Studies & Jewelry Design', date:'2013 - 2014',
-    thumbnail:`${IMG}/port/P5-1.jpg`, skillTags:['Product Development'],
+  { id:'pf-aigs', type:'certificate', headline:'AIGS (Asian Institute of Gemological Sciences)', subheadline:'Gemological Studies & Jewelry Design', date:'2013 - 2014',
+    descriptionImages:[`${IMG}/port/P5-1.jpg`], skillTags:['Product Development'],
     description:'I enrolled at the Asian Institute of Gemological Sciences (AIGS) to combine engineering methodology with the jewelry industry. I focused on technical courses: Gem Identification, Diamond Identification, and Jewelry Design. This technical foundation gave me the confidence to launch my first business, Personal Craft Co., Ltd., which utilized CAD-based design.' },
 
-  { id:'pf-grad', type:'portfolio', headline:'Graduation Project: Grid Fin Aerodynamics', subheadline:'B.Eng. Research Project', date:'2012',
+  { id:'cert-zh', type:'certificate',
+    headline:'Chinese Language — HSK Level 2',
+    subheadline:'Mandarin Proficiency', date:'',
+    skillTags:['Chinese (Beginner · HSK2)'],
+    description:'Passed HSK Level 2, covering foundational Mandarin vocabulary and everyday conversational phrases.' },
+
+  { id:'cert-en', type:'certificate',
+    headline:'English Language — TOEIC 915',
+    subheadline:'Professional Working Proficiency',
+    descriptionImages:[`${IMG}/cert/TOEIC.png`],
+    skillTags:['English (Fluent · TOEIC 915)'],
+    description:'Scored 915 on the TOEIC, reflecting professional-level English proficiency for business and financial communication.' },
+
+  { id:'pf-grad', type:'project', headline:'Graduation Project: Grid Fin Aerodynamics', subheadline:'B.Eng. Research Project', date:'2012',
     thumbnail:`${IMG}/port/P13.jpg`, skillTags:['CFD Analysis'],
     description:'Research project on the aerodynamics of grid fins using ANSYS Computational Fluid Dynamics (CFD). Analyzed complex shockwave interactions and their effect on stability and drag during supersonic flight conditions.' },
 
-  { id:'pf-sg', type:'portfolio', headline:'Singapore Internship: Rocket CFD Project', subheadline:'Research Assistant Internship', date:'2011',
+  { id:'pf-sg', type:'project', headline:'Singapore Internship: Rocket CFD Project', subheadline:'Research Assistant Internship', date:'2011',
     thumbnail:`${IMG}/port/P14.JPG`, skillTags:['CFD Analysis'],
     description:'Completed a 4-month internship in Singapore using Computational Fluid Dynamics (CFD) software (ANSYS) to analyze a rocket project for the Defence Technology Institute (DTI).' },
-
-  { id:'pf-us', type:'portfolio', headline:'US High School Exchange Program', subheadline:'Exchange Student', date:'2005',
-    thumbnail:`${IMG}/port/P11.JPG`, skillTags:[],
-    description:'Participated in a 1-semester high school exchange program in Grand Rapids, Michigan. This formative experience strengthened my English fluency and ability to adapt to new environments.' },
 
   /* ---------- INTERESTS ---------- */
   { id:'int-macro', type:'interest', headline:'Global Macro News', thumbnail:`${IMG}/interest/Global.jpg`,
     description:"I follow <strong>global economic and geopolitical events</strong> by default, treating them like a weekly drama series on Saturday night. It's my ongoing addiction to understanding the complex narratives that shape the world around us." },
-  { id:'int-freedive', type:'interest', headline:'Freediving', thumbnail:`${IMG}/interest/Freedive.JPG`,
+  { id:'int-freedive', type:'interest', headline:'Freediving', thumbnail:`${IMG}/interest/Freedive.jpg`,
     description:"There's nothing like exploring the underwater world through intense line training or relaxing fundives; I even hold a Mochnov W3 license. I've enjoyed diving in Japan, Indonesia, and the Philippines, always seeking new depths and hidden seascapes to explore." },
   { id:'int-badminton', type:'interest', headline:'Badminton', thumbnail:`${IMG}/interest/Badminton.jpg`,
     description:"I've been playing since 2017 as a fun hobby to stay active and socialize with friends. I co-founded a local group called \"Beerminton,\" where we get together weekly for a great workout—and maybe a few cold drinks afterwards 😉." },
   { id:'int-tennis', type:'interest', headline:'Tennis', thumbnail:`${IMG}/interest/Tennis.jpg`,
     description:"This is a new sport I've recently gotten completely hooked on, constantly striving to improve my footwork and powerful serve. It's a fantastic, high-energy way to unwind and focus purely on a physical challenge outside of my daily routine." },
-  { id:'int-trek', type:'interest', headline:'Trekking and Camping', thumbnail:`${IMG}/interest/Camp.JPG`,
+  { id:'int-trek', type:'interest', headline:'Trekking and Camping', thumbnail:`${IMG}/interest/Camp.jpg`,
     description:"I love getting away from the city lights and reconnecting with nature through long hikes and overnight camping trips. There's nothing quite as refreshing as fresh air, quiet wilderness, and managing your resources in the great outdoors." },
-  { id:'int-cat', type:'interest', headline:'Cat Companion', thumbnail:`${IMG}/interest/Cat.jpg`,
+  { id:'int-cat', type:'interest', headline:'Cat', thumbnail:`${IMG}/interest/Cat.jpg`,
     description:"I'm the proud owner of three lovely cats named <strong>Rick, Morty, and Summer</strong> (bet you can guess the inspiration for that!). They provide the perfect daily dose of amusing chaos and comforting companionship needed to keep life balanced." },
   { id:'int-anime', type:'interest', headline:'Manga & Anime', thumbnail:`${IMG}/interest/Anime.jpg`,
     description:"This is actually the main reason I decided to study Japanese—I wanted to experience the source material directly! My favorites span generations, from classics like <em>Fullmetal Alchemist</em> and <em>Guren Lagann</em> to modern gems like <em>Jujutsu Kaisen</em> and <em>Frieren</em>." },
@@ -436,8 +722,8 @@ const esc = s => (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g
 // A skill chip, styled by its category's theme (falls back to _default if unregistered).
 // Used identically on cards AND in About, so a category's look stays consistent everywhere.
 function chip(tag){
-  const cls = themeFor(SKILL_REGISTRY[tag]).chip;
-  return `<span class="${cls} px-3 py-1 rounded-full font-medium text-sm">${esc(tag)}</span>`;
+  const key = SKILL_REGISTRY[tag] || '_default';
+  return `<span class="chip ${key}">${esc(tag)}</span>`;
 }
 
 // CTA button
@@ -482,111 +768,133 @@ function renderSkills(){
     const tags = [...buckets[key]].sort();
     if(!tags.length) return; // category only appears once a card contributes a tag to it
     html += `
-      <h3 class="text-2xl font-semibold text-gray-900 mb-4 mt-6 flex items-center">
-        <span class="inline-block w-3 h-3 rounded-full ${themeFor(key).dot} mr-2"></span>${esc(SKILL_CATEGORIES[key].label)}
-      </h3>
-      <div class="flex flex-wrap gap-2">${tags.map(chip).join('')}</div>`;
+      <div class="skill-group">
+        <h3 class="font-display"><span class="sdot ${key}"></span>${esc(SKILL_CATEGORIES[key].label)}</h3>
+        <div class="chips">${tags.map(chip).join('')}</div>
+      </div>`;
   });
   document.getElementById('skills-container').innerHTML = html;
 }
 
 function renderProjects(){
-  const cards = byType('project').map(c => {
-    const bg = c.background
-      ? `<img src="${c.background}" alt="" class="w-full h-full object-cover"><div class="absolute inset-0 bg-gray-900/90"></div>`
-      : `<div class="w-full h-full bg-gradient-to-br from-gray-800 to-gray-900"></div>`;
-    const thumb = c.thumbnail
-      ? `<div class="w-full md:w-1/3 flex-shrink-0"><img src="${c.thumbnail}" alt="${esc(c.headline)}" class="w-full aspect-square object-cover rounded-xl shadow-lg border border-gray-700"></div>`
-      : '';
+  const list = byType('project');
+  const slides = list.map(c => {
+    let imgs = c.images || c.descriptionImages || [c.background, c.thumbnail];
+    imgs = (imgs||[]).filter(Boolean);
+    if(!imgs.length) imgs = ['https://placehold.co/800x800/1C2028/5ED3F3?text=Project'];
+    const figImgs = imgs.map((src,k)=>`<img src="${src}" alt="${esc(c.headline)} — image ${k+1}" class="${k===0?'active':''}" draggable="false" onerror="this.src='https://placehold.co/800x800/1C2028/5ED3F3?text=Project'">`).join('');
+    const imgNav = imgs.length>1 ? `<div class="pc-imgnav">${imgs.map((_,k)=>`<i class="${k===0?'on':''}" data-img="${k}"></i>`).join('')}</div>` : '';
+    const meta = c.subheadline ? `<span class="pc-kind">${esc(c.subheadline)}${c.date?` &middot; ${esc(c.date)}`:''}</span>` : (c.date?`<span class="pc-kind">${esc(c.date)}</span>`:'');
     const tags = (c.skillTags||[]).map(chip).join('');
     const ctas = [ctaBtn(c.cta1), ctaBtn(c.cta2)].filter(Boolean).join('');
     return `
-      <div class="relative w-[85vw] md:w-[900px] flex-shrink-0 snap-center rounded-2xl shadow-2xl overflow-hidden group">
-        <div class="absolute inset-0 w-full h-full">${bg}</div>
-        <div class="relative p-8 md:p-12 z-10 text-white">
-          <div class="flex flex-col md:flex-row gap-8 md:gap-12 items-start">
-            ${thumb}
-            <div class="w-full ${thumb ? 'md:w-2/3' : ''}">
-              <h3 class="text-2xl md:text-3xl font-bold text-white mb-4">${esc(c.headline)}</h3>
-              <p class="text-lg text-gray-300 mb-8 leading-relaxed">${c.description||''}</p>
-              ${tags ? `<div class="mb-8"><h4 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3">Skills & Tools</h4><div class="flex flex-wrap gap-2">${tags}</div></div>` : ''}
-              ${ctas ? `<div class="flex flex-col sm:flex-row gap-4">${ctas}</div>` : ''}
-            </div>
+      <article class="pc-slide">
+        <div class="pc-slide-inner">
+          <div class="pc-figure">${figImgs}${imgNav}</div>
+          <div class="pc-info">
+            ${meta}
+            <h3>${esc(c.headline)}</h3>
+            <p class="desc">${c.description||''}</p>
+            ${tags ? `<div class="chips">${tags}</div>` : ''}
+            ${ctas ? `<div class="ctas">${ctas}</div>` : ''}
           </div>
         </div>
-      </div>`;
+      </article>`;
   }).join('');
-  document.getElementById('projects-container').innerHTML = scroller(cards, 'space-x-6 overflow-x-auto pb-8 hide-scrollbar snap-x snap-mandatory', {step:800});
+  document.getElementById('projects-container').innerHTML = `
+    <div class="pc-viewport"><div class="pc-track">${slides}</div></div>
+    <button class="pc-nav prev" type="button" aria-label="Previous project">&#8249;</button>
+    <button class="pc-nav next" type="button" aria-label="Next project">&#8250;</button>`;
 }
 
 function renderTimelineItem(c, isLast){
-  const line = isLast ? '' : '<div class="absolute left-0 top-1 h-full border-l-2 border-gray-300"></div>';
   const cert = c.certLink
-    ? `<a href="${c.certLink.href}" target="_blank" rel="noopener noreferrer" title="${esc(c.certLink.title)}" download class="ml-2 text-gray-500 hover:text-gray-800 transition-colors"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg></a>`
+    ? `<a href="${c.certLink.href}" target="_blank" rel="noopener noreferrer" title="${esc(c.certLink.title)}" class="cert-icon"><svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 4H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V18a2 2 0 01-2 2z"/></svg></a>`
     : '';
   let media = '';
   if(c.descriptionImages && c.descriptionImages.length > 1){
-    const imgs = c.descriptionImages.map(src => `<img src="${src}" alt="${esc(c.headline)}" class="w-64 aspect-square object-cover rounded-lg flex-shrink-0 shadow-sm">`).join('');
-    media = `<div class="mt-6">${scroller(imgs, 'space-x-4 overflow-x-auto pb-2 hide-scrollbar', {small:true})}</div>`;
+    const imgs = c.descriptionImages.map(src => `<img src="${src}" alt="${esc(c.headline)}" class="tl-shot" onerror="this.style.display='none'">`).join('');
+    media = `<div class="tl-shots hide-scrollbar">${imgs}</div>`;
   } else if(c.descriptionImages && c.descriptionImages.length === 1){
-    media = `<img src="${c.descriptionImages[0]}" alt="${esc(c.headline)}" class="mt-6 w-64 aspect-square object-cover rounded-lg shadow-sm" onerror="this.src='https://placehold.co/600x600/e2e8f0/333333?text=Image+Error'">`;
+    media = `<img src="${c.descriptionImages[0]}" alt="${esc(c.headline)}" class="tl-shot" style="margin-top:14px" onerror="this.style.display='none'">`;
   }
   const tags = (c.skillTags||[]).map(chip).join('');
-  const label = c.type === 'job' ? 'Job Description' : 'Description';
   return `
-    <div class="relative pl-8">
-      ${line}
-      <div class="absolute left-[-6px] top-1 w-4 h-4 bg-gray-900 rounded-full border-4 border-white"></div>
-      <h4 class="text-xl font-semibold text-gray-900 inline-flex items-center">${esc(c.headline)}${cert}</h4>
-      ${c.subheadline ? `<p class="text-md text-gray-600 mb-1">${esc(c.subheadline)}</p>` : ''}
-      ${c.date ? `<p class="text-sm text-gray-500 mb-3">${esc(c.date)}</p>` : ''}
+    <div class="tl-item">
+      <span class="node"></span>
+      <h4 class="font-display">${esc(c.headline)}${cert}</h4>
+      ${c.subheadline ? `<div class="sub">${esc(c.subheadline)}</div>` : ''}
+      ${c.date ? `<div class="date">${esc(c.date)}</div>` : ''}
       <details>
-        <summary class="text-gray-700 font-semibold hover:text-gray-900">${label}</summary>
-        <p class="mt-2 text-gray-700">${c.description||''}</p>
+        <summary>Details</summary>
+        <p>${c.description||''}</p>
         ${media}
-        ${tags ? `<div class="mt-4 flex flex-wrap gap-2">${tags}</div>` : ''}
+        ${tags ? `<div class="chips" style="margin-top:14px">${tags}</div>` : ''}
       </details>
     </div>`;
 }
 
-function renderWork(){
-  const items = byType('job');
-  document.getElementById('work-container').innerHTML = items.map((c,i) => renderTimelineItem(c, i === items.length-1)).join('');
-}
-function renderEducation(){
-  const items = CARDS.filter(c => c.type==='certificate' || c.type==='education');
-  document.getElementById('education-container').innerHTML = items.map((c,i) => renderTimelineItem(c, i === items.length-1)).join('');
-}
-
-let PORTFOLIO_CARDS = [];
-function renderPortfolio(){
-  PORTFOLIO_CARDS = byType('portfolio');
-  const cards = PORTFOLIO_CARDS.map((c, idx) => {
+function renderExperience(){
+  const startYear = d => { const m=(d||'').match(/\d{4}/); return m ? +m[0] : 0; };
+  const items = byType('job').concat(byType('education')).sort((a,b)=> startYear(b.date)-startYear(a.date));
+  document.getElementById('experience-container').innerHTML = items.map((c,i) => {
+    const side = i % 2 === 0 ? 'left' : 'right';
+    const ym = (c.date||'').match(/\d{4}/); const year = ym ? ym[0] : '';
+    const kind = c.type === 'job' ? 'Work' : 'Education';
+    const cert = c.certLink
+      ? `<a href="${c.certLink.href}" target="_blank" rel="noopener noreferrer" title="${esc(c.certLink.title)}" class="cert-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 4H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V18a2 2 0 01-2 2z"/></svg></a>`
+      : '';
+    let media = '';
+    if(c.descriptionImages && c.descriptionImages.length > 1){
+      media = `<div class="tl-shots hide-scrollbar">${c.descriptionImages.map(src => `<img src="${src}" alt="${esc(c.headline)}" class="tl-shot" onerror="this.style.display='none'">`).join('')}</div>`;
+    } else if(c.descriptionImages && c.descriptionImages.length === 1){
+      media = `<img src="${c.descriptionImages[0]}" alt="${esc(c.headline)}" class="tl-shot" style="margin-top:14px" onerror="this.style.display='none'">`;
+    }
     const tags = (c.skillTags||[]).map(chip).join('');
     return `
-      <div class="w-80 flex-shrink-0 bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl cursor-pointer" data-portfolio-index="${idx}">
-        <img src="${c.thumbnail}" alt="${esc(c.headline)}" class="w-full aspect-square object-cover" onerror="this.src='https://placehold.co/600x400/e2e8f0/333333?text=Image+Error'">
-        <div class="p-6">
-          <h3 class="text-xl font-semibold text-gray-900 mb-2">${esc(c.headline)}</h3>
-          <p class="text-gray-700 mb-1 line-clamp-2">${esc(c.subheadline||'')}</p>
-          <p class="text-sm text-gray-500 mb-4">${esc(c.date||'')}</p>
-          <div class="flex flex-wrap gap-2">${tags}</div>
+      <div class="tl-row ${side} ${c.type==='job'?'work':'edu'}">
+        <span class="tl-node"><span class="tl-year">${year}</span></span>
+        <div class="tl-card">
+          <span class="tl-kind">${kind}</span>
+          <h4 class="font-display">${esc(c.headline)}${cert}</h4>
+          ${c.subheadline ? `<div class="sub">${esc(c.subheadline)}</div>` : ''}
+          ${c.date ? `<div class="date">${esc(c.date)}</div>` : ''}
+          <details><summary>Details</summary><p>${c.description||''}</p>${media}${tags ? `<div class="chips" style="margin-top:14px">${tags}</div>` : ''}</details>
         </div>
       </div>`;
   }).join('');
-  document.getElementById('portfolio-container').innerHTML = scroller(cards, 'space-x-6 overflow-x-auto pb-4 hide-scrollbar');
+}
+function renderCertifications(){
+  const items = byType('certificate');
+  document.getElementById('certifications-container').innerHTML = items.map((c,idx) => {
+    const img = (c.descriptionImages && c.descriptionImages[0]) || '';
+    const meta = c.subheadline ? `${esc(c.subheadline)}${c.date?` &middot; ${esc(c.date)}`:''}` : (c.date?esc(c.date):'');
+    const overlay = `<div class="cc-overlay">${meta?`<span class="cc-issuer">${meta}</span>`:''}${c.description?`<p class="cc-desc">${c.description}</p>`:''}${c.certLink?`<a class="cc-verify" href="${c.certLink.href}" target="_blank" rel="noopener noreferrer">Verify credential &rarr;</a>`:''}</div>`;
+    const media = img
+      ? `<div class="cc-media"><img src="${img}" alt="${esc(c.headline)}" onerror="this.style.display='none';this.parentNode.classList.add('cc-fallback');this.insertAdjacentHTML('beforebegin','<span class=\'cc-fbtext\'>'+this.alt+'</span>');">${overlay}</div>`
+      : `<div class="cc-media cc-fallback"><span class="cc-fbtext">${esc(c.headline)}</span>${overlay}</div>`;
+    const tags = (c.skillTags||[]).map(chip).join('');
+    return `
+      <article class="cc${idx>=5?' cc-more':''}">
+        ${media}
+        <h3 class="cc-title">${esc(c.headline)}</h3>
+        ${tags?`<div class="chips cc-chips">${tags}</div>`:''}
+      </article>`;
+  }).join('');
 }
 
+let PORTFOLIO_CARDS = [];
+/* Activities section removed (was 2 items — too sparse) */
+
 function renderInterests(){
-  const cards = byType('interest').map(c => `
-    <div class="w-72 flex-shrink-0 bg-white rounded-lg shadow-lg overflow-hidden border border-gray-100 hover:shadow-xl transition-shadow duration-300">
-      <img src="${c.thumbnail}" alt="${esc(c.headline)}" class="w-full aspect-square object-cover" onerror="this.src='https://placehold.co/300x300/eeeeee/111111?text=Interest'">
-      <div class="p-4">
-        <h3 class="text-xl font-semibold text-gray-900 mb-2">${esc(c.headline)}</h3>
-        <p class="text-gray-700 text-sm">${c.description||''}</p>
+  document.getElementById('interests-container').innerHTML = byType('interest').map(c => `
+    <article class="blog-card">
+      <div class="bc-media">
+        <img src="${c.thumbnail}" alt="${esc(c.headline)}" onerror="this.src='https://placehold.co/600x600/1C2028/5ED3F3?text=Interest'">
+        <div class="bc-overlay"><p>${c.description||''}</p></div>
       </div>
-    </div>`).join('');
-  document.getElementById('interests-container').innerHTML = scroller(cards, 'space-x-6 overflow-x-auto pb-4 hide-scrollbar');
+      <h3 class="bc-title">${esc(c.headline)}</h3>
+    </article>`).join('');
 }
 
 /* =========================================================================
@@ -647,22 +955,17 @@ function initModal(){
 function initNav(){
   const menuBtn = document.getElementById('mobile-menu-btn');
   const mobileMenu = document.getElementById('mobile-menu');
-  menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
-  document.querySelectorAll('.nav-link-mobile').forEach(l => l.addEventListener('click', () => mobileMenu.classList.add('hidden')));
-
+  if(menuBtn && mobileMenu){
+    menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+    document.querySelectorAll('.nav-link-mobile').forEach(l => l.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+  }
   const navLinks = document.querySelectorAll('.nav-link');
-  // Thin center band reliably highlights whichever section owns the middle of the screen,
-  // even when a section is taller than the viewport (the old threshold:0.4 failed on those).
+  if(!navLinks.length) return;
   const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if(entry.isIntersecting){
-        const id = entry.target.getAttribute('id');
-        navLinks.forEach(link => {
-          link.classList.remove('active');
-          if(link.getAttribute('href') === `#${id}`) link.classList.add('active');
-        });
-      }
-    });
+    entries.forEach(entry => { if(entry.isIntersecting){
+      const id = entry.target.getAttribute('id');
+      navLinks.forEach(link => { link.classList.remove('active'); if(link.getAttribute('href') === `#${id}`) link.classList.add('active'); });
+    }});
   }, { root:null, rootMargin:'-45% 0px -50% 0px', threshold:0 });
   document.querySelectorAll('main section').forEach(s => observer.observe(s));
 }
@@ -673,13 +976,257 @@ function initNav(){
 document.addEventListener('DOMContentLoaded', () => {
   renderSkills();
   renderProjects();
-  renderWork();
-  renderEducation();
-  renderPortfolio();
+  renderExperience();
+  renderCertifications();
   renderInterests();
   initScrollers();
   initModal();
   initNav();
+});
+</script>
+
+<script>
+/* ---- Work tenure live clock (since 1 May 2026, 08:30:00 local) ---- */
+(function(){
+  var start = new Date(2026,4,1,0,0,0); // 1 May 2026 00:00:00
+  var el = document.getElementById('tenure-val');
+  if(!el) return;
+  function diff(){
+    var now = new Date();
+    if(now < start){ el.textContent = 'starting soon'; return; }
+    var y=now.getFullYear()-start.getFullYear();
+    var m=now.getMonth()-start.getMonth();
+    var d=now.getDate()-start.getDate();
+    var hh=now.getHours()-start.getHours();
+    var mm=now.getMinutes()-start.getMinutes();
+    var ss=now.getSeconds()-start.getSeconds();
+    if(ss<0){ss+=60;mm--;} if(mm<0){mm+=60;hh--;} if(hh<0){hh+=24;d--;}
+    if(d<0){ var pm=new Date(now.getFullYear(),now.getMonth(),0).getDate(); d+=pm; m--; }
+    if(m<0){m+=12;y--;}
+    var parts=[]; if(y>0)parts.push(y+'y'); if(y>0||m>0)parts.push(m+'m'); parts.push(d+'d');var clock=hh+' hours '+mm+' mins '+ss+' sec';el.textContent = parts.join(' ')+'  '+clock;
+  }
+  diff(); setInterval(diff,1000);
+})();
+
+/* ---- Live market ticker via Finnhub (free key; restrict it to your domain in Finnhub settings) ---- */
+(function(){
+  // The key lives in a separate config so it's easy to swap / gitignore. See note below.
+  var KEY = (window.FINNHUB_KEY || '');
+  var track = document.getElementById('ticker-track');
+  if(!track) return;
+  // symbol : label (ETFs stand in for indices/gold on the free tier)
+  var items = [
+    {s:'SPY', l:'S&P 500'}, {s:'QQQ', l:'NASDAQ'}, {s:'GLD', l:'GOLD'},
+    {s:'BINANCE:BTCUSDT', l:'BTC'}, {s:'BINANCE:ETHUSDT', l:'ETH'},
+    {s:'OANDA:USD_THB', l:'USD/THB'}, {s:'AAPL', l:'AAPL'}, {s:'TSLA', l:'TSLA'}
+  ];
+  function render(map){
+    var html = items.map(function(it){
+      var q = map[it.s];
+      if(!q || q.c==null) return '<span class="tk"><b>'+it.l+'</b> &mdash;</span>';
+      var chg = q.dp!=null ? q.dp : 0;
+      var cls = chg>=0 ? 'up' : 'down';
+      var sign = chg>=0 ? '+' : '';
+      var px = q.c>=1000 ? q.c.toLocaleString(undefined,{maximumFractionDigits:0}) : q.c.toLocaleString(undefined,{maximumFractionDigits:2});
+      return '<span class="tk"><b>'+it.l+'</b> '+px+' <em class="'+cls+'">'+sign+chg.toFixed(2)+'%</em></span>';
+    }).join('');
+    track.innerHTML = html + html; // duplicate for seamless loop
+  }
+  if(!KEY){ return; } // no key -> leave the static markup already in the HTML
+  function load(){
+    Promise.all(items.map(function(it){
+      return fetch('https://finnhub.io/api/v1/quote?symbol='+encodeURIComponent(it.s)+'&token='+KEY)
+        .then(function(r){return r.ok?r.json():null;}).then(function(j){return {s:it.s,q:j};})
+        .catch(function(){return {s:it.s,q:null};});
+    })).then(function(res){
+      var map={}; res.forEach(function(x){map[x.s]=x.q;}); render(map);
+    }).catch(function(){/* keep static fallback */});
+  }
+  load();
+  setInterval(function(){ if(!document.hidden) load(); }, 20000);
+})();
+</script>
+<script>
+/* ---- Mouse candlestick trail: bars follow cursor, green=up / red=down, fade out ---- */
+(function(){
+  var c=document.getElementById('fx-candles'); if(!c) return;
+  if(matchMedia('(max-width:900px)').matches || matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  var ctx=c.getContext('2d'), dpr=Math.min(window.devicePixelRatio||1,2), W=0,H=0;
+  function resize(){ W=innerWidth; H=innerHeight; c.width=W*dpr; c.height=H*dpr; c.style.width=W+'px'; c.style.height=H+'px'; ctx.setTransform(dpr,0,0,dpr,0,0); }
+  resize(); addEventListener('resize',resize);
+  var candles=[], lastX=null,lastY=null,lastT=0, GREEN='#34D399', RED='#F87171', LIFE=1500;
+  addEventListener('mousemove',function(e){
+    var now=performance.now();
+    if(lastX!=null && now-lastT>=80){
+      var dy=e.clientY-lastY, dx=e.clientX-lastX, speed=Math.min(Math.abs(dy)+Math.abs(dx),64);
+      if(speed>4){ candles.push({x:e.clientX,y:e.clientY,h:9+speed*0.9,up:dy<0,born:now}); if(candles.length>40) candles.shift(); }
+      lastT=now;
+    }
+    lastX=e.clientX; lastY=e.clientY;
+  });
+  (function frame(now){
+    ctx.clearRect(0,0,W,H);
+    for(var i=candles.length-1;i>=0;i--){
+      var k=candles[i], age=now-k.born;
+      if(age>LIFE){ candles.splice(i,1); continue; }
+      var a=(1-age/LIFE)*0.85, col=k.up?GREEN:RED, bh=k.h;
+      ctx.globalAlpha=a; ctx.strokeStyle=col; ctx.fillStyle=col; ctx.lineWidth=1;
+      ctx.beginPath(); ctx.moveTo(k.x,k.y-bh*0.8); ctx.lineTo(k.x,k.y+bh*0.8); ctx.stroke();
+      ctx.fillRect(k.x-2.5,k.y-bh/2,5,bh);
+    }
+    ctx.globalAlpha=1; requestAnimationFrame(frame);
+  })(performance.now());
+})();
+
+/* ---- Music player toggle ---- */
+(function(){
+  var p=document.getElementById('player'), disc=document.getElementById('player-disc'), audio=document.getElementById('player-audio'), badge=document.getElementById('player-badge');
+  if(!p||!disc||!audio) return;
+  disc.addEventListener('click',function(){
+    if(audio.paused){
+      audio.volume=0.7;
+      audio.play().then(function(){
+        p.classList.add('playing'); p.classList.remove('paused');
+        if(badge) badge.innerHTML='&#10074;&#10074;';
+        disc.setAttribute('aria-label','Pause music');
+      }).catch(function(){ /* blocked — stay paused */ });
+    } else {
+      audio.pause(); p.classList.remove('playing'); p.classList.add('paused');
+      if(badge) badge.innerHTML='&#9654;';
+      disc.setAttribute('aria-label','Play music: CHAOS by Shane');
+    }
+  });
+})();
+
+/* ---- About: hover (desktop) / tap (mobile) to play video ---- */
+(function(){
+  var m=document.getElementById('about-media'); if(!m) return;
+  var v=m.querySelector('.about-video');
+  if(!v) return;
+  if(matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  var touch=matchMedia('(hover:none)').matches;
+  function play(){ v.play().then(function(){ m.classList.add('playing'); }).catch(function(){}); }
+  function stop(){ v.pause(); m.classList.remove('playing'); try{ v.currentTime=0; }catch(e){} }
+  if(touch){
+    m.addEventListener('click', function(){ m.classList.contains('playing') ? stop() : play(); });
+  } else {
+    m.addEventListener('mouseenter', play);
+    m.addEventListener('mouseleave', stop);
+  }
+})();
+/* ---- Selected Work carousel: project swipe + per-card image swipe ---- */
+document.addEventListener('DOMContentLoaded', function(){
+  var root=document.getElementById('projects-container'); if(!root) return;
+  var vp=root.querySelector('.pc-viewport'), track=root.querySelector('.pc-track');
+  if(!vp||!track) return;
+  var slides=[].slice.call(track.children), n=slides.length;
+  var prev=root.querySelector('.pc-nav.prev'), next=root.querySelector('.pc-nav.next');
+  var i=0, imgIdx=slides.map(function(){return 0;});
+  function fit(){ var h=0; slides.forEach(function(s){ var el=s.querySelector('.pc-slide-inner'); if(el) el.style.minHeight=''; }); slides.forEach(function(s){ var el=s.querySelector('.pc-slide-inner'); if(el) h=Math.max(h, el.offsetHeight); }); slides.forEach(function(s){ var el=s.querySelector('.pc-slide-inner'); if(el) el.style.minHeight=h+'px'; }); if(h) vp.style.height=h+'px'; }
+  function render(){ track.style.transform='translateX('+(-i*vp.clientWidth)+'px)'; if(prev) prev.disabled=(i===0); if(next) next.disabled=(i===n-1); }
+  function go(k){ i=Math.max(0,Math.min(n-1,k)); render(); }
+  function setImg(si,k){
+    var imgs=slides[si].querySelectorAll('.pc-figure img'); if(imgs.length<2) return;
+    k=(k+imgs.length)%imgs.length; imgIdx[si]=k;
+    imgs.forEach(function(im,x){ im.classList.toggle('active',x===k); });
+    slides[si].querySelectorAll('.pc-imgnav i').forEach(function(d,x){ d.classList.toggle('on',x===k); });
+  }
+  if(prev) prev.addEventListener('click',function(){ go(i-1); });
+  if(next) next.addEventListener('click',function(){ go(i+1); });
+  root.addEventListener('click',function(e){
+    var idot=e.target.closest('.pc-imgnav i');
+    if(idot){ var si=slides.indexOf(idot.closest('.pc-slide')); if(si>-1) setImg(si,+idot.getAttribute('data-img')); e.stopPropagation(); }
+  });
+  window.addEventListener('resize',function(){ fit(); render(); });
+  window.addEventListener('load', fit);
+  var down=false, sx=0, sy=0, dx=0, mode='project', dragging=false, downEl=null, suppress=false;
+  var isTouch=false;
+  vp.addEventListener('pointerdown',function(e){
+    if(e.button && e.button!==0) return;
+    down=true; dragging=false; sx=e.clientX; sy=e.clientY; dx=0; downEl=e.target;
+    isTouch=(e.pointerType!=='mouse');
+    var fig=e.target.closest('.pc-figure');
+    mode=(fig && slides[i].querySelectorAll('.pc-figure img').length>1) ? 'image' : 'project';
+  });
+  window.addEventListener('pointermove',function(e){
+    if(!down) return;
+    dx=e.clientX-sx; var dy=e.clientY-sy;
+    if(!dragging && isTouch && Math.abs(dx)>8 && Math.abs(dx)>Math.abs(dy)){ dragging=true; track.classList.add('dragging'); }
+    if(dragging){ if(e.cancelable) e.preventDefault(); if(mode==='project') track.style.transform='translateX('+(-i*vp.clientWidth+dx)+'px)'; }
+  },{passive:false});
+  window.addEventListener('pointerup',function(){
+    if(!down) return; down=false;
+    if(dragging){
+      track.classList.remove('dragging');
+      var adx=Math.abs(dx);
+      if(mode==='project'){ if(adx>50) go(i+(dx<0?1:-1)); else render(); }
+      else { if(adx>40) setImg(i, imgIdx[i]+(dx<0?1:-1)); else render(); }
+      suppress=true;
+    } else if(mode==='image' && downEl && downEl.closest('.pc-figure') && !downEl.closest('.pc-imgnav') && !downEl.closest('a')){
+      setImg(i, imgIdx[i]+1);
+    }
+  });
+  vp.addEventListener('click',function(e){ if(suppress){ e.preventDefault(); e.stopPropagation(); suppress=false; } }, true);
+  fit(); render();
+});
+
+/* ---- Interests: click a card to reveal its description overlay ---- */
+(function(){
+  var c=document.getElementById('interests-container'); if(!c) return;
+  c.addEventListener('click',function(e){
+    var card=e.target.closest('.blog-card'); if(!card) return;
+    var was=card.classList.contains('open');
+    var open=c.querySelectorAll('.blog-card.open');
+    for(var i=0;i<open.length;i++) open[i].classList.remove('open');
+    if(!was) card.classList.add('open');
+  });
+})();
+/* ---- Timeline: accordion (one card open) + drag-to-scroll image strips ---- */
+(function(){
+  var exp=document.getElementById('experience-container'); if(!exp) return;
+  // accordion — toggle doesn't bubble, catch it in capture phase
+  exp.addEventListener('toggle', function(e){
+    var d=e.target;
+    if(d.tagName==='DETAILS' && d.open){
+      var all=exp.querySelectorAll('details[open]');
+      for(var k=0;k<all.length;k++){ if(all[k]!==d) all[k].open=false; }
+    }
+  }, true);
+  // drag-to-scroll the .tl-shots image strips (hidden scrollbar → mouse can't grab otherwise)
+  var down=false, strip=null, sx=0, sl=0;
+  exp.addEventListener('pointerdown', function(e){
+    var s=e.target.closest('.tl-shots'); if(!s) return;
+    down=true; strip=s; sx=e.clientX; sl=s.scrollLeft; s.classList.add('grabbing');
+    try{ s.setPointerCapture(e.pointerId); }catch(err){}
+  });
+  exp.addEventListener('pointermove', function(e){
+    if(!down||!strip) return;
+    strip.scrollLeft = sl - (e.clientX - sx);
+  });
+  function up(){ if(strip) strip.classList.remove('grabbing'); down=false; strip=null; }
+  exp.addEventListener('pointerup', up);
+  exp.addEventListener('pointercancel', up);
+  exp.addEventListener('dragstart', function(e){ if(e.target.closest('.tl-shots')) e.preventDefault(); });
+})();
+/* ---- Certifications: click to reveal description + show all / less ---- */
+document.addEventListener('DOMContentLoaded', function(){
+  var grid=document.getElementById('certifications-container'); if(!grid) return;
+  grid.addEventListener('click',function(e){
+    if(e.target.closest('a')) return;
+    var card=e.target.closest('.cc'); if(!card) return;
+    var was=card.classList.contains('open');
+    var open=grid.querySelectorAll('.cc.open'); for(var i=0;i<open.length;i++) open[i].classList.remove('open');
+    if(!was) card.classList.add('open');
+  });
+  var btn=document.getElementById('certs-more');
+  if(btn){
+    if(grid.querySelectorAll('.cc-more').length===0){ if(btn.parentNode) btn.parentNode.style.display='none'; }
+    else btn.addEventListener('click',function(){
+      var open=grid.classList.toggle('show-all');
+      btn.classList.toggle('open',open);
+      var lbl=btn.querySelector('.lbl'); if(lbl) lbl.textContent = open ? 'Show less' : 'Show all 11';
+    });
+  }
 });
 </script>
 </body>
