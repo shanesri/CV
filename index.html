@@ -136,8 +136,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .icard h3{font-family:'Inter';font-weight:600;font-size:17px;margin:0 0 6px;}
   .icard p{color:var(--muted);font-size:13.5px;margin:0;}
 
-  .li-wrap{position:relative;max-width:680px;margin:0 auto;max-height:600px;overflow:hidden;border:1px solid var(--hair);border-radius:var(--radius);background:var(--card);}
-  .li-wrap:after{content:"";position:absolute;left:0;right:0;bottom:0;height:80px;background:linear-gradient(180deg,transparent,var(--card));pointer-events:none;}
+  .li-wrap{max-width:1000px;margin:0 auto;}
   .contact-links{display:flex;flex-wrap:wrap;justify-content:center;gap:16px 34px;}
   .contact-links a{display:inline-flex;align-items:center;gap:10px;color:var(--muted);font-size:16px;transition:color .18s;}
   .contact-links a:hover{color:var(--ink);}
@@ -238,9 +237,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .hero-id-tenure .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);flex:none;}
   /* ---- Scroll snap: "page flip" feel. proximity (not mandatory) so tall
          sections stay readable instead of trapping the scroll ---- */
-  html{scroll-snap-type:y proximity;scroll-padding-top:44px;}
-  main > section{scroll-snap-align:start;scroll-snap-stop:normal;}
-  @media(prefers-reduced-motion:reduce){html{scroll-snap-type:none;}}
 
   /* ---- Mouse candlestick trail (desktop only) ---- */
   #fx-candles{position:fixed;inset:0;z-index:45;pointer-events:none;}
@@ -248,7 +244,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   @media(prefers-reduced-motion:reduce){#fx-candles{display:none;}}
 
   /* ---- Vinyl music player (v3: pinned in hero, bob-to-invite, hover info) ---- */
-  .player{position:absolute;right:32px;bottom:30px;z-index:3;display:flex;flex-direction:column;align-items:center;gap:9px;font-family:'Inter',sans-serif;}
+  .player{position:absolute;left:32px;bottom:30px;z-index:3;display:flex;flex-direction:column;align-items:center;gap:9px;font-family:'Inter',sans-serif;}
   .player-disc{position:relative;width:88px;height:88px;border-radius:50%;border:0;background:transparent;cursor:pointer;padding:0;animation:playerBob 1.9s ease-in-out infinite;}
   .player.playing .player-disc{animation:none;}
   @keyframes playerBob{0%,100%{transform:translateY(0);}50%{transform:translateY(-7px);}}
@@ -262,12 +258,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .player-badge{position:absolute;right:1px;bottom:1px;width:26px;height:26px;border-radius:50%;background:var(--bg2);border:1px solid var(--hair);display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:11px;line-height:1;}
   .player-hint{font-family:'Sora','Inter';font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);transition:color .2s;}
   .player.playing .player-hint{color:var(--accent);}
-  .player-pop{position:absolute;bottom:calc(100% + 12px);right:0;width:252px;text-align:left;border:1px solid var(--hair);border-radius:14px;background:color-mix(in srgb,var(--bg2) 93%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:13px 15px;opacity:0;transform:translateY(6px);pointer-events:none;transition:opacity .25s,transform .25s;box-shadow:0 22px 54px -26px rgba(0,0,0,.85);}
+  .player-pop{position:absolute;bottom:calc(100% + 12px);left:0;width:252px;text-align:left;border:1px solid var(--hair);border-radius:14px;background:color-mix(in srgb,var(--bg2) 93%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:13px 15px;opacity:0;transform:translateY(6px);pointer-events:none;transition:opacity .25s,transform .25s;box-shadow:0 22px 54px -26px rgba(0,0,0,.85);}
   .player:hover .player-pop{opacity:1;transform:translateY(0);}
   .player-pop b{display:block;font-family:'Sora','Inter';font-weight:700;font-size:16px;letter-spacing:.04em;color:var(--ink);}
   .player-pop .by{display:block;font-size:12px;color:var(--muted);margin-top:3px;}
   .player-pop .insp{display:block;font-size:11.5px;color:var(--faint);margin-top:6px;line-height:1.5;}
-  @media(max-width:720px){.player{right:16px;bottom:16px;}.player-disc{width:68px;height:68px;}.player-hint{display:none;}.player-pop{right:auto;left:0;}}
+  @media(max-width:720px){.player{left:16px;bottom:16px;}.player-disc{width:68px;height:68px;}.player-hint{display:none;}.player-pop{right:auto;left:0;}}
   @media(prefers-reduced-motion:reduce){.player-disc{animation:none!important;}.player.playing .player-vinyl{animation:none!important;}}
   /* ---- Single center timeline (neon spine, alternating cards, year markers) ---- */
   .timeline{position:relative;max-width:1320px;margin:0 auto;padding:6px 0;}
@@ -344,7 +340,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 <!-- Market ticker -->
-<div class="ticker"><div class="ticker-track" id="ticker-track"><span class="tk"><b>S&amp;P 500</b> 5,930.85 <em class="up">+0.42%</em></span><span class="tk"><b>NASDAQ</b> 19,480.9 <em class="up">+0.61%</em></span><span class="tk"><b>DOW</b> 43,870 <em class="down">-0.11%</em></span><span class="tk"><b>GOLD</b> 2,652.3 <em class="up">+0.34%</em></span><span class="tk"><b>WTI</b> 71.20 <em class="down">-0.82%</em></span><span class="tk"><b>BTC</b> 96,410 <em class="up">+1.24%</em></span><span class="tk"><b>ETH</b> 3,382 <em class="up">+2.11%</em></span><span class="tk"><b>USD/THB</b> 34.15 <em class="up">+0.09%</em></span><span class="tk"><b>US10Y</b> 4.28% <em class="down">-0.02%</em></span><span class="tk"><b>SET</b> 1,420.6 <em class="down">-0.28%</em></span><span class="tk"><b>NIKKEI</b> 38,905 <em class="up">+0.53%</em></span><span class="tk"><b>HSI</b> 19,712 <em class="up">+0.91%</em></span><span class="tk"><b>S&amp;P 500</b> 5,930.85 <em class="up">+0.42%</em></span><span class="tk"><b>NASDAQ</b> 19,480.9 <em class="up">+0.61%</em></span><span class="tk"><b>DOW</b> 43,870 <em class="down">-0.11%</em></span><span class="tk"><b>GOLD</b> 2,652.3 <em class="up">+0.34%</em></span><span class="tk"><b>WTI</b> 71.20 <em class="down">-0.82%</em></span><span class="tk"><b>BTC</b> 96,410 <em class="up">+1.24%</em></span><span class="tk"><b>ETH</b> 3,382 <em class="up">+2.11%</em></span><span class="tk"><b>USD/THB</b> 34.15 <em class="up">+0.09%</em></span><span class="tk"><b>US10Y</b> 4.28% <em class="down">-0.02%</em></span><span class="tk"><b>SET</b> 1,420.6 <em class="down">-0.28%</em></span><span class="tk"><b>NIKKEI</b> 38,905 <em class="up">+0.53%</em></span><span class="tk"><b>HSI</b> 19,712 <em class="up">+0.91%</em></span></div></div>
+<div class="ticker"><div class="ticker-track" id="ticker-track"><span class="tk"><b>S&amp;P 500</b> &mdash;</span><span class="tk"><b>NASDAQ</b> &mdash;</span><span class="tk"><b>DOW</b> &mdash;</span><span class="tk"><b>GOLD</b> &mdash;</span><span class="tk"><b>AAPL</b> &mdash;</span><span class="tk"><b>MSFT</b> &mdash;</span><span class="tk"><b>NVDA</b> &mdash;</span><span class="tk"><b>TSLA</b> &mdash;</span><span class="tk"><b>AMZN</b> &mdash;</span><span class="tk"><b>S&amp;P 500</b> &mdash;</span><span class="tk"><b>NASDAQ</b> &mdash;</span><span class="tk"><b>DOW</b> &mdash;</span><span class="tk"><b>GOLD</b> &mdash;</span><span class="tk"><b>AAPL</b> &mdash;</span><span class="tk"><b>MSFT</b> &mdash;</span><span class="tk"><b>NVDA</b> &mdash;</span><span class="tk"><b>TSLA</b> &mdash;</span><span class="tk"><b>AMZN</b> &mdash;</span></div></div>
 
 
 
@@ -434,8 +430,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div class="section-head"><h2>Latest on LinkedIn</h2></div>
 <p class="lead-c">Recent posts and updates &mdash; follow along on <a href="https://www.linkedin.com/in/shanesri/" target="_blank" rel="noopener noreferrer" style="color:var(--accent);font-weight:600">LinkedIn</a>.</p>
 <div class="li-wrap">
-<div class="sk-ww-linkedin-profile-post" data-embed-id="25711347"></div>
-<script src="https://widgets.sociablekit.com/linkedin-profile-posts/widget.js" defer></script>
+<script src="https://elfsightcdn.com/platform.js" async></script>
+<div class="elfsight-app-e154bcda-4167-4221-8861-177dac4b3081" data-elfsight-app-lazy></div>
 </div>
 </div>
 </section>
@@ -519,18 +515,18 @@ const SKILL_REGISTRY = {
   'Financial Modelling':'finance','Corporate Investment Analyst':'finance','Global Macro Finance':'finance',
   'Economic Analysis':'finance','Cross-Border Trading':'finance','Asset Valuation':'finance',
   'Financial Analysis':'finance','Investment Tools':'finance','Ethical Standards':'finance',
-  'Investment Planning':'finance','Financial Advisory':'finance','Global Equities':'finance','Offshore Investment':'finance',
+  'Investment Planning':'finance','Financial Advisory':'finance','Global Equities':'finance','Offshore Investment':'finance','Trading Platforms':'finance',
   // Quantitative & Technical Tools
   'Python':'quant','SQL':'quant','R':'quant','Data Analysis':'quant','Data Visualization':'quant',
   'Quantitative Analysis':'quant','Quantitative Problem-Solving':'quant','Quantitative Methods':'quant',
-  'GitHub':'quant','Streamlit':'quant','Tableau':'quant','CFD Analysis':'quant',
+  'GitHub':'quant','Streamlit':'quant','Tableau':'quant','CFD Analysis':'quant','CAD':'quant',
   // Business & Operations (soft skills upgraded into executive/professional competencies)
   'Operations Management':'business','Project Management':'business','Strategic Planning':'business',
   'Cross-functional Leadership':'business','Stakeholder Management':'business','Client Relations':'business',
   'Strategic Communication':'business','Pitching':'business','Community Building':'business',
   'Digital Marketing':'business','Media Buying':'business','Marketing Strategy':'business',
   'Entrepreneurship':'business','Product Development':'business','Facebook Ads':'business',
-  'Brand Awareness':'business','NFT':'business',
+  'Brand Awareness':'business','NFT':'business','Community Marketing':'business',
   // Languages (categorization only — you'll add Language cards; their tags land here)
   'Thai (Native)':'language','English (Fluent · TOEIC 915)':'language',
   'Chinese (Beginner · HSK2)':'language','Japanese (Beginner)':'language',
@@ -559,7 +555,7 @@ const CARDS = [
   /* ---------- PROJECTS ---------- */
   { id:'proj-macroterminal', type:'project',
     headline:'Macro Terminal — Portfolio Analytics Suite',
-    background:`${IMG}/project/EF2.jpg`, thumbnail:`${IMG}/project/EF1.jpg`,
+    images:[`${IMG}/project/EF1.jpg`,`${IMG}/project/MCS1.jpg`],
     description:'A growing suite of portfolio-analytics tools I built in Python + Streamlit, pulling live market data from Yahoo Finance. Two tools are live today: a Monte Carlo Simulator that projects the range of outcomes for a buy-and-hold portfolio, and an Efficient Frontier optimizer that finds the weight mix delivering the best return for a given level of risk (Modern Portfolio Theory). It’s an ongoing build that turns CFA-curriculum theory into working tools — with a public roadmap toward stress-testing against Black-Swan events, risk parity, fat-tailed return models, and rebalancing simulation.',
     skillTags:['Portfolio Management','Python','Data Visualization','GitHub','Streamlit'],
     cta1:{label:'🚀 Launch App — click & wait ~30s to wake', href:'https://mcrtmn.streamlit.app/', variant:'red', icon:'launch'},
@@ -567,7 +563,7 @@ const CARDS = [
 
   { id:'proj-aot', type:'project',
     headline:'Airports of Thailand (AOT) – Strategic Valuation & Financial Model Forecast',
-    background:`${IMG}/project/AOT.jpg`, thumbnail:`${IMG}/project/AOT2.jpg`,
+    images:[`${IMG}/project/AOT2.jpg`],
     description:'AOT Financial model, built entirely from scratch, analyzes Airports of Thailand (AOT). It features a dynamic three-case scenario analysis with granular drivers for PSC fee hikes, concession sharing, and office occupancy, alongside a robust valuation triangulated via FCFF, FCFE, DDM, and global peer benchmarking.',
     skillTags:['Financial Statement Analysis','Equity Analysis','Valuation','Financial Modelling','Data Analysis'],
     cta1:{label:'Download Report', href:'https://github.com/shanesri/CV/blob/main/download-doc/FinanceModelForecast_AOT.pdf?raw=true', variant:'white', icon:'download'},
@@ -580,7 +576,7 @@ const CARDS = [
     date:'May 2026 – Present',
     description:'I work with the Cross-Border Trading team to facilitate direct international transactions for CGSI Thailand, connecting domestic clients with global financial markets. I provide organization-wide support for international trading platforms and investment products, and I train and advise Investment Consultants and Marketing teams on direct offshore asset classes — from global equities to more complex instruments such as futures, bonds, and options. I also help develop strategic initiatives that expand client exposure to international investments and diversify their portfolios.',
     descriptionImages:[`${IMG}/work/CG%20(1).jpg`,`${IMG}/work/CG%20(2).jpg`,`${IMG}/work/CG%20(3).jpg`,`${IMG}/work/CG%20(4).jpg`],
-    skillTags:['Cross-Border Trading','Global Macro Finance','Economic Analysis','Strategic Communication','Strategic Planning'] },
+    skillTags:['Cross-Border Trading','Global Macro Finance','Economic Analysis','Strategic Communication','Trading Platforms'] },
 
   { id:'job-brandbuddy', type:'job',
     headline:'Co-Owner, Head of Media & Operations',
@@ -603,7 +599,7 @@ const CARDS = [
     subheadline:'Enjoy & The Progress Co., Ltd. | Bangkok',
     date:'May 2012 – May 2013 (1 yr 1 mo)',
     description:'In this role, I served as a key engineer for a strategic partnership between E&T Corporation and HONDA R&D ASIA PACIFIC (HRAP). My responsibilities included providing technical sales and consultation for advanced CAE software and CAD outsourcing services. I also managed aspects of our collaborative projects, including the application of a cutting-edge fluid dynamics simulation technique known as the particle method.',
-    skillTags:['CFD Analysis','Stakeholder Management'] },
+    skillTags:['CFD Analysis','CAD'] },
 
   /* ---------- EDUCATION / CERTIFICATE ---------- */
   { id:'edu-cfa', type:'certificate',
@@ -647,9 +643,9 @@ const CARDS = [
     descriptionImages:[`${IMG}/port/P2-1.jpg`], skillTags:['Data Analysis','SQL','Tableau','R','Data Visualization'],
     description:'A comprehensive certification focused on the entire data analysis lifecycle. This program provided hands-on experience with in-demand tools and skills, including data collection (SQL), data transformation (Spreadsheets, R), data visualization (Tableau), and analysis (R). The course culminated in a capstone project demonstrating the ability to ask the right questions and solve business problems using data.' },
 
-  { id:'pf-nft', type:'project', headline:'NFT (PFPs) Project', subheadline:'Community & Strategic Marketing Lead', date:'Jun 2021 - Aug 2022',
-    thumbnail:`${IMG}/port/P4-1.jpg`, skillTags:['NFT','Community Building'],
-    description:'Co-founded and led community strategy for a ~3,000-piece PFP NFT collection on Ethereum. As one of five core members, I built the community from zero across Discord and Twitter and ran the go-to-market plan. Despite launching straight into the Terra/Luna crash and a full bear market, the collection sold out in 4 minutes.' },
+  { id:'pf-nft', type:'project', headline:'Anonymous NFT Project (PFPs)', subheadline:'Co-founder & Lead Community Marketer', date:'Jun 2021 - Aug 2022',
+    thumbnail:`${IMG}/port/P4-1.jpg`, skillTags:['NFT','Community Marketing'],
+    description:"As a co-founder and Lead Community Marketer for an anonymous, global ~3,000-piece PFP NFT collection on Ethereum, I spearheaded our go-to-market strategy. My primary role was building the community from zero across Discord and Twitter. This involved developing the marketing strategy, recruiting and managing moderators, steering the community's direction, and generating massive pre-launch hype. Despite launching directly into the Terra/Luna crash and a brutal bear market, our efforts led to a complete sell-out in just 4 minutes." },
 
   { id:'pf-gvideo', type:'certificate', headline:'Google Ads Video Certificate', subheadline:'Professional Certificate', date:'May 2021',
     descriptionImages:[`${IMG}/port/P8-1.jpg`], skillTags:['Digital Marketing','Brand Awareness'],
@@ -668,8 +664,8 @@ const CARDS = [
     description:"This professional certification from Meta validates the advanced skills required to manage media buying campaigns on the Facebook and Instagram platforms. The exam covers all aspects of the campaign lifecycle, from planning and setup (e.g., audience targeting, budget strategy, ad placements) to optimization (e.g., A/B testing, scaling) and reporting. It demonstrates a high-level competency in using Meta's tools to achieve specific business goals." },
 
   { id:'pf-baanbaicha', type:'project', headline:'BaanBaiCha (Thai Tea formula)', subheadline:'Business Co-founder', date:'2014 - 2015',
-    thumbnail:`${IMG}/port/P12.JPG`, skillTags:['Entrepreneurship','Product Development'],
-    description:'This was my first experience as a small business owner. Three friends and I co-founded BaanBaiCha to create a unique, premium Thai Tea formula from scratch. Our key differentiator was our blend: we spent months developing a proprietary recipe combining 5 different types of tea. We launched as a pivot tea stall near a major office building, and it was an immediate local hit, selling ~350 glasses per day at its peak.' },
+    images:[`${IMG}/project/BBC1.jpg`,`${IMG}/project/BBC2.png`,`${IMG}/project/BBC3.JPG`], skillTags:['Entrepreneurship','Product Development'],
+    description:"This was my first experience as a small business owner. Three friends and I co-founded BaanBaiCha, developing a proprietary premium Thai Tea blend from 5 different types of tea. We launched as a tea stall near a major office building, becoming an immediate local hit with peak sales of ~350 glasses per day. I later sold my shares to an investor, but continued to contribute to the brand's marketing for another 5 years, supporting its expansion into modern trade across major department stores." },
 
   { id:'pf-aigs', type:'certificate', headline:'AIGS (Asian Institute of Gemological Sciences)', subheadline:'Gemological Studies & Jewelry Design', date:'2013 - 2014',
     descriptionImages:[`${IMG}/port/P5-1.jpg`], skillTags:['Product Development'],
@@ -678,19 +674,21 @@ const CARDS = [
   { id:'cert-zh', type:'certificate',
     headline:'Chinese Language — HSK Level 2',
     subheadline:'Mandarin Proficiency', date:'',
+    descriptionImages:[`${IMG}/cert/HSK.png`],
     skillTags:['Chinese (Beginner · HSK2)'],
     description:'Passed HSK Level 2, covering foundational Mandarin vocabulary and everyday conversational phrases.' },
 
   { id:'cert-en', type:'certificate',
     headline:'English Language — TOEIC 915',
     subheadline:'Professional Working Proficiency',
-    descriptionImages:[`${IMG}/cert/TOEIC.png`],
+    certLink:{href:`${IMG}/cert/Toeic2.png`, title:'View TOEIC score report'},
+    descriptionImages:[`${IMG}/cert/Toeic1.png`],
     skillTags:['English (Fluent · TOEIC 915)'],
     description:'Scored 915 on the TOEIC, reflecting professional-level English proficiency for business and financial communication.' },
 
   { id:'pf-grad', type:'project', headline:'Graduation Project: Grid Fin Aerodynamics', subheadline:'B.Eng. Research Project', date:'2012',
-    thumbnail:`${IMG}/port/P13.jpg`, skillTags:['CFD Analysis'],
-    description:'Research project on the aerodynamics of grid fins using ANSYS Computational Fluid Dynamics (CFD). Analyzed complex shockwave interactions and their effect on stability and drag during supersonic flight conditions.' },
+    images:[`${IMG}/project/GridFin1.jpg`,`${IMG}/project/GridFin2.jpg`], skillTags:['CFD Analysis'],
+    description:"Conducted CFD research using ANSYS on grid fins—a technology famously used by SpaceX for fine-tuned directional control in reusable rockets. Analyzed complex shockwave interactions and the crucial trade-off between extreme drag and stability during supersonic flight. Because physical testing under exact supersonic conditions is extremely costly, this project focused on utilizing ANSYS simulations as a highly efficient and cost-effective method for aerodynamic modeling." },
 
   { id:'pf-sg', type:'project', headline:'Singapore Internship: Rocket CFD Project', subheadline:'Research Assistant Internship', date:'2011',
     thumbnail:`${IMG}/port/P14.JPG`, skillTags:['CFD Analysis'],
@@ -1016,9 +1014,8 @@ document.addEventListener('DOMContentLoaded', () => {
   if(!track) return;
   // symbol : label (ETFs stand in for indices/gold on the free tier)
   var items = [
-    {s:'SPY', l:'S&P 500'}, {s:'QQQ', l:'NASDAQ'}, {s:'GLD', l:'GOLD'},
-    {s:'BINANCE:BTCUSDT', l:'BTC'}, {s:'BINANCE:ETHUSDT', l:'ETH'},
-    {s:'OANDA:USD_THB', l:'USD/THB'}, {s:'AAPL', l:'AAPL'}, {s:'TSLA', l:'TSLA'}
+    {s:'SPY', l:'S&P 500'}, {s:'QQQ', l:'NASDAQ'}, {s:'DIA', l:'DOW'}, {s:'GLD', l:'GOLD'},
+    {s:'AAPL', l:'AAPL'}, {s:'MSFT', l:'MSFT'}, {s:'NVDA', l:'NVDA'}, {s:'TSLA', l:'TSLA'}, {s:'AMZN', l:'AMZN'}
   ];
   function render(map){
     var html = items.map(function(it){
@@ -1043,7 +1040,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }).catch(function(){/* keep static fallback */});
   }
   load();
-  setInterval(function(){ if(!document.hidden) load(); }, 20000);
+  setInterval(function(){ if(!document.hidden) load(); }, 60000);
 })();
 </script>
 <script>
@@ -1123,8 +1120,8 @@ document.addEventListener('DOMContentLoaded', function(){
   var prev=root.querySelector('.pc-nav.prev'), next=root.querySelector('.pc-nav.next');
   var i=0, imgIdx=slides.map(function(){return 0;});
   function fit(){ var h=0; slides.forEach(function(s){ var el=s.querySelector('.pc-slide-inner'); if(el) el.style.minHeight=''; }); slides.forEach(function(s){ var el=s.querySelector('.pc-slide-inner'); if(el) h=Math.max(h, el.offsetHeight); }); slides.forEach(function(s){ var el=s.querySelector('.pc-slide-inner'); if(el) el.style.minHeight=h+'px'; }); if(h) vp.style.height=h+'px'; }
-  function render(){ track.style.transform='translateX('+(-i*vp.clientWidth)+'px)'; if(prev) prev.disabled=(i===0); if(next) next.disabled=(i===n-1); }
-  function go(k){ i=Math.max(0,Math.min(n-1,k)); render(); }
+  function render(){ track.style.transform='translateX('+(-i*vp.clientWidth)+'px)'; }
+  function go(k){ i=(k+n)%n; render(); }
   function setImg(si,k){
     var imgs=slides[si].querySelectorAll('.pc-figure img'); if(imgs.length<2) return;
     k=(k+imgs.length)%imgs.length; imgIdx[si]=k;
