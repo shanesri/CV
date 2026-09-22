@@ -317,7 +317,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   .pc-info .desc{color:var(--muted);font-size:14.5px;line-height:1.65;margin:0;}
   .pc-info .chips{margin-top:16px;}
   .pc-info .ctas{margin-top:auto;padding-top:22px;display:flex;flex-wrap:wrap;gap:10px;}
-  .pc-nav{position:absolute;top:50%;z-index:6;width:48px;height:48px;border-radius:50%;background:color-mix(in srgb,var(--bg2) 86%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid color-mix(in srgb,var(--accent) 30%,var(--hair));color:var(--accent);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:22px;line-height:1;box-shadow:0 0 0 0 color-mix(in srgb,var(--accent) 40%,transparent);transition:border-color .2s,color .2s,transform .2s,opacity .2s,background .2s;}
+  .pc-nav{position:absolute;top:50%;z-index:6;width:52px;height:78px;border-radius:16px;background:color-mix(in srgb,var(--bg2) 86%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid color-mix(in srgb,var(--accent) 30%,var(--hair));color:var(--accent);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:22px;line-height:1;box-shadow:0 0 0 0 color-mix(in srgb,var(--accent) 40%,transparent);transition:border-color .2s,color .2s,transform .2s,opacity .2s,background .2s;}
   .pc-nav:hover{border-color:var(--accent);color:#0b0e12;background:var(--accent);animation:none;transform:translateY(-50%) scale(1.1);}
   .pc-nav.prev{left:2px;animation:navPulseL 2.2s ease-in-out infinite;}
   .pc-nav.next{right:2px;animation:navPulseR 2.2s ease-in-out infinite;}
@@ -325,7 +325,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   @keyframes navPulseR{0%,100%{transform:translateY(-50%) translateX(0);box-shadow:0 0 0 0 color-mix(in srgb,var(--accent) 45%,transparent);}50%{transform:translateY(-50%) translateX(5px);box-shadow:0 0 0 7px color-mix(in srgb,var(--accent) 0%,transparent);}}
   .pc-nav[disabled]{opacity:0;pointer-events:none;}
   @media(prefers-reduced-motion:reduce){.pc-nav{animation:none!important;}}
-  @media(max-width:760px){.pcarousel{padding:0 8px;}.pc-nav{width:40px;height:40px;font-size:19px;top:42vw;}.pc-nav.prev{left:2px;}.pc-nav.next{right:2px;}}
+  @media(max-width:760px){.pcarousel{padding:0 6px;}.pc-nav{width:42px;height:62px;font-size:23px;top:42vw;}.pc-nav.prev{left:2px;}.pc-nav.next{right:2px;}}
   @media(max-width:760px){
     .pc-slide-inner{grid-template-columns:1fr;gap:16px;align-items:start;}
     .pc-track{align-items:flex-start;}
@@ -413,7 +413,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <div class="section-head"><h2>Certifications</h2></div>
 <p class="lead-c">Professional certifications and licenses across finance, data, and marketing.</p>
 <div class="cgrid" id="certifications-container"></div>
-<div class="more-wrap"><button id="certs-more" class="show-more" type="button"><span class="lbl">Show all 11</span> <span class="arw">&#8595;</span></button></div>
+<div class="more-wrap"><button id="certs-more" class="show-more" type="button"><span class="lbl">Show all</span> <span class="arw">&#8595;</span></button></div>
 </div>
 </section>
 
@@ -517,11 +517,11 @@ const SKILL_REGISTRY = {
   'Financial Modelling':'finance','Corporate Investment Analyst':'finance','Global Macro Finance':'finance',
   'Economic Analysis':'finance','Cross-Border Trading':'finance','Asset Valuation':'finance',
   'Financial Analysis':'finance','Investment Tools':'finance','Ethical Standards':'finance',
-  'Investment Planning':'finance','Financial Advisory':'finance','Global Equities':'finance','Offshore Investment':'finance','Trading Platforms':'finance',
+  'Investment Planning':'finance','Financial Advisory':'finance','Global Equities':'finance','Offshore Investment':'finance','Trading Platforms':'finance','DeFi':'finance',
   // Quantitative & Technical Tools
   'Python':'quant','SQL':'quant','R':'quant','Data Analysis':'quant','Data Visualization':'quant',
   'Quantitative Analysis':'quant','Quantitative Problem-Solving':'quant','Quantitative Methods':'quant',
-  'GitHub':'quant','Streamlit':'quant','Tableau':'quant','CFD Analysis':'quant','CAD':'quant',
+  'GitHub':'quant','Streamlit':'quant','Tableau':'quant','CFD Analysis':'quant','CAD':'quant','Blockchain':'quant',
   // Business & Operations (soft skills upgraded into executive/professional competencies)
   'Operations Management':'business','Project Management':'business','Strategic Planning':'business',
   'Cross-functional Leadership':'business','Stakeholder Management':'business','Client Relations':'business',
@@ -650,6 +650,10 @@ const CARDS = [
     thumbnail:`${IMG}/port/P4-1.jpg`, skillTags:['NFT','Community Marketing'],
     description:"As a co-founder and Lead Community Marketer for an anonymous, global ~3,000-piece PFP NFT collection on Ethereum, I spearheaded our go-to-market strategy. My primary role was building the community from zero across Discord and Twitter. This involved developing the marketing strategy, recruiting and managing moderators, steering the community's direction, and generating massive pre-launch hype. Despite launching directly into the Terra/Luna crash and a brutal bear market, our efforts led to a complete sell-out in just 4 minutes." },
 
+  { id:'proj-camp', type:'project', headline:'CAMP \u2014 Decentralized Social Trading Platform', subheadline:'Marketing (Core Team)', date:'Jan 2021 - May 2022',
+    images:[`${IMG}/project/CAMP1.png`,`${IMG}/project/CAMP2.png`,`${IMG}/project/CAMP3.png`,`${IMG}/project/CAMP4.png`], skillTags:['Digital Marketing','Marketing Strategy','Community Building','DeFi','Blockchain'],
+    description:'Founded by a group of friends passionate about DeFi, CAMP was a decentralized social trading platform built on the Binance Smart Chain (BSC). As the marketing lead, I spearheaded the marketing strategy and branding for this secure, smart contract-based copy-trade model. Although the project concluded after its initial phases, this entrepreneurial venture served as my pivotal gateway into the investment world, granting me valuable, hands-on experience in financial markets and community-led growth.' },
+
   { id:'pf-gvideo', type:'certificate', headline:'Google Ads Video Certificate', subheadline:'Professional Certificate', date:'May 2021',
     descriptionImages:[`${IMG}/port/P8-1.jpg`], skillTags:['Digital Marketing','Brand Awareness'],
     description:'This certification validates expertise in creating and optimizing Google Video ad campaigns, primarily on YouTube. It covers strategies for reaching audiences with different video ad formats (e.g., skippable in-stream, bumper ads), driving brand awareness, and measuring campaign effectiveness to maximize client ROI on video spend.' },
@@ -670,6 +674,12 @@ const CARDS = [
     images:[`${IMG}/project/BBC1.jpg`,`${IMG}/project/BBC2.png`,`${IMG}/project/BBC3.JPG`], skillTags:['Entrepreneurship','Product Development'],
     description:"This was my first experience as a small business owner. Three friends and I co-founded BaanBaiCha, developing a proprietary premium Thai Tea blend from 5 different types of tea. We launched as a tea stall near a major office building, becoming an immediate local hit with peak sales of ~350 glasses per day. I later sold my shares to an investor, but continued to contribute to the brand's marketing for another 5 years, supporting its expansion into modern trade across major department stores." },
 
+  { id:'cert-adworld21', type:'certificate', headline:'Ad World Conference 2021', subheadline:'Digital Marketing Conference', date:'2021',
+    descriptionImages:[`${IMG}/cert/Adworld1.jpg`], skillTags:['Digital Marketing','Marketing Strategy'],
+    description:'Attended the 2021 Ad World Conference to capture the rapid shifts in digital marketing following the pandemic. Key topics included the explosion of e-commerce, the rise of the creator economy, and new content strategies for engaging a remote audience. This event provided critical, timely insights that helped my team pivot our client strategies to align with the "new normal" of consumer behavior.' },
+  { id:'cert-adworld22', type:'certificate', headline:'Ad World Conference 2022', subheadline:'Digital Marketing Conference', date:'2022',
+    descriptionImages:[`${IMG}/cert/Adworld2.jpg`], skillTags:['Media Buying','Marketing Strategy'],
+    description:'Attended the 2022 Ad World Conference, a premier global event for the marketing industry. This multi-day conference featured insights from top-tier brand leaders and marketing pioneers on the latest trends in media buying, content marketing, and agency operations. My attendance was focused on absorbing cutting-edge strategies to ensure our agency (Brand Buddy) remained competitive and provided clients with the most modern marketing solutions.' },
   { id:'pf-aigs', type:'certificate', headline:'AIGS (Asian Institute of Gemological Sciences)', subheadline:'Gemological Studies & Jewelry Design', date:'2013 - 2014',
     descriptionImages:[`${IMG}/cert/AIGS1.png`,`${IMG}/cert/AIGS3.jpg`], skillTags:['Product Development'],
     certLink:{href:`${IMG}/cert/AIGS2.jpg`, title:'Download Credential', label:'Download Credential'},
@@ -779,7 +789,8 @@ function renderSkills(){
 }
 
 function renderProjects(){
-  const list = byType('project');
+  const py = d => { const m=(d||'').match(/\d{4}/); return m ? +m[0] : 9999; };
+  const list = byType('project').slice().sort((a,b)=> py(b.date)-py(a.date));
   const slides = list.map(c => {
     let imgs = c.images || c.descriptionImages || [c.background, c.thumbnail];
     imgs = (imgs||[]).filter(Boolean);
@@ -860,7 +871,7 @@ function renderExperience(){
           <span class="tl-kind">${kind}</span>
           <h4 class="font-display">${esc(c.headline)}${cert}</h4>
           ${c.subheadline ? `<div class="sub">${esc(c.subheadline)}</div>` : ''}
-          ${c.date ? `<div class="date">${esc(c.date)}</div>` : ''}
+          ${c.date ? `<div class="date">${esc(c.date)}${/Present/i.test(c.date)?' <span id="exp-clock" class="exp-live">\u2026</span>':''}</div>` : ''}
           <details><summary>Details</summary><p>${c.description||''}</p>${media}${tags ? `<div class="chips" style="margin-top:14px">${tags}</div>` : ''}</details>
         </div>
       </div>`;
@@ -1005,7 +1016,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if(ss<0){ss+=60;mm--;} if(mm<0){mm+=60;hh--;} if(hh<0){hh+=24;d--;}
     if(d<0){ var pm=new Date(now.getFullYear(),now.getMonth(),0).getDate(); d+=pm; m--; }
     if(m<0){m+=12;y--;}
-    var parts=[]; if(y>0)parts.push(y+'y'); if(y>0||m>0)parts.push(m+'m'); parts.push(d+'d');var clock=hh+' hours '+mm+' mins '+ss+' sec';el.textContent = parts.join(' ')+'  '+clock;
+    var parts=[]; if(y>0)parts.push(y+'y'); if(y>0||m>0)parts.push(m+'m'); parts.push(d+'d');var clock=hh+' hours '+mm+' mins '+ss+' sec';var out=parts.join(' ')+'  '+clock;el.textContent=out;var ex=document.getElementById('exp-clock');if(ex)ex.textContent='('+out+')';
   }
   diff(); setInterval(diff,1000);
 })();
@@ -1044,7 +1055,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }).catch(function(){/* keep static fallback */});
   }
   load();
-  setInterval(function(){ if(!document.hidden) load(); }, 60000);
+  setInterval(function(){ if(!document.hidden) load(); }, 21600000);
 })();
 </script>
 <script>
@@ -1140,31 +1151,26 @@ document.addEventListener('DOMContentLoaded', function(){
   });
   window.addEventListener('resize',function(){ fit(); render(); });
   window.addEventListener('load', fit);
-  var down=false, sx=0, sy=0, dx=0, mode='project', dragging=false, downEl=null, suppress=false;
-  var isTouch=false;
+  var down=false, sx=0, sy=0, dx=0, dragging=false, downEl=null, suppress=false, isTouch=false;
   vp.addEventListener('pointerdown',function(e){
     if(e.button && e.button!==0) return;
     down=true; dragging=false; sx=e.clientX; sy=e.clientY; dx=0; downEl=e.target;
     isTouch=(e.pointerType!=='mouse');
-    var fig=e.target.closest('.pc-figure');
-    mode=(fig && slides[i].querySelectorAll('.pc-figure img').length>1) ? 'image' : 'project';
   });
   window.addEventListener('pointermove',function(e){
     if(!down) return;
     dx=e.clientX-sx; var dy=e.clientY-sy;
     if(!dragging && isTouch && Math.abs(dx)>8 && Math.abs(dx)>Math.abs(dy)){ dragging=true; track.classList.add('dragging'); }
-    if(dragging){ if(e.cancelable) e.preventDefault(); if(mode==='project') track.style.transform='translateX('+(-i*vp.clientWidth+dx)+'px)'; }
+    if(dragging){ if(e.cancelable) e.preventDefault(); track.style.transform='translateX('+(-i*vp.clientWidth+dx)+'px)'; }
   },{passive:false});
   window.addEventListener('pointerup',function(){
     if(!down) return; down=false;
-    if(dragging){
+    if(dragging){                                   // swipe always changes PROJECT (so multiple projects are discoverable)
       track.classList.remove('dragging');
-      var adx=Math.abs(dx);
-      if(mode==='project'){ if(adx>50) go(i+(dx<0?1:-1)); else render(); }
-      else { if(adx>40) setImg(i, imgIdx[i]+(dx<0?1:-1)); else render(); }
+      if(Math.abs(dx)>50) go(i+(dx<0?1:-1)); else render();
       suppress=true;
-    } else if(mode==='image' && downEl && downEl.closest('.pc-figure') && !downEl.closest('.pc-imgnav') && !downEl.closest('a')){
-      setImg(i, imgIdx[i]+1);
+    } else if(downEl && downEl.closest('.pc-figure') && !downEl.closest('.pc-imgnav') && !downEl.closest('a')){
+      var imgs=slides[i].querySelectorAll('.pc-figure img'); if(imgs.length>1) setImg(i, imgIdx[i]+1);   // tap image = next image
     }
   });
   vp.addEventListener('click',function(e){ if(suppress){ e.preventDefault(); e.stopPropagation(); suppress=false; } }, true);
@@ -1221,12 +1227,10 @@ document.addEventListener('DOMContentLoaded', function(){
   });
   var btn=document.getElementById('certs-more');
   if(btn){
+    var total=grid.querySelectorAll('.cc').length;
+    var setl=function(open){ var l=btn.querySelector('.lbl'); if(l) l.textContent = open ? 'Show less' : 'Show all '+total; };
     if(grid.querySelectorAll('.cc-more').length===0){ if(btn.parentNode) btn.parentNode.style.display='none'; }
-    else btn.addEventListener('click',function(){
-      var open=grid.classList.toggle('show-all');
-      btn.classList.toggle('open',open);
-      var lbl=btn.querySelector('.lbl'); if(lbl) lbl.textContent = open ? 'Show less' : 'Show all 11';
-    });
+    else { setl(false); btn.addEventListener('click',function(){ var open=grid.classList.toggle('show-all'); btn.classList.toggle('open',open); setl(open); }); }
   }
 });
 </script>
