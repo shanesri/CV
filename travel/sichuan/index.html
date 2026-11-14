@@ -15,6 +15,9 @@
 .profile svg{width:100%;height:auto}
 .profile text{font-family:var(--sans);fill:var(--soft);font-size:11px}
 .profile .peak{fill:#B8862B;font-weight:600;font-size:12px}
+.bk{font-size:18px;margin:22px 0 4px}.bk:first-child{margin-top:4px}
+.due{font-size:12px;font-weight:600;color:var(--accent);background:var(--accent-soft);border-radius:999px;padding:1px 8px;white-space:nowrap}
+.ok{font-size:12px;font-weight:600;color:#2E7D4F}
 .profile-note{font-size:13px;color:var(--soft);margin:4px 6px}
 </style>
 </head>
@@ -42,7 +45,7 @@
 <div class="tools">
   <button class="btn" id="expand" type="button">ขยายทุกวัน</button>
   <button class="btn" id="field" type="button" aria-pressed="false">โหมดหน้างาน (ซ่อนรูป)</button>
-  <a class="btn" href="#eat">ของกิน</a><a class="btn" href="#copy">ลอกทริป</a><a class="btn" href="#money">งบ</a>
+  <a class="btn" href="#eat">ของกิน</a><a class="btn" href="#copy">ต้องจองอะไร</a><a class="btn" href="#money">งบ</a>
 </div>
 
 <section class="profile" aria-label="ความสูงตลอดเส้นทาง">
@@ -238,18 +241,8 @@
   <li>หน้าสถานี: ข้าวหมากต้มไข่ <span class="zh">张醪糟</span> ของหวานร้อน</li>
 </ul></section>
 
-<h2 id="copy">ลอกทริปนี้<small>เช็กลิสต์สำหรับเพื่อนที่อยากไปตาม · ติ๊กได้ (จำไว้ในเครื่องตัวเอง)</small></h2>
-<div class="card"><ul class="check" id="checklist">
-  <li><input type="checkbox" id="c1"><label for="c1"><b>ตั๋วเครื่องบิน</b> DMK ⇄ TFU (Thai Lion Air)<small>ไฟลต์ปีใหม่เต็มเร็ว จองล่วงหน้า 2–3 เดือน</small></label></li>
-  <li><input type="checkbox" id="c2"><label for="c2"><b>ที่พักคืน 31 ธ.ค.</b><small>ใกล้สถานี Chengdu South แต่นอกเขตปิดถนนรอบตึกแฝด</small></label></li>
-  <li><input type="checkbox" id="c3"><label for="c3"><b>ตั๋วรถไฟ 3 ขา ใน Trip.com</b><small>1 ม.ค. เฉิงตูใต้→เอ๋อเหมยซาน · 3 ม.ค. เอ๋อเหมยซาน→เล่อซาน · 4 ม.ค. เล่อซาน→เฉิงตูตะวันออก, ซีผู่→ชิงเฉิงซาน · ตั๋วเปิดขายล่วงหน้า 15 วัน ตั้งจองล่วงหน้าไว้</small></label></li>
-  <li><input type="checkbox" id="c4"><label for="c4"><b>Alipay + WeChat Pay</b> ผูกบัตรเครดิต<small>ร้านเล็กแทบไม่รับเงินสด/บัตร</small></label></li>
-  <li><input type="checkbox" id="c5"><label for="c5"><b>eSIM ที่ใช้ Google/LINE ได้</b><small>โรมมิ่งผ่านฮ่องกง ไม่ต้องใช้ VPN</small></label></li>
-  <li><input type="checkbox" id="c6"><label for="c6"><b>แอป:</b> Apple Maps (นำทาง) · Didi (เรียกรถ) · Dianping (ร้าน) · Trip.com (รถไฟ)</label></li>
-  <li><input type="checkbox" id="c7"><label for="c7"><b>ของกันหนาว + แผ่นกันลื่นรองเท้า</b><small>ยอดง้อไบ๊ติดลบ บันไดเป็นน้ำแข็ง · ซื้อแผ่นกันลื่นที่ตีนเขาก็ได้</small></label></li>
-  <li><input type="checkbox" id="c8"><label for="c8"><b>ประกันเดินทาง</b></label></li>
-  <li><input type="checkbox" id="c9"><label for="c9"><b>ลางาน 4–6 ม.ค.</b> 😅</label></li>
-</ul></div>
+<h2 id="copy">สิ่งที่ต้องจอง<small>เรียงตามลำดับที่ต้องทำ · ติ๊กได้ (จำไว้ในเครื่องตัวเอง) · เพื่อนจะลอกทริปไล่ตามนี้ได้เลย</small></h2>
+<div class="card" id="checklist"><h3 class="bk">จองเสร็จแล้ว</h3><ul class="check"><li><input type="checkbox" id="b1" checked data-done><label for="b1"><b>ตั๋วเครื่องบิน DMK ⇄ TFU</b> <span class="ok">✓ จองแล้ว</span><small>Thai Lion Air SL932 / SL933 · ไฟลต์ช่วงปีใหม่เต็มเร็ว เพื่อนที่จะไปตามจอง 2–3 เดือนก่อน</small></label></li><li><input type="checkbox" id="b2" checked data-done><label for="b2"><b>ที่พัก 6 คืน 4 ที่</b> <span class="ok">✓ จองแล้ว</span><small>Trip.com · ยกเลิกฟรีได้ถึง 31 ธ.ค.–2 ม.ค. แล้วแต่ที่ (ดูตารางที่พักข้างล่าง)</small></label></li></ul><h3 class="bk">ก่อนบิน (ทำได้เลยตอนนี้)</h3><ul class="check"><li><input type="checkbox" id="b3"><label for="b3"><b>ประกันเดินทาง</b> <span class="due">ก่อน 31 ธ.ค.</span><small>ให้คุ้มครองการเดินเขาด้วย</small></label></li><li><input type="checkbox" id="b4"><label for="b4"><b>ผูกบัตรกับ Alipay + WeChat Pay</b> <span class="due">ก่อน 31 ธ.ค.</span><small>ร้านเล็ก Didi รถบัสอุทยาน จ่ายผ่านแอปเกือบหมด ลองจ่ายสักรายการก่อนไป</small></label></li><li><input type="checkbox" id="b5"><label for="b5"><b>eSIM</b> <span class="due">ก่อน 31 ธ.ค.</span><small>เลือกแบบโรมมิ่งผ่านฮ่องกง ใช้ Google / LINE ได้ ไม่ต้องใช้ VPN</small></label></li><li><input type="checkbox" id="b6"><label for="b6"><b>ตั้งจองตั๋วรถไฟล่วงหน้าใน Trip.com</b> <span class="due">ตอนนี้</span><small>ตั๋วรถไฟจีนเปิดขายล่วงหน้า 15 วัน ตั้ง pre-book ไว้ ระบบจะซื้อให้อัตโนมัติตอนเปิดขาย</small></label></li><li><input type="checkbox" id="b7"><label for="b7"><b>ลางาน 4–6 ม.ค.</b> <span class="due">ตอนนี้</span><small>😅</small></label></li></ul><h3 class="bk">ตั๋วรถไฟ (เปิดขายล่วงหน้า 15 วัน)</h3><ul class="check"><li><input type="checkbox" id="b8"><label for="b8"><b>1 ม.ค. เฉิงตูใต้ → เอ๋อเหมยซาน</b> <span class="due">เปิดขาย ~18 ธ.ค.</span><small>วันหยุดปีใหม่จีน ขาที่เต็มเร็วสุด · ช่วงเที่ยง ราว 1 ชม. 15 นาที</small></label></li><li><input type="checkbox" id="b9"><label for="b9"><b>3 ม.ค. เอ๋อเหมยซาน → เล่อซาน</b> <span class="due">เปิดขาย ~20 ธ.ค.</span><small>รอบ ~08:00 ราว 20 นาที · วันหยุดวันสุดท้าย คนกลับบ้านเยอะ</small></label></li><li><input type="checkbox" id="b10"><label for="b10"><b>4 ม.ค. เล่อซาน → เฉิงตูตะวันออก</b> <span class="due">เปิดขาย ~21 ธ.ค.</span><small>รอบ ~09:00 ราว 1 ชม.</small></label></li><li><input type="checkbox" id="b11"><label for="b11"><b>4 ม.ค. ซีผู่ → ชิงเฉิงซาน</b> <span class="due">เปิดขาย ~21 ธ.ค.</span><small>ราว 30 นาที 10 หยวน · ระหว่างนี้นั่ง Metro สาย 2 ไม่ต้องจอง</small></label></li><li><input type="checkbox" id="b12"><label for="b12"><b>6 ม.ค. ไปสนามบิน: รถไฟหรือ Didi</b> <span class="due">ตัดสินใจหน้างาน</span><small>Didi 220–280 หยวน ไม่ต้องจอง · ถ้าจะนั่งรถไฟ ชิงเฉิงซาน → ซีผู่ เปิดขาย ~23 ธ.ค.</small></label></li></ul><h3 class="bk">ตั๋วเข้าสถานที่ (จองออนไลน์ใช้พาสปอร์ต)</h3><ul class="check"><li><input type="checkbox" id="b13"><label for="b13"><b>ง้อไบ๊: ตั๋วเข้า + รถบัสอุทยาน + กระเช้า</b> <span class="due">จอง 1–3 วันก่อน</span><small>จองใน Trip.com หรือมินิโปรแกรมใน WeChat · ช่วงวันหยุดคิวที่จุดขายยาว</small></label></li><li><input type="checkbox" id="b14"><label for="b14"><b>พระใหญ่เล่อซาน</b> <span class="due">จอง 1–3 วันก่อน</span><small>จองรอบบ่าย · ถ้าจะล่องเรือดูพระทั้งองค์ ซื้อตั๋วเรือแยก</small></label></li><li><input type="checkbox" id="b15"><label for="b15"><b>เขื่อนตูเจียงเยี่ยน</b> <span class="due">ซื้อวันนั้นได้</span><small>จองในแอปก่อนเข้าก็ได้ ไม่ต้องรีบ</small></label></li><li><input type="checkbox" id="b16"><label for="b16"><b>หลังเขาชิงเฉิงซาน (20 หยวน) + หน้าเขา</b> <span class="due">ซื้อวันนั้นได้</span><small>กระเช้าซื้อหน้างาน</small></label></li></ul><h3 class="bk">ของที่ต้องเตรียม</h3><ul class="check"><li><input type="checkbox" id="b17"><label for="b17"><b>โหลดแอป</b><small>Apple Maps (นำทาง) · Didi (เรียกรถ) · Dianping (หาร้าน) · Trip.com (รถไฟ)</small></label></li><li><input type="checkbox" id="b18"><label for="b18"><b>ของกันหนาว + แผ่นกันลื่นรองเท้า</b><small>ยอดง้อไบ๊ติดลบ บันไดเป็นน้ำแข็ง · แผ่นกันลื่นซื้อที่ตีนเขาได้</small></label></li><li><input type="checkbox" id="b19"><label for="b19"><b>พาสปอร์ตอายุเหลือ 6 เดือนขึ้นไป</b><small>คนไทยเข้าจีนไม่ต้องขอวีซ่า อยู่ได้ไม่เกิน 30 วัน</small></label></li></ul></div>
 
 <h2>ไฟลต์</h2>
 <div class="card">
@@ -290,7 +283,7 @@
 <script src="../travel.js"></script>
 <script>
 // remember checklist ticks on this device
-document.querySelectorAll('#checklist input').forEach(c=>{const k='sc-'+c.id;try{c.checked=localStorage.getItem(k)==='1'}catch(e){}c.addEventListener('change',()=>{try{localStorage.setItem(k,c.checked?'1':'0')}catch(e){}})});
+document.querySelectorAll('#checklist input').forEach(c=>{const k='sc-'+c.id;try{const v=localStorage.getItem(k);if(v!==null)c.checked=v==='1'}catch(e){}c.addEventListener('change',()=>{try{localStorage.setItem(k,c.checked?'1':'0')}catch(e){}})});
 </script>
 </body>
 </html>

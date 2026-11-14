@@ -94,7 +94,16 @@ a.trip:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(60,40,20,.10
 </div>
 
 <h2 id="previous">Previous<small>ทริปที่กลับมาแล้วจะย้ายมาอยู่ตรงนี้เอง</small></h2>
-<div class="grid" id="prev"><p class="empty" id="prev-empty">ยังไม่มี — ทริปแรกเริ่ม 31 ธ.ค. 🎆</p></div>
+<div class="grid" id="prev"><a class="trip" href="act/" data-start="2026-04-06" data-end="2026-04-19">
+  <div class="pic"><img loading="lazy" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/4/47/Reflection_of_Tilicho_glacier_on_Tilicho_lake_at_4919_meters.jpg/1280px-Reflection_of_Tilicho_glacier_on_Tilicho_lake_at_4919_meters.jpg" alt=""></div>
+  <div class="meta">
+    <div class="when">6 – 19 เม.ย. 2026 · 14 วัน</div>
+    <h3>Thin Air</h3>
+    <div class="place">Annapurna Circuit + Tilicho · เนปาล</div>
+    <ul class="tags"><li>เทรค 5,416 ม.</li><li>Thorong La</li><li>ทะเลสาบ Tilicho</li></ul>
+    <div class="foot"><span class="price">~54k <small>฿ ต่อคน</small></span><span class="st">ไปมาแล้ว</span></div>
+  </div>
+</a></div>
 
 <h2 id="someday">Someday<small>แพลนไว้แล้ว แต่ยังไม่ลงวัน</small></h2>
 <div class="grid"><div class="trip idea"><div class="pic"><img loading="lazy" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/2/24/Mt_Manaslu.jpg/1280px-Mt_Manaslu.jpg" alt=""></div><div class="meta"><div class="when">ยังไม่ลงวัน · ~14 วัน</div><h3>Manaslu Circuit</h3><div class="place">เนปาล · เทรค 5,000 ม.+</div><p class="note">อยากได้ฟีลแบบ ACT อีกรอบ · เพื่อนชวนไปเม.ย. แต่ปีนี้ยังไม่ได้</p></div></div><div class="trip idea"><div class="pic"><img loading="lazy" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/0/0a/HuaShan_Mountain.jpg/1280px-HuaShan_Mountain.jpg" alt=""></div><div class="meta"><div class="when">ยังไม่ลงวัน · ~5 วัน</div><h3>Xi'an + Huashan</h3><div class="place">ซีอาน · จีน</div><p class="note">ทหารดินเผา + ทางเดินไม้หน้าผาหัวซาน · แพลนไว้แล้วแต่ยังไม่ลงปี</p></div></div></div>
@@ -105,7 +114,7 @@ a.trip:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(60,40,20,.10
 // move finished trips to Previous automatically
 (function(){const now=Date.now(),prev=document.getElementById('prev');
 document.querySelectorAll('#up .trip').forEach(c=>{if(new Date(c.dataset.end+'T23:59:59+07:00')<now){prev.prepend(c);const b=c.querySelector('.badge');if(b)b.remove();const s=c.querySelector('.st');if(s)s.textContent='ไปมาแล้ว'}});
-if(prev.querySelector('.trip'))document.getElementById('prev-empty').remove();})();
+})();
 </script>
 <script src="travel.js"></script>
 </body></html>
